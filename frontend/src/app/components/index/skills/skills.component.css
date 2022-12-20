@@ -1,0 +1,19 @@
+h2 {
+    color: #000000;
+    font-weight: 700;
+}
+
+h3 {
+    color: #000000;
+    font-weight: 700;   
+}
+
+i {
+    font-size: 100px;
+    color: #ffffff;
+}
+
+svg {
+    width: 130px;
+    height: 130px;
+}
