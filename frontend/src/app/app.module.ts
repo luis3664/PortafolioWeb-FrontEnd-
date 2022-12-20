@@ -14,6 +14,7 @@ import { WorksComponent } from './components/works/works.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { CourseCardComponent } from './components/index/courses/course-card/course-card.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
     SkillsComponent,
     ProjectsComponent,
     LoginComponent,
-    IndexComponent
+    IndexComponent,
+    CourseCardComponent
   ],
   imports: [
     BrowserModule,
