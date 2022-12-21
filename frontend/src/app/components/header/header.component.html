@@ -2,7 +2,8 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <!-- Logo -->
-    <a  class="navbar-brand col-12 col-sm-10" href="../../../index.html">
+    <a  class="navbar-brand col-12 col-sm-10" routerLink="/index" 
+      routerLinkActive="active" (isActiveChange)="displayLink=true">
       <img src="../../../assets/logo.png" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
       Luis Lopez - Full Stack Developer Jr.
     </a>
@@ -12,7 +13,7 @@
       aria-controls="offcanvasDarkNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- Menu elements -->
+    <!-- Menu -->
     <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="menu" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <!-- Button close Menu -->
@@ -26,19 +27,25 @@
         <!-- List -->
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item mx-auto">
+            <a class="nav-link" routerLink="/index">Home</a>
+          </li>
+          <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#cards-presentation">Presentation</a>
           </li>
-          <li class="nav-item mx-auto">
+          <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#works">Works</a>
           </li>
-          <li class="nav-item mx-auto">
+          <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#courses">Courses and Certificates</a>
           </li>
-          <li class="nav-item mx-auto">
+          <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#skills">Hard & Soft Skills</a>
           </li>
-          <li class="nav-item mx-auto">
+          <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#projects">Projects</a>
+          </li>
+          <li class="nav-item mx-auto" (click)="displayLink=false">
+            <a class="nav-link" routerLink="/login">Login</a>
           </li>
         </ul>
       </div>

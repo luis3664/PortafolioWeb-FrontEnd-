@@ -33,7 +33,7 @@ import { CourseCardComponent } from './components/index/courses/course-card/cour
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
