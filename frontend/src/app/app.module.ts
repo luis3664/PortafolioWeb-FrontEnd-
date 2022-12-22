@@ -9,12 +9,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { IndexComponent } from './components/index/index.component'
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CardsPresentationComponent } from './components/cards-presentation/cards-presentation.component';
-import { WorksComponent } from './components/works/works.component';
-import { CoursesComponent } from './components/courses/courses.component';
-import { SkillsComponent } from './components/skills/skills.component';
-import { ProjectsComponent } from './components/projects/projects.component';
+import { CardsPresentationComponent } from './components/index/cards-presentation/cards-presentation.component';
+import { WorksComponent } from './components/index/works/works.component';
+import { CoursesComponent } from './components/index/courses/courses.component';
 import { CourseCardComponent } from './components/index/courses/course-card/course-card.component';
+import { SkillsComponent } from './components/index/skills/skills.component';
+import { ProjectsComponent } from './components/index/projects/projects.component';
+import { Page404Component } from './components/page404/page404.component';
+
 
 @NgModule({
   declarations: [
@@ -24,11 +26,12 @@ import { CourseCardComponent } from './components/index/courses/course-card/cour
     CardsPresentationComponent,
     WorksComponent,
     CoursesComponent,
+    CourseCardComponent,
     SkillsComponent,
     ProjectsComponent,
     LoginComponent,
     IndexComponent,
-    CourseCardComponent
+    Page404Component
   ],
   imports: [
     BrowserModule,
