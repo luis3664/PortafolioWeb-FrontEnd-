@@ -4,8 +4,8 @@
     <!-- Logo -->
     <a  class="navbar-brand col-12 col-sm-10" routerLink="/index" 
       routerLinkActive="active" (isActiveChange)="displayLink=true">
-      <img src="../../../assets/logo.png" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
-      Luis Lopez - Full Stack Developer Jr.
+      <img src="{{logoImg}}" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
+      {{logoTitle}}
     </a>
     <!-- button -->
     <button class="navbar-toggler col-12 col-sm-1" type="button" 
@@ -26,23 +26,23 @@
       <div class="offcanvas-body">
         <!-- List -->
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item mx-auto">
+          <li class="nav-item mx-auto" *ngIf="!displayLink">
             <a class="nav-link" routerLink="/index">Home</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#cards-presentation">Presentation</a>
+            <a class="nav-link" href="index#cards-presentation">{{titleCardsPresentation}}</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#works">Works</a>
+            <a class="nav-link" href="index#works">{{titleWork}}</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#courses">Courses and Certificates</a>
+            <a class="nav-link" href="index#courses">{{titleCourses}}</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#skills">Hard & Soft Skills</a>
+            <a class="nav-link" href="index#skills">{{titleSkills}}</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#projects">Projects</a>
+            <a class="nav-link" href="index#projects">{{titleProjects}}</a>
           </li>
           <li class="nav-item mx-auto" (click)="displayLink=false">
             <a class="nav-link" routerLink="/login">Login</a>
