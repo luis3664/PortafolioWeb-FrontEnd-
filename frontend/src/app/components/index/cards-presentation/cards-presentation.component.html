@@ -7,7 +7,8 @@
   <h2 class="text-center">{{titleCardsPresentation}}</h2>
   <!--Cards Section-->
   <div class="d-flex justify-content-evenly row">
-    <app-card-section1 *ngFor="let card of cards; let i = index" [interaction]="i"
+    <app-card-section1 
+      *ngFor="let card of cards; let i = index" [interaction]="i"
       class="card text-white bg-dark m-2 col-ms-12 border border-dark border-3"
     ></app-card-section1>
   </div>
