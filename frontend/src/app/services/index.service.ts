@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +74,83 @@ export class IndexService {
         imgName: "None Proyect",
         dateCard: "2023",
         courseUrl: "index#courses",
+      }
+    ]
+  }
+
+  section4 = {
+    // Title Section
+    titleSkill: "Hard & Soft Skills",
+    topics: [
+      // Topic 1
+      {
+        titleTopic: "Front End",
+        bars: [
+          //Bar 1
+          {
+            titleBar: "HTML",
+            svg: false,
+            icon: "bi bi-filetype-html",
+            svgImg: "",
+            valueBar: "92",
+          },{
+            titleBar: "CSS",
+            svg: false,
+            icon: "bi bi-filetype-css",
+            svgImg: "",
+            valueBar: "55",
+          },{
+            titleBar: "JavaScript",
+            svg: false,
+            icon: "bi bi-filetype-js",
+            svgImg: "",
+            valueBar: "60",
+          },{
+            titleBar: "TypeScript",
+            svg: true,
+            icon: "",
+            svgImg: "../../../assets/typescriptSVG.svg",
+            valueBar: "55",
+          },{
+            titleBar: "Bootstrap",
+            svg: false,
+            icon: "bi bi-bootstrap-fill",
+            svgImg: "",
+            valueBar: "75",
+          },{
+            titleBar: "Angular JS",
+            svg: true,
+            icon: "",
+            svgImg: "../../../assets/angularjsSVG.svg",
+            valueBar: "70",
+          },
+        ]
+      },
+      // Topic 2
+      {
+        titleTopic: "Back End",
+        bars: [
+          // Bar 1
+          {
+            titleBar: "Java",
+            svg: false,
+            icon: "bi bi-filetype-java",
+            svgImg: "",
+            valueBar: "50",
+          },{
+            titleBar: "MySQL",
+            svg: false,
+            icon: "bi bi-filetype-sql",
+            svgImg: "",
+            valueBar: "60",
+          },{
+            titleBar: "Spring Boot",
+            svg: true,
+            icon: "",
+            svgImg: "../../../assets/springbootSVG.svg",
+            valueBar: "60",
+          },
+        ]
       }
     ]
   }
