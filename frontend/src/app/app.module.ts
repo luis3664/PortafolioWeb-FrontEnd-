@@ -23,6 +23,7 @@ import { Page404Component } from './components/page404/page404.component';
 
 // Services
 import { IndexService } from './services/index.service';
+import { ProjectComponent } from './components/index/projects/project/project.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { IndexService } from './services/index.service';
     IndexComponent,
     Page404Component,
     CardSection1Component,
-    ItemWorkComponent
+    ItemWorkComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

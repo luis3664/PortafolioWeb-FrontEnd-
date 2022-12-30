@@ -155,5 +155,21 @@ export class IndexService {
     ]
   }
 
-  
+  section5 = {
+    // Title Section
+    title: "Projects",
+    projects: [
+      {
+        title: "Amber Project",
+        text: "Artificial intelligence app that works as a daily assistant.",
+        imgUrl: "../../../assets/AmberProject.jpg",
+        imgName: "Amber Project",
+      },{
+        title: "Coming Soon",
+        text: "Future Project.",
+        imgUrl: "../../../assets/NoneProyect.png",
+        imgName: "None Project",
+      }
+    ],
+  }
 }

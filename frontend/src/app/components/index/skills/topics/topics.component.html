@@ -1,10 +1,10 @@
 <!-- Title Topic -->
-<div class="row">
+<div class="row ms-5 my-3">
     <h3>{{title}}</h3>
 </div>
 
 <!-- Bar Topic -->
-<div class="row d-flex justify-content-evenly" *ngFor="let bar of bars">
+<div class="row d-flex justify-content-center" *ngFor="let bar of bars">
     <!-- Template Icon -->
     <ng-template #iconTemplate>
         <i class="{{bar.icon}}"></i>
@@ -16,14 +16,14 @@
     </ng-template>
 
     <!-- Icon or SVG Container -->
-    <div class="col-1">
+    <div class="col-12 col-md-1 d-flex justify-content-center me-3">
         <ng-container *ngIf="bar.svg; else iconTemplate">
             <ng-container *ngTemplateOutlet = "svgTemplate"></ng-container>
         </ng-container>
     </div>
     
     <!-- Bar -->
-    <div class="col-9 my-auto">
+    <div class="col-12 col-md-9 my-auto">
         <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" 
                 aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100" 
