@@ -10,15 +10,26 @@ import { IndexService } from 'src/app/services/index.service';
 
 export class CardsPresentationComponent {
 
-  cards = this._indexService.section1.cards;
+  private section1: any;
 
-  constructor (private _indexService:IndexService) {}
+  constructor (
+    private _indexService:IndexService,
+    ) {
+      this._indexService.getData().subscribe(data => {
+      this.section1 = data.section1;
+    });
+  }
 
   // Title Section
-  public get titleCardsPresentation(): string {
-    return this._indexService.section1.title;
+  public get titleSection(): string {
+    return this.section1.title;
   }
-  public set titleCardsPresentation(value: string) {
-    this._indexService.section1.title = value;
+  public set titleSection(value: string) {
+    this.section1.title = value;
+  }
+
+  // Cards for ngFor
+  public get cards(): any {
+    return this.section1.cards;
   }
 }

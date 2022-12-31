@@ -5,8 +5,15 @@
     <h2 class="text-center">{{title}}</h2>
     <!--Carousel Works-->
     <div id="carouselWorks" class="carousel carousel-dark slide m-3" data-bs-ride="carousel">
+        <!-- Button Indicators -->
+        <div class="carousel-indicators">
+            <button *ngFor="let item of items, let i = index"
+                type="button" data-bs-target="#carouselWorks" [attr.data-bs-slide-to]="i" [ngClass]="{'active': i == 0}" 
+                aria-current="true" [attr.aria-label]="i+1">
+            </button>
+        </div>
+        <!-- Works -->
         <div class="carousel-inner">
-            <!-- Works -->
             <app-item-work
                 class="carousel-item" [ngClass]="{'active': i == 0}" data-bs-interval="4000" 
                 *ngFor="let item of items, let i = index" [interaction]="i">

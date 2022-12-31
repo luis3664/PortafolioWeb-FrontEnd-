@@ -6,6 +6,14 @@
 
     <!-- Projects -->
     <div id="carouselProjects" class="carousel carousel-dark slide m-3" data-bs-ride="carousel">
+        <!-- Button Indicators -->
+        <div class="carousel-indicators">
+            <button *ngFor="let item of items, let i = index"
+                type="button" data-bs-target="#carouselProjects" [attr.data-bs-slide-to]="i" [ngClass]="{'active': i == 0}" 
+                aria-current="true" [attr.aria-label]="i+1">
+            </button>
+        </div>
+
         <div class="carousel-inner">
             <!-- Project -->
             <app-project

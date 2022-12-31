@@ -8,18 +8,27 @@ import { IndexService } from 'src/app/services/index.service';
 })
 export class CoursesComponent {
 
-  cards = this._indexService.section3.courses;
+  private section3: any;
 
   constructor (
-    private _indexService: IndexService, 
-  ){}
+    private _indexService: IndexService,
+  ){
+    this._indexService.getData().subscribe(data => {
+      this.section3 = data.section3;
+    })
+  }
 
   // Title Section
   public get title(): string {
-    return this._indexService.section3.title;
+    return this.section3.title;
   }
   public set title(value: string) {
-    this._indexService.section3.title = value;
+    this.section3.title = value;
   }
-
+  
+  // Cards for ngFor
+  public get cards(): string {
+    return this.section3.courses;
+  }
+  
 }

@@ -10,27 +10,30 @@ import { IndexService } from 'src/app/services/index.service';
 export class TopicsComponent {
   
   @Input('iSkills') interactor: any;
-
-  svgImg : any;
+  private topics: any;
 
   constructor (
     private _indexService: IndexService,
-  ){}
+  ){
+    this._indexService.getData().subscribe(data => {
+      this.topics = data.section4.topics;
+    })
+  }
 
   // Title the Topics
   public get title(): string {
-    return this._indexService.section4.topics[this.interactor].titleTopic;
+    return this.topics[this.interactor].titleTopic;
   }
   public set title(value: string) {
-    this._indexService.section4.topics[this.interactor].titleTopic = value;
+    this.topics[this.interactor].titleTopic = value;
   }
   
   // Bars
   public get bars(): any {
-    return this._indexService.section4.topics[this.interactor].bars;
+    return this.topics[this.interactor].bars;
   }
   public set bars(value: any) {
-    this._indexService.section4.topics[this.interactor].bars = value;
+    this.topics[this.interactor].bars = value;
   }
 
 }

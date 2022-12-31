@@ -9,20 +9,27 @@ import { IndexService } from 'src/app/services/index.service';
 
 export class SkillsComponent {
 
-  topics: any;
+  private section4: any;
 
   constructor (
     private _indexService: IndexService,
   ){
-    this.topics = _indexService.section4.topics;
+    this._indexService.getData().subscribe(data => {
+      this.section4 = data.section4;
+    })
   }
 
   // Title Section
   public get title(): string {
-    return this._indexService.section4.titleSkill;
+    return this.section4.titleSkill;
   }
   public set title(value: string) {
-    this._indexService.section4.titleSkill = value;
+    this.section4.titleSkill = value;
+  }
+
+  // Topics for ngFor
+  public get topics(): any {
+    return this.section4.topics;
   }
 
 }
