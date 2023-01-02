@@ -1,4 +1,27 @@
 {
+	"header":{
+		"logoImg": "../../../assets/logo.png",
+		"logoTitle": "Luis Lopez - Full Stack Developer Jr."
+	},
+	"footer": {
+		"logoImg": "../../../assets/logo.png",
+		"text": "Contact me and i will make your web application come true.",
+		"icons": [
+			{
+				"iconTitle": "Git Hub",
+				"iconUrl": "",
+				"icon": "bi bi-github"
+			},{
+				"iconTitle": "Linkedin",
+				"iconUrl": "",
+				"icon": "bi bi-linkedin"
+			},{
+				"iconTitle": "Mail",
+				"iconUrl": "",
+				"icon": "bi bi-envelope-fill"
+			}
+		]
+	},
 	"section1": {
 		"title": "Presentation",
 		"cards": [{
@@ -57,7 +80,7 @@
 	},
 
 	"section4": {
-		"titleSkill": "Hard & Soft Skills",
+		"title": "Hard & Soft Skills",
 		"topics": [{
 				"titleTopic": "Front End",
 				"bars": [{

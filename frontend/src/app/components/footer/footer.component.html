@@ -1,22 +1,14 @@
 <div class="container-fluid bg-dark">			
   <div class="row text-white">
     <!-- Logo -->
-    <div class="col-xs-12 col-md-8 col-lg-4 mt-2">
-      <p class="h5"><img src="../../../assets/logo.png" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">Full Stack Developer Jr.</p>
-    <!-- Text -->
-      <p>Contact me and i will make your web application come true.</p>
+    <div class="col-xs-12 col-md-8 col-lg-3 mt-2">
+      <p class="h5"><img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">Full Stack Developer Jr.</p>
+      <p>{{text}}</p>
     </div>
-    <!-- GitHub -->
-    <div class="col-xs-12 col-md-6 col-lg-3 p-4">
-      <i class="bi bi-github"></i>
-    </div>
-    <!-- Linkedin -->
-    <div class="col-xs-12 col-md-6 col-lg-3 p-4">
-      <i class="bi bi-linkedin"></i>
-    </div>
-    <!-- Mail -->
-    <div class="col-xs-12 col-md-4 col-lg-2 p-4">
-      <i class="bi bi-envelope-fill"></i>
+
+    <!-- Icons -->
+    <div class="text-center col-xs-12 col-md-6 col-lg-3 p-4" *ngFor="let item of icons">
+      <i class="{{item.icon}}" [attr.aria-label]="item.iconTitle" (click)="openUrl"></i>
     </div>
   </div>			
 </div>

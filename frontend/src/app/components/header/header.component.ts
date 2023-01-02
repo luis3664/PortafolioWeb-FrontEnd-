@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IndexService } from 'src/app/services/index.service';
 
 @Component({
   selector: 'app-header',
@@ -9,24 +10,64 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   // Logo
-  logoImg: String = "../../../assets/logo.png";
-  logoTitle: String = "Luis Lopez - Full Stack Developer Jr.";
+  private logo: any;
   // Tittles Menu
-  titleCardsPresentation: String = "Presentation";
-  titleWork: String = "Works";
-  titleCourses: String = "Courses and Certificates";
-  titleSkills: String = "Hard & Soft Skills";
-  titleProjects: String = "Projects";
+  private titleSec1: any;
+  private titleSec2: any;
+  private titleSec3: any;
+  private titleSec4: any;
+  private titleSec5: any;
 
   displayLink: boolean = true;
   
-  constructor () {}
-
-  ngOnInit(): void {
+  constructor (
+    private _indexService: IndexService,
+  ) {
+    this._indexService.getData().subscribe(data => {
+      this.logo = data.header;
+      this.titleSec1 = data.section1.title;
+      this.titleSec2 = data.section2.title;
+      this.titleSec3 = data.section3.title;
+      this.titleSec4 = data.section4.title;
+      this.titleSec5 = data.section5.title;
+    })
 
     if(window.location.pathname == '/login'){
       this.displayLink = false;
     }
-
   }
+
+  // Logo Img
+  public get logoImg(){
+    return this.logo.logoImg;
+  }
+  public set logoImg(value: string){
+    this.logo.logoImg = value;
+  }
+
+  // Logo Title
+  public get logoTitle(){
+    return this.logo.logoTitle;
+  }
+  public set logoTitle(value: string){
+    this.logo.logoTitle = value;
+  }
+
+  // Titles Menu
+  public get titlePresentation(){
+    return this.titleSec1;
+  }
+  public get titleWork(){
+    return this.titleSec2;
+  }
+  public get titleCourses(){
+    return this.titleSec3;
+  }
+  public get titleSkills(){
+    return this.titleSec4;
+  }
+  public get titleProjects(){
+    return this.titleSec5;
+  }
+
 }

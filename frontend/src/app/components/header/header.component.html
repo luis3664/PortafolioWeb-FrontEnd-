@@ -4,7 +4,7 @@
     <!-- Logo -->
     <a  class="navbar-brand col-12 col-sm-10" routerLink="/index" 
       routerLinkActive="active" (isActiveChange)="displayLink=true">
-      <img src="{{logoImg}}" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
+      <img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
       {{logoTitle}}
     </a>
     <!-- button -->
@@ -14,7 +14,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu -->
-    <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="menu" aria-labelledby="offcanvasDarkNavbarLabel">
+    <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="menu">
       <div class="offcanvas-header">
         <!-- Button close Menu -->
         <button type="button" class="btn-close btn-close-white text-reset" 
@@ -30,7 +30,7 @@
             <a class="nav-link" routerLink="/index">Home</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#cards-presentation">{{titleCardsPresentation}}</a>
+            <a class="nav-link" href="index#cards-presentation">{{titlePresentation}}</a>
           </li>
           <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#works">{{titleWork}}</a>
