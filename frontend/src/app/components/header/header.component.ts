@@ -18,8 +18,6 @@ export class HeaderComponent {
   private titleSec4: any;
   private titleSec5: any;
 
-  logOn: boolean= true;
-
   displayLink: boolean = true;
   
   constructor (

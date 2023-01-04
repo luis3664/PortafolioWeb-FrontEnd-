@@ -1,7 +1,7 @@
 <img [src]="imgUrl" class="card-img-top img-fluid mt-2" [alt]="imgName">
     
-<div class="card-body">
-  <h5 class="card-title">{{title}}</h5>
+<div class="card-body d-flex flex-column">
+  <h4 class="card-title">{{title}}</h4>
   <p class="card-text">{{text}}</p>
-  <a [href]="courseUrl" class="btn btn-secondary">{{date}}</a>
+  <a [href]="courseUrl" class="btn btn-secondary align-self-end mt-auto mx-auto">{{date}}</a>
 </div>

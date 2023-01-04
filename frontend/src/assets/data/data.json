@@ -67,7 +67,7 @@
 		"courses": [{
 			"titleCard": "Full Stack Developer Jr.",
 			"textCard": "Web application developer with HTML, CSS, TypeScripts, Angular, MySQL and Spring Boot.",
-			"imgUrl": "...",
+			"imgUrl": "../../../assets/LogoArgentinaPrograma.jpg",
 			"imgName": "Full-Stack Course",
 			"dateCard": "15/01/2023",
 			"courseUrl": ""
