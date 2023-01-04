@@ -4,11 +4,34 @@
     <div class="col-xs-12 col-md-8 col-lg-3 mt-2">
       <p class="h5"><img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">Full Stack Developer Jr.</p>
       <p>{{text}}</p>
+      <!-- Button Editor Footer -->
+      <button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editFooter">
+        <i class="bi bi-gear-wide-connected"></i>
+      </button>
     </div>
 
     <!-- Icons -->
     <div class="text-center col-xs-12 col-md-6 col-lg-3 p-4" *ngFor="let item of icons">
-      <i class="{{item.icon}}" [attr.aria-label]="item.iconTitle" (click)="openUrl"></i>
+      <i class="{{item.icon}} btn contact" [attr.aria-label]="item.iconTitle" (click)="openUrl"></i>
     </div>
   </div>			
+</div>
+
+<!-- Modal Editor Footer -->
+<div class="modal fade" id="editFooter" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Footer Editor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark">Save</button>
+      </div>
+    </div>
+  </div>
 </div>

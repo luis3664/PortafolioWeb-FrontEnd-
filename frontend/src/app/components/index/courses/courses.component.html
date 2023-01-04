@@ -2,11 +2,36 @@
   <br>
   <br>
   <br>
-  <h2 class="text-center">{{title}}</h2>
+  <h2 class="text-center">
+    {{title}}
+    <!-- Button Editor Section 1 -->
+    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec3">
+      <i class="bi bi-gear-wide-connected"></i>
+    </button>
+  </h2>
   <div class="d-flex justify-content-around row">
     <app-course-card
       class="card text-white bg-dark m-3 col-ms-12 border-3"
       *ngFor="let card of cards; let i = index" [interaction]="i">
     </app-course-card>
+  </div>
+
+  <!-- Modal Editor Section 3 -->
+  <div class="modal fade" id="editSec3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Section 3 Editor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

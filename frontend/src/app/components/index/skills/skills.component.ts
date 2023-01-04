@@ -21,10 +21,10 @@ export class SkillsComponent {
 
   // Title Section
   public get title(): string {
-    return this.section4.titleSkill;
+    return this.section4.title;
   }
   public set title(value: string) {
-    this.section4.titleSkill = value;
+    this.section4.title = value;
   }
 
   // Topics for ngFor

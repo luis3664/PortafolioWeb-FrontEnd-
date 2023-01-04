@@ -1,18 +1,27 @@
 <!-- Navegator -->
 <nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <!-- Logo -->
-    <a  class="navbar-brand col-12 col-sm-10" routerLink="/index" 
-      routerLinkActive="active" (isActiveChange)="displayLink=true">
-      <img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
-      {{logoTitle}}
-    </a>
+    <div class="navbar-brand">
+      <!-- Logo -->
+      <a  class="navbar-brand" routerLink="/index" 
+        routerLinkActive="active" (isActiveChange)="displayLink=true">
+        <img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
+        {{logoTitle}}
+      </a>
+      <!-- Button Editor Navbar -->
+      <button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editHeader">
+        <i class="bi bi-gear-wide-connected"></i>
+      </button>
+    </div>
+    
+      
     <!-- button -->
-    <button class="navbar-toggler col-12 col-sm-1" type="button" 
+    <button class="navbar-toggler col-12 col-md-1 justify-content-md-end" type="button" 
       data-bs-toggle="offcanvas" data-bs-target="#menu" 
       aria-controls="offcanvasDarkNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <!-- Menu -->
     <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="menu">
       <div class="offcanvas-header">
@@ -22,10 +31,11 @@
           aria-label="Close">
         </button>
       </div>
+      
       <!-- Menu List -->
       <div class="offcanvas-body">
         <!-- List -->
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <ul class="navbar-nav flex-grow-1 pe-3">
           <li class="nav-item mx-auto" *ngIf="!displayLink">
             <a class="nav-link" routerLink="/index">Home</a>
           </li>
@@ -52,3 +62,22 @@
     </div>
   </div>
 </nav>
+
+<!-- Modal Editor Header -->
+<div class="modal fade" id="editHeader" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Header Editor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

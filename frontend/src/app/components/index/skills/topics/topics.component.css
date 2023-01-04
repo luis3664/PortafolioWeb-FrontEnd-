@@ -3,6 +3,18 @@ h3 {
     font-weight: 700;   
 }
 
+h3:hover {
+    color: #1e1d1d;
+}
+
+h3:active {
+    color: #ffffff;
+}
+
+h3.pointer {
+    cursor: pointer;
+}
+
 i {
     font-size: 65px;
     color: #ffffff;

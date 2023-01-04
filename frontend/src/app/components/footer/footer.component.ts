@@ -9,6 +9,7 @@ import { IndexService } from 'src/app/services/index.service';
 export class FooterComponent {
 
   private footer: any;
+  logOn: boolean= true;
 
   constructor (
     private _indexService: IndexService,

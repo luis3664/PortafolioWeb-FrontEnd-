@@ -1,33 +1,35 @@
 <!-- Title Topic -->
 <div class="row ms-5 my-3">
-    <h3>{{title}}</h3>
+    <h3 class="pointer" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+ids">{{title}}</h3>
 </div>
 
 <!-- Bar Topic -->
-<div class="row d-flex justify-content-center" *ngFor="let bar of bars">
-    <!-- Template Icon -->
-    <ng-template #iconTemplate>
-        <i [ngClass]="bar.icon"></i>
-    </ng-template>
+<div class="collapse" id="{{ids}}">
+    <div class="row d-flex justify-content-center" *ngFor="let bar of bars">
+        <!-- Template Icon -->
+        <ng-template #iconTemplate>
+            <i [ngClass]="bar.icon"></i>
+        </ng-template>
+        
+        <!-- Template SVG -->
+        <ng-template #svgTemplate>
+            <img class="ms-1 mb-1" [src]="bar.svgImg" [alt]="bar.titleBar">
+        </ng-template>
     
-    <!-- Template SVG -->
-    <ng-template #svgTemplate>
-        <img class="ms-1 mb-1" [src]="bar.svgImg" [alt]="bar.titleBar">
-    </ng-template>
-
-    <!-- Icon or SVG Container -->
-    <div class="col-12 col-md-1 d-flex justify-content-center me-3">
-        <ng-container *ngIf="bar.svg; else iconTemplate">
-            <ng-container *ngTemplateOutlet = "svgTemplate"></ng-container>
-        </ng-container>
-    </div>
-    
-    <!-- Bar -->
-    <div class="col-12 col-md-9 my-auto">
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" 
-                [attr.aria-label]="bar.titleBar" aria-valuemin="0" aria-valuemax="100" 
-                [attr.aria-valuenow]="bar.valueBar" [style.width]="bar.valueBar+'%'">
+        <!-- Icon or SVG Container -->
+        <div class="col-12 col-md-1 d-flex justify-content-center me-3">
+            <ng-container *ngIf="bar.svg; else iconTemplate">
+                <ng-container *ngTemplateOutlet = "svgTemplate"></ng-container>
+            </ng-container>
+        </div>
+        
+        <!-- Bar -->
+        <div class="col-12 col-md-9 my-auto">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" 
+                    [attr.aria-label]="bar.titleBar" aria-valuemin="0" aria-valuemax="100" 
+                    [attr.aria-valuenow]="bar.valueBar" [style.width]="bar.valueBar+'%'">
+                </div>
             </div>
         </div>
     </div>

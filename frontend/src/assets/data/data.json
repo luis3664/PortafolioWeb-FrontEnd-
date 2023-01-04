@@ -3,6 +3,7 @@
 		"logoImg": "../../../assets/logo.png",
 		"logoTitle": "Luis Lopez - Full Stack Developer Jr."
 	},
+
 	"footer": {
 		"logoImg": "../../../assets/logo.png",
 		"text": "Contact me and i will make your web application come true.",
@@ -22,6 +23,7 @@
 			}
 		]
 	},
+
 	"section1": {
 		"title": "Presentation",
 		"cards": [{
@@ -82,38 +84,45 @@
 	"section4": {
 		"title": "Hard & Soft Skills",
 		"topics": [{
+				"id": "T0",
 				"titleTopic": "Front End",
 				"bars": [{
+					"id": "T1B0",
 					"titleBar": "HTML",
 					"svg": false,
 					"icon": "bi bi-filetype-html",
 					"svgImg": "",
 					"valueBar": "92"
 				}, {
+					"id": "T1B1",
 					"titleBar": "CSS",
 					"svg": false,
 					"icon": "bi bi-filetype-css",
 					"svgImg": "",
 					"valueBar": "55"
 				}, {
+					"id": "T1B2",
 					"titleBar": "JavaScript",
 					"svg": false,
 					"icon": "bi bi-filetype-js",
 					"svgImg": "",
 					"valueBar": "60"
 				}, {
+					"id": "T1B3",
 					"titleBar": "TypeScript",
 					"svg": true,
 					"icon": "",
 					"svgImg": "../../../assets/typescriptSVG.svg",
 					"valueBar": "55"
 				}, {
+					"id": "T1B4",
 					"titleBar": "Bootstrap",
 					"svg": false,
 					"icon": "bi bi-bootstrap-fill",
 					"svgImg": "",
 					"valueBar": "75"
 				}, {
+					"id": "T1B5",
 					"titleBar": "Angular JS",
 					"svg": true,
 					"icon": "",
@@ -122,20 +131,24 @@
 				}]
 			},
 			{
+				"id": "T1",
 				"titleTopic": "Back End",
 				"bars": [{
+					"id": "T2B0",
 					"titleBar": "Java",
 					"svg": false,
 					"icon": "bi bi-filetype-java",
 					"svgImg": "",
 					"valueBar": "50"
 				}, {
+					"id": "T2B1",
 					"titleBar": "MySQL",
 					"svg": false,
 					"icon": "bi bi-filetype-sql",
 					"svgImg": "",
 					"valueBar": "60"
 				}, {
+					"id": "T2B2",
 					"titleBar": "Spring Boot",
 					"svg": true,
 					"icon": "",

@@ -3,8 +3,33 @@
     <br>
     <br>
     <!-- Title Section -->
-    <h2 class="text-center">{{title}}</h2>
+    <h2 class="text-center">
+        {{title}}
+        <!-- Button Editor Section 4 -->
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec4">
+            <i class="bi bi-gear-wide-connected"></i>
+        </button>
+    </h2>
     
+    <!-- Modal Editor Section 4 -->
+    <div class="modal fade" id="editSec4" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Section 4 Editor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
     <!-- Topics -->
     <div class="container_fluid">
         <app-topics *ngFor="let topic of topics; let i = index" [iSkills]="i"></app-topics>

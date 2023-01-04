@@ -22,6 +22,7 @@ export class TopicsComponent {
 
   // Title the Topics
   public get title(): string {
+    console.log(this.interactor);
     return this.topics[this.interactor].titleTopic;
   }
   public set title(value: string) {
@@ -34,6 +35,11 @@ export class TopicsComponent {
   }
   public set bars(value: any) {
     this.topics[this.interactor].bars = value;
+  }
+
+  // Id Topic
+  public get ids(): string {
+    return this.topics[this.interactor].id;
   }
 
 }
