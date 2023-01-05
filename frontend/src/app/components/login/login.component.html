@@ -1,21 +1,57 @@
-<article>
+<article class="py-5">
     <br>
     <br>
     <br>
-    <form>
-        <div class="mb-3">
-           <label for="exampleInputEmail1" class="form-label">Username</label>
-           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-    </form>
+    <div class="row d-flex">
+        <form class=" col-8 col-sm-7 col-md-5 col-lg-4 my-auto mx-auto" [formGroup]="singPorfolio" 
+            (ngSubmit)="onSend(singPorfolio.value)"
+        >
+            <!-- Username -->
+            <label class="form-labelfs-5 text-center">Welcome Developer.</label>
+            <div class="mb-3 form-floating">
+                <input type="username" class="form-control" id="inputUsername" placeholder=" " 
+                    formControlName="username" [class.is-valid]="singPorfolio.get('username')?.valid"
+                >
+                <label for="inputUsername" class="form-label fs-5">Username</label>
+            </div>
+            <!-- Alert Username minlength -->
+            <div class="alert alert-danger" *ngIf="singPorfolio.get('username')?.errors?.['minlength'] && singPorfolio.get('username')?.touched">
+                The Username must be at least {{singPorfolio.get('username')?.errors?.['minlength']?.requiredLength}} characters.
+            </div>
+            <!-- Alert Username maxlength -->
+            <div class="alert alert-danger" *ngIf="singPorfolio.get('username')?.errors?.['maxlength'] && singPorfolio.get('username')?.touched">
+                The Username has a maximum of {{singPorfolio.get('username')?.errors?.['maxlength']?.requiredLength}} characters.
+            </div>
+            <!-- Alert Username touched -->
+            <div class="alert alert-danger d-flex" *ngIf="singPorfolio.get('username')?.touched && !singPorfolio.get('username')?.valid">
+                It is necessary to enter a username.
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3 form-floating">
+                <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder=" " 
+                    formControlName="password" [class.is-valid]="singPorfolio.get('password')?.valid" 
+                >
+                <label for="inputPassword" class="form-label fs-5">Password</label>
+                <div id="passwordHelp" class="form-text">To enter the porfolio editor it is necessary to enter with a validated username and password.</div>
+            </div>
+            <!-- Alert Password minlength -->
+            <div class="alert alert-danger" *ngIf="singPorfolio.get('password')?.errors?.['minlength'] && singPorfolio.get('password')?.touched">
+                The Password must be at least {{singPorfolio.get('password')?.errors?.['minlength'].requiredLength}} characters.
+            </div>
+            <!-- Alert Password touched -->
+            <div class="alert alert-danger" *ngIf="singPorfolio.get('password')?.touched && !singPorfolio.get('password')?.valid">
+                It is necessary to enter a password.
+            </div>
+
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+
+            <!-- Button Submit -->
+            <button type="submit" class="btn btn-success">Loging</button>
+        </form>
+    </div>
 </article>
