@@ -9,7 +9,7 @@
         {{logoTitle}}
       </a>
       <!-- Button Editor Navbar -->
-      <button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editHeader">
+      <button *ngIf="authService.logIn" type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editHeader">
         <i class="bi bi-gear-wide-connected"></i>
       </button>
     </div>
@@ -54,8 +54,11 @@
           <li class="nav-item mx-auto" *ngIf="displayLink">
             <a class="nav-link" href="index#projects">{{titleProjects}}</a>
           </li>
-          <li class="nav-item mx-auto" (click)="displayLink=false">
+          <li *ngIf="!authService.logIn" class="nav-item mx-auto" (click)="displayLink=false">
             <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+          <li *ngIf="authService.logIn" class="nav-item mx-auto" (click)="displayLink=false">
+            <a class="nav-link" routerLink="/login">Logout</a>
           </li>
         </ul>
       </div>

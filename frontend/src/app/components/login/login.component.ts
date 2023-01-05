@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +14,16 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
   ){
     this.singPorfolio = this.formBuilder.group({
       username: ['',[Validators.required, Validators.minLength(4),Validators.maxLength(12)]],
       password: ['',[Validators.required, Validators.minLength(8)]],
     })
+  }
+  private login(){
+    this.authService.login(this.username, this.password)
   }
 
   public onSend(event: Event) {
@@ -24,6 +31,7 @@ export class LoginComponent {
     
     if (this.singPorfolio.valid){
       console.log(event);
+      this.login();
     }else{
       this.singPorfolio.markAllAsTouched();
     }

@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  uri = 'http://localhost:4200/';
-  token: any;
+  private uri = 'http://localhost:4200/';
+  private token: any;
 
   constructor(
     private http: HttpClient,

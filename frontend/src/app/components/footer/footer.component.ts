@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { IndexService } from 'src/app/services/index.service';
 
 @Component({
@@ -9,15 +10,24 @@ import { IndexService } from 'src/app/services/index.service';
 export class FooterComponent {
 
   private footer: any;
-  logOn: boolean= true;
+  // Login
+  private authentication: any;
 
   constructor (
     private _indexService: IndexService,
+    private _authService: AuthService,
   ){
+    this.authentication = this._authService;
+
     this._indexService.getData().subscribe(data => {
       this.footer = data.footer;
     })
   }
+
+  // Login
+  public get authService() {
+    return this.authentication;
+  } 
 
   // Logo Img
   public get logoImg(): string{

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { IndexService } from 'src/app/services/index.service';
 
 @Component({
@@ -10,13 +11,23 @@ export class CoursesComponent {
 
   private section3: any;
 
+  private authentication: any;
+
   constructor (
     private _indexService: IndexService,
+    private _authService: AuthService,
   ){
+    this.authentication = this._authService;
+
     this._indexService.getData().subscribe(data => {
       this.section3 = data.section3;
-    })
+    });
   }
+
+  // Login
+  public get authService() {
+    return this.authentication;
+  } 
 
   // Title Section
   public get title(): string {

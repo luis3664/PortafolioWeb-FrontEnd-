@@ -5,7 +5,7 @@
   <h2 class="text-center">
     {{title}}
     <!-- Button Editor Section 1 -->
-    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec3">
+    <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec3">
       <i class="bi bi-gear-wide-connected"></i>
     </button>
   </h2>

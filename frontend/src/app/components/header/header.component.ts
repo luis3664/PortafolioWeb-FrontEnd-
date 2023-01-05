@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { IndexService } from 'src/app/services/index.service';
 
 @Component({
@@ -17,12 +18,17 @@ export class HeaderComponent {
   private titleSec3: any;
   private titleSec4: any;
   private titleSec5: any;
+  // Login
+  private authentication: any;
 
   displayLink: boolean = true;
   
   constructor (
     private _indexService: IndexService,
+    private _authService: AuthService,
   ) {
+    this.authentication = this._authService;
+
     this._indexService.getData().subscribe(data => {
       this.logo = data.header;
       this.titleSec1 = data.section1.title;
@@ -36,6 +42,11 @@ export class HeaderComponent {
       this.displayLink = false;
     }
   }
+
+  // Login
+  public get authService() {
+    return this.authentication;
+  } 
 
   // Logo Img
   public get logoImg(){
