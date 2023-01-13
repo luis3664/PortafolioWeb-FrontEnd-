@@ -24,6 +24,10 @@ import { Page404Component } from './components/page404/page404.component';
 // Services
 import { IndexService } from './services/index.service';
 import { ProjectComponent } from './components/index/projects/project/project.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
 
 
 @NgModule({
@@ -51,6 +55,9 @@ import { ProjectComponent } from './components/index/projects/project/project.co
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
   ],
   providers: [
     IndexService
