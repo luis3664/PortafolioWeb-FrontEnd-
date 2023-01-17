@@ -6,7 +6,7 @@
   <!--Title Section-->
   <h2 class="text-center">{{titleSection}}
     <!-- Button Editor Section 1 -->
-    <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec1">
+    <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec1">
       <i class="bi bi-gear-wide-connected"></i>
     </button>
   </h2>
@@ -20,11 +20,16 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <form [formGroup]="formModule">
+            <div class="col-auto">
+              <label for="titleSection" class="form_label">Title Section</label>
+              <input id="titleSection" type="text" class="form-control" formControlName="title" [placeholder]="">
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-dark">Save</button>
+          <button type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
         </div>
       </div>
     </div>

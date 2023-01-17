@@ -28,6 +28,8 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { DataService } from './services/data.service';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -56,11 +58,13 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
     FormsModule,
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
   ],
   providers: [
-    IndexService
+    IndexService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })

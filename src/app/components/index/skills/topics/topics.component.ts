@@ -22,7 +22,6 @@ export class TopicsComponent {
 
   // Title the Topics
   public get title(): string {
-    console.log(this.interactor);
     return this.topics[this.interactor].titleTopic;
   }
   public set title(value: string) {
