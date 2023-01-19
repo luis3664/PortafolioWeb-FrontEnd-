@@ -71,7 +71,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Header Editor</h5>
+        <h5 class="modal-title">Header Editor</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body align-self-auto">
@@ -84,8 +84,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editLogo" data-bs-dismiss="modal">Change Logo</button>
-        <button type="button" class="btn btn-dark" (click)="updateLogoTitle()">Save</button>
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="updateLogoTitle()">Save & Close</button>
+        <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" (click)="updateLogoTitle()">Save</button>
       </div>
     </div>
   </div>
@@ -96,14 +95,14 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Change Header logo</h5>
+        <h5 class="modal-title">Change Header logo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body align-self-auto">
         <form [formGroup]="formLogo" class="form-group">
           <div class="col-auto">
             <label for="currentId" class="form-label">Select Logo</label>
-            <select class="form-select" formControlName="currentId" name="currentId">
+            <select id="currentId" class="form-select" formControlName="currentId" name="currentId">
               <option [value]="i" *ngFor="let logo of logosArray; let i = index">
                 {{logo.name}}
               </option>
@@ -126,7 +125,7 @@
             </form>
           </div>
           <div id="editForm" class="collapse">
-            <form formGroupName="editLogo">
+            <form id="editLogo" formGroupName="editLogo">
               <div class="col-auto">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" formControlName="name" />
@@ -142,8 +141,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editHeader" data-bs-dismiss="modal">Edit Text</button>
-        <button type="button" class="btn btn-dark" (click)="updateLogo()">Save Selection</button>
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="updateLogo()">Save & Close</button>
+        <button [disabled]="formLogo.invalid" type="button" class="btn btn-dark" (click)="updateLogo()">Save Selection</button>
       </div>
     </div>
   </div>

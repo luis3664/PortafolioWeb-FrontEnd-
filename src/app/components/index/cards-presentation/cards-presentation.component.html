@@ -11,25 +11,144 @@
     </button>
   </h2>
   
-  <!-- Modal Editor Section 1 -->
+  <!-- Modal Editor Title Section 1 -->
   <div class="modal fade" id="editSec1" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content bg-dark text-white">
+        <!-- Modal Title -->
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Section 1 Editor</h5>
+          <h5 class="modal-title">Section 1 Editor</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <!-- Modal Body -->
         <div class="modal-body">
           <form [formGroup]="formModule">
             <div class="col-auto">
               <label for="titleSection" class="form_label">Title Section</label>
-              <input id="titleSection" type="text" class="form-control" formControlName="title" [placeholder]="">
+              <input id="titleSection" type="text" class="form-control" formControlName="title">
             </div>
           </form>
         </div>
+        <!-- Modal Footer -->
         <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editCardSec1" data-bs-dismiss="modal">Edit Cards</button>
+          <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editor Cards Section 1 -->
+  <div class="modal fade" id="editCardSec1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <!-- Modal Title -->
+        <div class="modal-header">
+          <h5 class="modal-title">Cards Section 1 Editor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form [formGroup]="formCards">
+            <div class="col-auto">
+              <label for="selectCard" class="form_label">Select Card</label>
+              <select id="selectCard" class="form-select" formControlName="select" name="select">
+                <option [value]="i" *ngFor="let card of cards; let i = index">
+                  {{card.title}}
+                </option>
+              </select>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm">Add Card</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteCard()">Delete Selection</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="setEditCard()">Edit Text</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2 dropdown-toggle" data-bs-toggle="dropdown">Edit Image</button>
+                <div class="dropdown-menu bg-dark text-white">
+                  <button class="btn btn-dark m-0" data-bs-toggle="collapse" data-bs-target="#addImg">Add Image</button>
+                  <button class="btn btn-dark m-0" data-bs-toggle="collapse" data-bs-target="#editImg">Edit Image</button>
+                </div>
+              </div>
+            </div>
+            <!-- Text Editor -->
+            <div id="addForm" class="collapse">
+              <form formGroupName="addCard">
+                <div class="col-auto">
+                  <label for="title">Title New Card</label>
+                  <input type="text" class="form-control" id="title" formControlName="title"/>
+                </div>
+                <div formArrayName="textBody" *ngFor="let item of newTexts; let i = index">
+                  <form [formGroupName]="i">
+                    <div class="col-auto">
+                      <label for="text">Text Body Line {{i+1}}</label>
+                      <input type="text" class="form-control" id="text" formControlName="text"/>
+                    </div>
+                  </form>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addLineText()">Add Line</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLineText()">Delete Line</button>
+                <div class="col-auto">
+                  <label for="text">Text End Card</label>
+                  <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm" (click)="addCard()">Save New Card</button>
+              </form>
+              <!-- <form></form> -->
+            </div>
+            <div id="editForm" class="collapse">
+              <form formGroupName="editCard">
+                <div class="col-auto">
+                  <label for="title">Title Card</label>
+                  <input type="text" class="form-control" id="title" formControlName="title"/>
+                </div>
+                <div formArrayName="textBody" *ngFor="let item of editTexts; let i = index">
+                  <form [formGroupName]="i">
+                    <div class="col-auto">
+                      <label for="text">Text Body Line {{i+1}}</label>
+                      <input type="text" class="form-control" id="text" formControlName="text"/>
+                    </div>
+                  </form>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addLineEdit()">Add Line</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLineEdit()">Delete Line</button>
+                <div class="col-auto">
+                  <label for="text">Text End Card</label>
+                  <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="editCard()">Save Card</button>
+              </form>
+            </div>
+            <!-- Img Editor -->
+            <div id="addImg" class="collapse">
+              <form formGroupName="addImg">
+                <div class="col-auto">
+                  <label for="name">Name New Image</label>
+                  <input type="text" class="form-control" id="name" formControlName="name"/>
+                </div>
+                <div class="col-auto">
+                  <label for="url">URL New Image</label>
+                  <input type="text" class="form-control" id="url" formControlName="url"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addImg">Save New Img</button>
+              </form>
+            </div>
+            <div id="editImg" class="collapse">
+              <form formGroupName="editImg">
+                <div class="col-auto">
+                  <label for="name">Name Image</label>
+                  <input type="text" class="form-control" id="name" formControlName="name"/>
+                </div>
+                <div class="col-auto">
+                  <label for="url">URL Image</label>
+                  <input type="text" class="form-control" id="url" formControlName="url"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editImg">Save Card</button>
+              </form>
+            </div>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec1" data-bs-dismiss="modal">Edit Title Section</button>
           <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
         </div>
       </div>
     </div>

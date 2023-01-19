@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Header } from 'src/app/interfaces/Header.interface';
-import { ImgLogo } from 'src/app/interfaces/ImgLogo';
-import { Logos } from 'src/app/interfaces/Logos';
+import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
+import { Logos } from 'src/app/interfaces/Logos.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { IndexService } from 'src/app/services/index.service';
@@ -19,10 +19,10 @@ export class HeaderComponent implements OnInit{
   private header!: Header;
   private imgLogo!: ImgLogo;
   private logoCurrent!: any;
-  private selectEdit!: number
+  private selectEdit!: number;
   
   // Initializers
-  private textHeader: any;
+  private textHeader!: string;
   private logo!: Logos;
   private logos!: Logos[];
   private titleSec1: any;
@@ -91,12 +91,12 @@ export class HeaderComponent implements OnInit{
   formLogo = new FormGroup({
     currentId: new FormControl(0, Validators.required),
     addLogo: new FormGroup({
-      name: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
+      name: new FormControl(''),
+      url: new FormControl(''),
     }),
     editLogo: new FormGroup({
-      name: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
+      name: new FormControl(''),
+      url: new FormControl(''),
     }),
   })
 
@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit{
     return this._dataService.readHeader();
   }
   // Set Current Header
-  public setCurrentHeader(header: any){
+  private setCurrentHeader(header: any){
     this.formModule.patchValue(header);
   }
 
@@ -135,7 +135,6 @@ export class HeaderComponent implements OnInit{
   }
 
   public editLogo(){
-
     let ref = this.formLogo.controls.editLogo.getRawValue();
     this.imgLogo.logos[this.selectEdit].name = ref.name;
     this.imgLogo.logos[this.selectEdit].url = ref.url;
@@ -161,6 +160,9 @@ export class HeaderComponent implements OnInit{
       this.imgLogo.logos.splice(index, 1);
       if(index < this.imgLogo.currentId){
         this.imgLogo.currentId -= 1;
+      }
+      if(this.imgLogo.currentId == index){
+        this.imgLogo.currentId = 0;
       }
       this._dataService.updateLogoImg(this.imgLogo);
     }

@@ -1,4 +1,4 @@
-import { Logos } from "./Logos";
+import { Logos } from "./Logos.interface";
 
 export interface ImgLogo {
     currentId: number,
