@@ -86,13 +86,14 @@ export class DataService {
     let logoDocRef = doc(this.firestore, 'imgLogo/TazKzQxYWxnRoXqzxwlJ');
     return updateDoc(logoDocRef, imgLogo);
   }
-  
-  // ------------------------------- Section 1 -------------------------------
-  public readSec1(): Observable<Section1[]>{
+
+  // ------------------------------- Sections --------------------------------
+  public readSections(){
     let sec1Ref = collection(this.firestore, 'sections');
     return collectionData(sec1Ref) as Observable<Section1[]>;
   }
   
+  // ------------------------------- Section 1 -------------------------------
   public updateSec1(sec1: any){
     let sec1DocRef = doc(this.firestore, 'sections/1');
     return updateDoc(sec1DocRef, sec1);

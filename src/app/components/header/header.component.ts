@@ -2,10 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Header } from 'src/app/interfaces/Header.interface';
 import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
-import { Logos } from 'src/app/interfaces/Logos.interface';
+import { Logo } from 'src/app/interfaces/Logo.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
-import { IndexService } from 'src/app/services/index.service';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +22,8 @@ export class HeaderComponent implements OnInit{
   
   // Initializers
   private textHeader!: string;
-  private logo!: Logos;
-  private logos!: Logos[];
+  private logo!: Logo;
+  private logos!: Logo[];
   private titleSec1: any;
   private titleSec2: any;
   private titleSec3: any;
@@ -37,7 +36,6 @@ export class HeaderComponent implements OnInit{
   // Injection
   private _dataService = inject(DataService);
   private _authService = inject(AuthService);
-  private _indexService = inject(IndexService);
   
 
   displayLink: boolean = true;
@@ -45,14 +43,6 @@ export class HeaderComponent implements OnInit{
   constructor () {
 
     this.authentication = this._authService;
-
-    this._indexService.getData().subscribe(data => {
-      this.titleSec1 = data.section1.title;
-      this.titleSec2 = data.section2.title;
-      this.titleSec3 = data.section3.title;
-      this.titleSec4 = data.section4.title;
-      this.titleSec5 = data.section5.title;
-    })
 
   }
   
@@ -76,6 +66,16 @@ export class HeaderComponent implements OnInit{
 
       // Initializers
       this.textHeader = this.header.text
+    })
+
+    // Menu
+    this._dataService.readSections().subscribe(titles => {
+      // Initializers
+      this.titleSec1 = titles[0].title;
+      this.titleSec2 = titles[1].title;
+      this.titleSec3 = titles[2].title;
+      this.titleSec4 = titles[3].title;
+      this.titleSec5 = titles[4].title;
     })
 
     // Identificator pathname
@@ -123,7 +123,7 @@ export class HeaderComponent implements OnInit{
   }
 
   public addLogo(){
-    let logo: Logos = this.formLogo.getRawValue().addLogo;
+    let logo: Logo = this.formLogo.getRawValue().addLogo;
     this.imgLogo.logos.push(logo);
     this._dataService.updateLogoImg(this.imgLogo);
   }

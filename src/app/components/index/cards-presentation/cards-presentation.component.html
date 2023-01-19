@@ -4,7 +4,7 @@
   <br>
   <br>
   <!--Title Section-->
-  <h2 class="text-center">{{titleSection}}
+  <h2 class="text-center mt-4 mt-md-0">{{titleSection}}
     <!-- Button Editor Section 1 -->
     <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec1">
       <i class="bi bi-gear-wide-connected"></i>
@@ -44,7 +44,7 @@
       <div class="modal-content bg-dark text-white">
         <!-- Modal Title -->
         <div class="modal-header">
-          <h5 class="modal-title">Cards Section 1 Editor</h5>
+          <h5 class="modal-title">Section 1 Cards Editor</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Modal Body -->
@@ -60,15 +60,10 @@
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm">Add Card</button>
                 <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteCard()">Delete Selection</button>
-                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="setEditCard()">Edit Text</button>
-                <button type="button" class="btn btn-dark mt-2 ms-2 dropdown-toggle" data-bs-toggle="dropdown">Edit Image</button>
-                <div class="dropdown-menu bg-dark text-white">
-                  <button class="btn btn-dark m-0" data-bs-toggle="collapse" data-bs-target="#addImg">Add Image</button>
-                  <button class="btn btn-dark m-0" data-bs-toggle="collapse" data-bs-target="#editImg">Edit Image</button>
-                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="setEditCard()">Edit Selection</button>
               </div>
             </div>
-            <!-- Text Editor -->
+            <!-- Card Editor -->
             <div id="addForm" class="collapse">
               <form formGroupName="addCard">
                 <div class="col-auto">
@@ -89,9 +84,22 @@
                   <label for="text">Text End Card</label>
                   <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
                 </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm" (click)="addCard()">Save New Card</button>
+                <div formArrayName="img" *ngFor="let img of newImg; let i= index">
+                  <form [formGroupName]="i">
+                    <div class="col-auto">
+                      <label for="name">New Image Name Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="name" formControlName="name"/>
+                    </div>
+                    <div class="col-auto">
+                      <label for="url">New URL Image Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="url" formControlName="url"/>
+                    </div>
+                  </form>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addImgAdd()">Add Img</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteImgAdd()">Delete Img</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2 d-block" data-bs-toggle="collapse" data-bs-target="#addForm" (click)="addCard()">Save New Card</button>
               </form>
-              <!-- <form></form> -->
             </div>
             <div id="editForm" class="collapse">
               <form formGroupName="editCard">
@@ -113,34 +121,21 @@
                   <label for="text">Text End Card</label>
                   <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
                 </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="editCard()">Save Card</button>
-              </form>
-            </div>
-            <!-- Img Editor -->
-            <div id="addImg" class="collapse">
-              <form formGroupName="addImg">
-                <div class="col-auto">
-                  <label for="name">Name New Image</label>
-                  <input type="text" class="form-control" id="name" formControlName="name"/>
+                <div formArrayName="img" *ngFor="let img of editImg; let i= index">
+                  <form [formGroupName]="i">
+                    <div class="col-auto">
+                      <label for="name">New Image Name Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="name" formControlName="name"/>
+                    </div>
+                    <div class="col-auto">
+                      <label for="url">New URL Image Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="url" formControlName="url"/>
+                    </div>
+                  </form>
                 </div>
-                <div class="col-auto">
-                  <label for="url">URL New Image</label>
-                  <input type="text" class="form-control" id="url" formControlName="url"/>
-                </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addImg">Save New Img</button>
-              </form>
-            </div>
-            <div id="editImg" class="collapse">
-              <form formGroupName="editImg">
-                <div class="col-auto">
-                  <label for="name">Name Image</label>
-                  <input type="text" class="form-control" id="name" formControlName="name"/>
-                </div>
-                <div class="col-auto">
-                  <label for="url">URL Image</label>
-                  <input type="text" class="form-control" id="url" formControlName="url"/>
-                </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editImg">Save Card</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addImgEdit()">Add Img</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteImgEdit()">Delete Img</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2 d-block" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="editCard()">Save Card</button>
               </form>
             </div>
           </form>

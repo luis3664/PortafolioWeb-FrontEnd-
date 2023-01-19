@@ -16,7 +16,6 @@ export class CardsPresentationComponent implements OnInit {
 
   // Items
   private section1!: Section1;
-  private selectEdit!: number
 
   // Initializers
   private title!: string;
@@ -34,7 +33,7 @@ export class CardsPresentationComponent implements OnInit {
   }
   
   ngOnInit() {
-    this._dataService.readSec1().subscribe(res =>{
+    this._dataService.readSections().subscribe(res =>{
       // items
       this.section1 = res[0];
       this.setCurrentTitle(res[0]);
@@ -56,21 +55,18 @@ export class CardsPresentationComponent implements OnInit {
       textBody: new FormArray([new FormGroup({
         text: new FormControl()
       })]),
-      textEnd: new FormControl()
+      textEnd: new FormControl(),
+      img: new FormArray([new FormGroup({
+        name: new FormControl(),
+        url: new FormControl(),
+      })])
     }),
     editCard: new FormGroup({
       title: new FormControl(),
       textBody: new FormArray([]),
-      textEnd: new FormControl()
+      textEnd: new FormControl(),
+      img: new FormArray([])
     }),
-    addImg: new FormGroup({
-      name: new FormControl(),
-      url: new FormControl()
-    }),
-    editImg: new FormGroup({
-      name: new FormControl(),
-      url: new FormControl()
-    })
   })
 
   // Login
@@ -103,6 +99,19 @@ export class CardsPresentationComponent implements OnInit {
     this._dataService.updateSec1(this.section1);
   }
 
+  public addImgAdd() {
+    let ref = (this.formCards.controls.addCard.get('img') as FormArray).length;
+    if(ref < 3){
+      (this.formCards.controls.addCard.get('img') as FormArray).push(
+        new FormGroup({
+          name: new FormControl(),
+          url: new FormControl()
+        })
+      );
+    }else{
+      alert("Maximum 3 lines");
+    }
+  }
   public addLineText() {
     let ref = (this.formCards.controls.addCard.get('textBody') as FormArray).length;
     if(ref < 5){
@@ -125,13 +134,26 @@ export class CardsPresentationComponent implements OnInit {
     }
   }
 
+  public deleteImgAdd() {
+    let ref = (this.formCards.controls.addCard.get('img') as FormArray).length - 1;
+    if( ref > 0){
+      (this.formCards.controls.addCard.get('img') as FormArray).removeAt(ref);
+    }else{
+      alert("At least one line is required");
+    }
+  }
+
   public get newTexts() {
     return (this.formCards.controls.addCard.get('textBody') as FormArray).controls;
+  }
+  public get newImg() {
+    return (this.formCards.controls.addCard.get('img') as FormArray).controls;
   }
 
   // Cards Section 1 Edit  
   public setEditCard(){
     (this.formCards.controls.editCard.get('textBody') as FormArray).clear();
+    (this.formCards.controls.editCard.get('img') as FormArray).clear();
     let ref = this.formCards.getRawValue().select as number;
     let select = this.section1.cards[ref];
     this.formCards.controls.editCard.controls.title.patchValue(select.title);
@@ -142,6 +164,13 @@ export class CardsPresentationComponent implements OnInit {
         text: new FormControl(res.text),
       });
       (this.formCards.controls.editCard.get('textBody') as FormArray).push(editForm);
+    });
+    select.img.map((res: any) => {
+      let editForm = new FormGroup({
+        name: new FormControl(res.name),
+        url: new FormControl(res.url),
+      });
+      (this.formCards.controls.editCard.get('img') as FormArray).push(editForm);
     });
   }
 
@@ -164,6 +193,20 @@ export class CardsPresentationComponent implements OnInit {
     }
   }
 
+  public addImgEdit() {
+    let ref = (this.formCards.controls.editCard.get('img') as FormArray).length;
+    if(ref < 3){
+      (this.formCards.controls.editCard.get('img') as FormArray).push(
+        new FormGroup({
+          name: new FormControl(),
+          url: new FormControl()
+        })
+      );
+    }else{
+      alert("Maximum 3 image");
+    }
+  }
+
   public deleteLineEdit() {
     let ref = (this.formCards.controls.editCard.get('textBody') as FormArray).length - 1;
     if( ref > 0){
@@ -173,18 +216,31 @@ export class CardsPresentationComponent implements OnInit {
     }
   }
 
+  public deleteImgEdit() {
+    let ref = (this.formCards.controls.editCard.get('img') as FormArray).length - 1;
+    if( ref > 0){
+      (this.formCards.controls.editCard.get('img') as FormArray).removeAt(ref);
+    }else{
+      alert("At least one line is required");
+    }
+  }
+  
   public get editTexts() {
     return (this.formCards.controls.editCard.get('textBody') as FormArray).controls;
+  }
+  public get editImg() {
+    return (this.formCards.controls.editCard.get('img') as FormArray).controls;
   }
 
   // Cards Section 1 Delete
   public deleteCard() {
     let index = this.formCards.controls.select.getRawValue() as number;
-    this.section1.cards.splice(index, 1);
-    this._dataService.updateLogoImg(this.section1);
+    if(index <= 1){
+      alert("To maintain the aesthetics of the page, this card cannot be deleted.")
+    }else{
+      this.section1.cards.splice(index, 1);
+      this._dataService.updateSec1(this.section1);
+    }
   }
-
-  
-  // Cards Section 1 Imagen Card
 
 }

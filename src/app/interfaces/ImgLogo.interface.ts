@@ -1,6 +1,6 @@
-import { Logos } from "./Logos.interface";
+import { Logo } from "./Logo.interface";
 
 export interface ImgLogo {
     currentId: number,
-    logos: Array<Logos>;
+    logos: Array<Logo>;
 }
