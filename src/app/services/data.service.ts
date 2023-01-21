@@ -103,6 +103,25 @@ export class DataService {
   public updateSec2(sec2: any){
     let sec2DocRef = doc(this.firestore, 'sections/2');
     return updateDoc(sec2DocRef, sec2);
+  
+  }
+
+  // ------------------------------- Section 3 -------------------------------
+  public updateSec3(sec3: any){
+    let sec3DocRef = doc(this.firestore, 'sections/3');
+    return updateDoc(sec3DocRef, sec3);
+  }
+
+  // ------------------------------- Section 4 -------------------------------
+  public updateSec4(sec4: any){
+    let sec4DocRef = doc(this.firestore, 'sections/4');
+    return updateDoc(sec4DocRef, sec4);
+  }
+
+  // ------------------------------- Section 5 -------------------------------
+  public updateSec5(sec5: any){
+    let sec5DocRef = doc(this.firestore, 'sections/5');
+    return updateDoc(sec5DocRef, sec5);
   }
   
 }

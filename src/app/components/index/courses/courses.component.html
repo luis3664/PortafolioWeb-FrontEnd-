@@ -5,7 +5,7 @@
   <h2 class="text-center mt-4 mt-md-0">
     {{title}}
     <!-- Button Editor Section 1 -->
-    <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec3">
+    <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec3">
       <i class="bi bi-gear-wide-connected"></i>
     </button>
   </h2>
@@ -20,16 +20,126 @@
   <div class="modal fade" id="editSec3" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content bg-dark text-white">
+        <!-- Modal Title -->
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Section 3 Editor</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <!-- Modal Body -->
         <div class="modal-body">
-          ...
+          <form [formGroup]="formTitle">
+            <div class="col-auto">
+              <label for="titleSection" class="form_label">Title Section</label>
+              <input id="titleSection" type="text" class="form-control" formControlName="title">
+            </div>
+          </form>
         </div>
+        <!-- Modal Footer -->
         <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editCardsSec3" data-bs-dismiss="modal">Edit Cards</button>
+          <button [disabled]="formTitle.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editor Cards Section 3 -->
+  <div class="modal fade" id="editCardsSec3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <!-- Modal Title -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Section 3 Cards Editor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form [formGroup]="formCards">
+            <div class="col-auto">
+              <label for="selectCardSec3" class="form_label">Select Card</label>
+              <select id="selectCardSec3" class="form-select" formControlName="select" name="select">
+                <option [value]="i" *ngFor="let card of cards; let i = index">
+                  {{card.title}}
+                </option>
+              </select>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addCardSec3">Add Card</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteCard()">Delete Selection</button>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editCardSec3" (click)="setEditCard()">Edit Selection</button>
+              </div>
+            </div>
+            <div id="addCardSec3" class="collapse">
+              <form formGroupName="addCard">
+                <div class="col-auto">
+                  <label for="title">Title New Card</label>
+                  <input type="text" class="form-control" id="title" formControlName="title"/>
+                </div>
+                <div class="col-auto">
+                  <label for="text">Text Body</label>
+                  <input type="text" class="form-control" id="text" formControlName="text"/>
+                </div>
+                <div class="col-auto">
+                  <label for="date">Date</label>
+                  <input type="text" class="form-control" id="date" formControlName="date"/>
+                </div>
+                <div class="col-auto">
+                  <label for="imgName">New Image Name</label>
+                  <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                </div>
+                <div class="col-auto">
+                  <label for="imgUrl">New Image URL</label>
+                  <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                </div>
+                <div class="col-auto">
+                  <label for="certificateTitle">Certificate Title</label>
+                  <input type="text" class="form-control" id="certificateTitle" formControlName="certificateTitle"/>
+                </div>
+                <div class="col-auto">
+                  <label for="certificateUrl">URL of the Certificate Image</label>
+                  <input type="text" class="form-control" id="certificateUrl" formControlName="certificateUrl"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2 d-block" data-bs-toggle="collapse" data-bs-target="#addCardSec3" (click)="addCard()">Save New Card</button>
+              </form>
+            </div>
+            <div id="editCardSec3" class="collapse">
+              <form formGroupName="editCard">
+                <div class="col-auto">
+                  <label for="title">Title Card</label>
+                  <input type="text" class="form-control" id="title" formControlName="title"/>
+                </div>
+                <div class="col-auto">
+                  <label for="text">Text Body</label>
+                  <input type="text" class="form-control" id="text" formControlName="text"/>
+                </div>
+                <div class="col-auto">
+                  <label for="date">Date</label>
+                  <input type="text" class="form-control" id="date" formControlName="date"/>
+                </div>
+                <div class="col-auto">
+                  <label for="imgName">Image Name</label>
+                  <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                </div>
+                <div class="col-auto">
+                  <label for="imgUrl">Image URL</label>
+                  <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                </div>
+                <div class="col-auto">
+                  <label for="certificateTitle">Certificate Title</label>
+                  <input type="text" class="form-control" id="certificateTitle" formControlName="certificateTitle"/>
+                </div>
+                <div class="col-auto">
+                  <label for="certificateUrl">URL of the Certificate Image</label>
+                  <input type="text" class="form-control" id="certificateUrl" formControlName="certificateUrl"/>
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2 d-block" data-bs-toggle="collapse" data-bs-target="#editCardSec3" (click)="editCard()">Save Card</button>
+              </form>
+            </div>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec3" data-bs-dismiss="modal">Edit Title Section</button>
           <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-dark">Save</button>
         </div>
       </div>
     </div>

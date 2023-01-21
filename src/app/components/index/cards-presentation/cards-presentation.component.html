@@ -81,7 +81,7 @@
                 <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addLineText()">Add Line</button>
                 <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLineText()">Delete Line</button>
                 <div class="col-auto">
-                  <label for="text">Text End Card</label>
+                  <label for="textEnd">Text End Card</label>
                   <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
                 </div>
                 <div formArrayName="img" *ngFor="let img of newImg; let i= index">
