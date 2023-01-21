@@ -6,7 +6,7 @@
     <h2 class="text-center mt-4 mt-md-0">
         {{title}}
         <!-- Button Editor Section 4 -->
-        <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec4">
+        <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec4">
             <i class="bi bi-gear-wide-connected"></i>
         </button>
     </h2>
@@ -15,16 +15,168 @@
     <div class="modal fade" id="editSec4" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
+                <!-- Modal Header -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Section 4 Editor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!-- Modal Body -->
                 <div class="modal-body">
-                    ...
+                    <form [formGroup]="formTitle">
+                        <div class="col-auto">
+                            <label for="titleSection" class="form_label">Title Section</label>
+                            <input id="titleSection" type="text" class="form-control" formControlName="title">
+                        </div>
+                    </form>
                 </div>
+                <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-dark">Save</button>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editTopicsSec4" data-bs-dismiss="modal">Edit Topics</button>
+                    <button type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editor Topics Section 4 -->
+    <div class="modal fade" id="editTopicsSec4" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Topics Section 4 Editor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form [formGroup]="formTopics">
+                        <div class="col-auto">
+                            <label for="selectTopicSec4" class="form_label">Select Card</label>
+                            <select id="selectTopicSec4" class="form-select" formControlName="select" name="select">
+                              <option [value]="i" *ngFor="let topic of topics; let i = index">
+                                {{topic.title}}
+                              </option>
+                            </select>
+                            <div class="btn-group" role="group">
+                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addTopicSec4">Add Topic</button>
+                              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteTopic()">Delete Selection</button>
+                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editTopicSec4" (click)="setEditTopic()">Edit Selection</button>
+                            </div>
+                        </div>
+                        <div id="addTopicSec4" class="collapse">
+                            <form formGroupName="addTopic">
+                                <div class="col-auto">
+                                    <label for="title" class="form_label">Title New Topic</label>
+                                    <input id="title" type="text" class="form-control" formControlName="title">
+                                    <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addTopicSec4" (click)="addTopic()">Add New Topic</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="editTopicSec4" class="collapse">
+                            <form formGroupName="editTopic">
+                                <div class="col-auto">
+                                    <label for="title" class="form_label">Title New Topic</label>
+                                    <input id="title" type="text" class="form-control" formControlName="title">
+                                    <button type="button" class="btn btn-dark mt-2 ms-2" (click)="editTopic()">Save Topic</button>
+                                </div>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec4" data-bs-dismiss="modal">Edit Title Section</button>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editBarsSec4" data-bs-dismiss="modal" (click)="setBarsOfTopic()">Edit Bars of the Topic Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editor Bars of Topic of Section 4 -->
+    <div class="modal fade" id="editBarsSec4" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bars Editor of Topic "{{titleTopic}}" of Section 4</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form [formGroup]="formBars">
+                        <div class="col-auto">
+                            <label for="selectBarSec4" class="form_label">Select Bar</label>
+                            <select id="selectBarSec4" class="form-select" formControlName="select" name="select">
+                              <option [value]="i" *ngFor="let bar of bars; let i = index">
+                                {{bar.name}}
+                              </option>
+                            </select>
+                            <div class="btn-group" role="group">
+                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addBarSec4">Add Bar</button>
+                              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteBar()">Delete Selection</button>
+                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editBarSec4" (click)="setEditBar()">Edit Selection</button>
+                            </div>
+                        </div>
+                        <div id="addBarSec4" class="collapse">
+                            <form formGroupName="addBar">
+                                <div class="col-auto">
+                                    <label for="name" class="form_label">Name Bar</label>
+                                    <input id="name" type="text" class="form-control" formControlName="name">
+                                </div>
+                                <div class="col-auto mt-2">
+                                    <label for="svg" class="form_label">Is SVG Image?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectAdd">
+                                    </div>
+                                </div>
+                                <div class="col-auto" *ngIf="!svgSelectAdd">
+                                    <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                                    <input id="icon" type="text" class="form-control" formControlName="icon">
+                                </div>
+                                <div class="col-auto" *ngIf="svgSelectAdd">
+                                    <label for="url" class="form_label">URL of SVG Image</label>
+                                    <input id="url" type="text" class="form-control" formControlName="url">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="valueBar" class="form_label">Skill Value 0-100</label>
+                                    <input id="valueBar" type="number" class="form-control" formControlName="valueBar">
+                                </div>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addBarSec4" (click)="addBar()">Add New Bar</button>
+                            </form>
+                        </div>
+                        <div id="editBarSec4" class="collapse">
+                            <form formGroupName="editBar">
+                                <div class="col-auto">
+                                    <label for="name" class="form_label">Name Bar</label>
+                                    <input id="name" type="text" class="form-control" formControlName="name">
+                                </div>
+                                <div class="col-auto mt-2">
+                                    <label for="svg" class="form_label">Is SVG Image?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectEdit">
+                                    </div>
+                                </div>
+                                <div class="col-auto" *ngIf="!svgSelectEdit">
+                                    <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                                    <input id="icon" type="text" class="form-control" formControlName="icon">
+                                </div>
+                                <div class="col-auto" *ngIf="svgSelectEdit">
+                                    <label for="url" class="form_label">URL of SVG Image</label>
+                                    <input id="url" type="text" class="form-control" formControlName="url">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="valueBar" class="form_label">Skill Value 0-100</label>
+                                    <input id="valueBar" type="number" class="form-control" formControlName="valueBar">
+                                </div>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editBarSec4" (click)="editBar()">Save Bar</button>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editTopicsSec4" data-bs-dismiss="modal">Go Back to Select Another Topic</button>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec4" data-bs-dismiss="modal">Edit Title Section</button>
                 </div>
             </div>
         </div>

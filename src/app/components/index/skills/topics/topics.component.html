@@ -13,7 +13,7 @@
         
         <!-- Template SVG -->
         <ng-template #svgTemplate>
-            <img class="ms-1 mb-1" [src]="bar.svgImg" [alt]="bar.titleBar">
+            <img class="ms-1 mb-1" [src]="bar.url" [alt]="bar.name">
         </ng-template>
     
         <!-- Icon or SVG Container -->
@@ -27,7 +27,7 @@
         <div class="col-12 col-md-9 my-auto">
             <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" 
-                    [attr.aria-label]="bar.titleBar" aria-valuemin="0" aria-valuemax="100" 
+                    [attr.aria-label]="bar.name" aria-valuemin="0" aria-valuemax="100" 
                     [attr.aria-valuenow]="bar.valueBar" [style.width]="bar.valueBar+'%'">
                 </div>
             </div>

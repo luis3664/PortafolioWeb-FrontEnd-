@@ -1,5 +1,9 @@
 import { HtmlParser } from '@angular/compiler';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { Bar } from 'src/app/interfaces/Bar.interface';
+import { Section4 } from 'src/app/interfaces/Section4.interface';
+import { TopicSec4 } from 'src/app/interfaces/TopicSec4.interface';
+import { DataService } from 'src/app/services/data.service';
 import { IndexService } from 'src/app/services/index.service';
 
 @Component({
@@ -7,38 +11,50 @@ import { IndexService } from 'src/app/services/index.service';
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.css']
 })
-export class TopicsComponent {
+export class TopicsComponent implements OnInit {
   
   @Input('iSkills') interactor: any;
-  private topics: any;
 
-  constructor (
-    private _indexService: IndexService,
-  ){
-    this._indexService.getData().subscribe(data => {
-      this.topics = data.section4.topics;
+  // Items
+  private section4!: Section4;
+  
+  // Initializers
+  private titleTopic!: string;
+  private barsSec4!: Bar[];
+  private id: any;
+
+  // Inject
+  private _dataService = inject(DataService);
+
+
+  constructor (){
+  }
+
+  ngOnInit(): void {
+    this._dataService.readSections().subscribe(res =>{
+      // Items
+      this.section4 = res[3];
+      
+      // Initializers
+      this.titleTopic = this.section4.topics[this.interactor].title as string;
+      this.barsSec4 = this.section4.topics[this.interactor].bars;
+      this.id = "id" + this.interactor;
     })
   }
 
   // Title the Topics
   public get title(): string {
-    return this.topics[this.interactor].titleTopic;
-  }
-  public set title(value: string) {
-    this.topics[this.interactor].titleTopic = value;
+    return this.titleTopic;
   }
   
   // Bars
   public get bars(): any {
-    return this.topics[this.interactor].bars;
-  }
-  public set bars(value: any) {
-    this.topics[this.interactor].bars = value;
+    return this.barsSec4;
   }
 
   // Id Topic
   public get ids(): string {
-    return this.topics[this.interactor].id;
+    return this.id;
   }
 
 }

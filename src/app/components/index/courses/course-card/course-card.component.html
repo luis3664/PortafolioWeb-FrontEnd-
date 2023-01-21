@@ -3,5 +3,23 @@
 <div class="card-body d-flex flex-column">
   <h4 class="card-title">{{title}}</h4>
   <p class="card-text">{{text}}</p>
-  <a [href]="courseUrl" class="btn btn-secondary align-self-end mt-auto mx-auto">{{date}}</a>
+  <!-- <a [href]="courseUrl" class="btn btn-secondary align-self-end mt-auto mx-auto"></a> -->
+  <button class="btn btn-secondary align-self-end mt-auto mx-auto" data-bs-toggle="modal" [attr.data-bs-target]="'#'+ids">{{date}}</button>
+</div>
+
+<!-- Modal Certification -->
+<div class="modal fade" [id]="ids" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <!-- Modal Title -->
+      <div class="modal-header">
+        <h5 class="modal-title">{{courseTitle}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <img [src]="courseUrl" [alt]="courseTitle">
+      </div>
+    </div>
+  </div>
 </div>
