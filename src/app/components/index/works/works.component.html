@@ -6,7 +6,7 @@
         {{title}}
 
         <!-- Button Editor Section 2 -->
-        <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec2">
+        <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec2">
             <i class="bi bi-gear-wide-connected"></i>
         </button>
     </h2>
@@ -15,16 +15,102 @@
     <div class="modal fade" id="editSec2" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
+                <!-- Modal Title -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Section 2 Editor</h5>
+                    <h5 class="modal-title">Section 2 Editor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!-- Modal Body -->
                 <div class="modal-body">
-                    ...
+                    <form [formGroup]="formTitle">
+                        <div class="col-auto">
+                            <label for="titleSection" class="form_label">Title Section</label>
+                            <input id="titleSection" type="text" class="form-control" formControlName="title">
+                        </div>
+                    </form>
                 </div>
+                <!-- Modal Footer -->
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSlideSec2" data-bs-dismiss="modal">Edit Slides</button>
+                    <button [disabled]="formTitle.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editor Slide Section 2 -->
+    <div class="modal fade" id="editSlideSec2" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <!-- Modal Title -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Section 2 Slides Editor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form [formGroup]="formSlide">
+                        <div class="col-auto">
+                            <label for="selectSlide" class="form_label">Select Card</label>
+                            <select id="selectSlide" class="form-select" formControlName="select" name="select">
+                                <option [value]="i" *ngFor="let slide of slides; let i = index">
+                                {{slide.title}}
+                                </option>
+                            </select>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addFormSec2">Add Card</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteSlide()">Delete Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editFormSec2" (click)="setEditSlide()">Edit Selection</button>
+                            </div>
+                        </div>
+                        <div id="addFormSec2" class="collapse">
+                            <form formGroupName="addSlide">
+                                <div class="col-auto">
+                                    <label for="title">Title New Slide</label>
+                                    <input type="text" class="form-control" id="title" formControlName="title"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="text">Text New Slide</label>
+                                    <input type="text" class="form-control" id="text" formControlName="text"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgName">Image Name New Slide</label>
+                                    <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgUrl">Image URL New Slide</label>
+                                    <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addFormSec2" (click)="addSlide()">Save New Slide</button>
+                        </div>
+                        <div id="editFormSec2" class="collapse">
+                            <form formGroupName="editSlide">
+                                <div class="col-auto">
+                                    <label for="title">Title Slide</label>
+                                    <input type="text" class="form-control" id="title" formControlName="title"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="text">Text Slide</label>
+                                    <input type="text" class="form-control" id="text" formControlName="text"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgName">Image Name Slide</label>
+                                    <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgUrl">Image URL Slide</label>
+                                    <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editFormSec2" (click)="editSlide()">Save Slide</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec2" data-bs-dismiss="modal">Edit Title Section</button>
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-dark">Save</button>
                 </div>
             </div>
         </div>
@@ -34,7 +120,7 @@
     <div id="carouselWorks" class="carousel carousel-dark slide m-3" data-bs-ride="carousel">
         <!-- Button Indicators -->
         <div class="carousel-indicators">
-            <button *ngFor="let item of items, let i = index"
+            <button *ngFor="let item of slides, let i = index"
                 type="button" data-bs-target="#carouselWorks" [attr.data-bs-slide-to]="i" [ngClass]="{'active': i == 0}" 
                 aria-current="true" [attr.aria-label]="i+1">
             </button>
@@ -43,7 +129,7 @@
         <div class="carousel-inner">
             <app-item-work
                 class="carousel-item" [ngClass]="{'active': i == 0}" data-bs-interval="4000" 
-                *ngFor="let item of items, let i = index" [interaction]="i">
+                *ngFor="let slide of slides, let i = index" [interaction]="i">
             </app-item-work>
         </div>
         <!-- Side Button -->

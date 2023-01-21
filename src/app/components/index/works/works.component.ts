@@ -1,29 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/data.service';
 import { IndexService } from 'src/app/services/index.service';
+import { Section2 } from 'src/app/interfaces/Section2.interface';
+import { Slide } from 'src/app/interfaces/Slide.interface';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-works',
   templateUrl: './works.component.html',
   styleUrls: ['./works.component.css']
 })
-export class WorksComponent {
+export class WorksComponent implements OnInit {
 
-  private section2: any;
+  // Items
+  private section2!: Section2;
+  
+  // Initializers
+  private titleSlide!: string;
+  private slidesWork!: Slide[];
+
   // Login
   private authentication: any;
 
+  private _dataService = inject(DataService);
+
   constructor (
-    private _indexService: IndexService,
     private _authService: AuthService,
   ){
     this.authentication = this._authService;
+  }
 
-    this._indexService.getData().subscribe(data => {
-      this.section2 = data.section2;
+  ngOnInit(): void {
+    this._dataService.readSections().subscribe(res =>{
+      // Items
+      this.section2 = res[1];
+      this.setCurrentTitle(this.section2);
+      
+      // Initializers
+      this.titleSlide = this.section2.title;
+      this.slidesWork = this.section2.slide;
     })
   }
   
+  // Forms
+  formTitle = new FormGroup({
+    title: new FormControl('', Validators.required)
+  })
+  formSlide = new FormGroup({
+    select: new FormControl(0),
+    addSlide: new FormGroup({
+      title: new FormControl(''),
+      text: new FormControl(''),
+      imgName: new FormControl(''),
+      imgUrl: new FormControl('')
+    }),
+    editSlide: new FormGroup({
+      title: new FormControl(''),
+      text: new FormControl(''),
+      imgName: new FormControl(''),
+      imgUrl: new FormControl('')
+    })
+  })
+
   // Login
   public get authService() {
     return this.authentication;
@@ -31,15 +70,51 @@ export class WorksComponent {
 
   // Title Section
   public get title(): string {
-    return this.section2.title;
+    return this.titleSlide;
   }
-  public set title(value: string) {
-    this.section2.title = value;
+  private setCurrentTitle(sec2: Section2){
+    this.formTitle.controls.title.patchValue(sec2.title);
   }
-  
-  // Items for ngFor
-  public get items(): string {
-    return this.section2.works;
+  public saveTitle(){
+    this._dataService.updateSec2(this.formTitle.getRawValue());
   }
-  
+
+  // Slides
+  public get slides(){
+    return this.slidesWork;
+  }
+
+  public addSlide(){
+    if(this.slidesWork.length < 11){
+      let slide: Slide = this.formSlide.getRawValue().addSlide as Slide;
+      this.section2.slide.push(slide);
+      this._dataService.updateSec2(this.section2);
+    }else{
+      alert('Maximum 10 slides to maintain aesthetics')
+    }
+  }
+
+  public setEditSlide(){
+    let ref = this.formSlide.getRawValue().select as number;
+    let select = this.section2.slide[ref];
+    this.formSlide.controls.editSlide.patchValue(select);
+  }
+
+  public editSlide(){
+    let ref = this.formSlide.controls.select.getRawValue() as number;
+    this.section2.slide[ref] = this.formSlide.controls.editSlide.getRawValue() as Slide;
+    this._dataService.updateSec2(this.section2);
+  }
+
+  public deleteSlide(){
+    let index = this.formSlide.controls.select.getRawValue() as number;
+    if(index <= 1){
+      alert("To maintain the aesthetics of the page, this slide cannot be deleted.")
+    }else{
+      this.section2.slide.splice(index, 1);
+      this._dataService.updateSec2(this.section2);
+      this.formSlide.controls.select.patchValue(0);
+    }
+  }
+
 }

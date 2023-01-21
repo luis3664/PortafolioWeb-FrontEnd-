@@ -34,7 +34,7 @@ export class CardsPresentationComponent implements OnInit {
   
   ngOnInit() {
     this._dataService.readSections().subscribe(res =>{
-      // items
+      // Items
       this.section1 = res[0];
       this.setCurrentTitle(res[0]);
 
@@ -44,6 +44,7 @@ export class CardsPresentationComponent implements OnInit {
     });
 
   }
+  
   // Forms
   formModule = new FormGroup({
     title: new FormControl('', Validators.required)
@@ -240,6 +241,7 @@ export class CardsPresentationComponent implements OnInit {
     }else{
       this.section1.cards.splice(index, 1);
       this._dataService.updateSec1(this.section1);
+      this.formCards.controls.select.patchValue(0);
     }
   }
 

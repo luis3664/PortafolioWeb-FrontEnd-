@@ -98,5 +98,11 @@ export class DataService {
     let sec1DocRef = doc(this.firestore, 'sections/1');
     return updateDoc(sec1DocRef, sec1);
   }
+
+  // ------------------------------- Section 2 -------------------------------
+  public updateSec2(sec2: any){
+    let sec2DocRef = doc(this.firestore, 'sections/2');
+    return updateDoc(sec2DocRef, sec2);
+  }
   
 }

@@ -37,8 +37,6 @@ export class CardSection1Component implements OnInit {
       this.textBody = this.card.textBody;
       this.textEnd = this.card.textEnd;
       this.img = this.card.img;
-
-      console.log(this.img);
     });
   }
   
