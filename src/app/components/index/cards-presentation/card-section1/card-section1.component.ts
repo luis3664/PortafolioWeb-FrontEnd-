@@ -1,61 +1,65 @@
-import { Component, Input } from '@angular/core';
-import { IndexService } from 'src/app/services/index.service';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
+import { CardSec1 } from 'src/app/interfaces/CardSec1.interface';
+import { Img } from 'src/app/interfaces/Img.interface';
 
 @Component({
   selector: 'app-card-section1',
   templateUrl: './card-section1.component.html',
   styleUrls: ['./card-section1.component.css']
 })
-export class CardSection1Component {
+export class CardSection1Component implements OnInit {
 
   @Input() interaction: any;
-  private cards: any;
 
-  constructor(
-    private _indexService: IndexService,
-  ){
-    this._indexService.getData().subscribe(data => {
-      this.cards = data.section1.cards;
-    })
+  // Items
+  private card!: CardSec1;
+
+  // Initializers
+  private titleCard!: string;
+  private textBody!: Array<any>;
+  private textEnd!: string;
+  private img!: Array<Img>;
+
+  // Inject
+  private _dataService = inject(DataService);
+
+  constructor(){
+  }
+
+  ngOnInit(){
+    this._dataService.readSections().subscribe(res =>{
+      // Items
+      this.card = res[0].cards[this.interaction];
+
+      // Initializers
+      this.titleCard = this.card.title;
+      this.textBody = this.card.textBody;
+      this.textEnd = this.card.textEnd;
+      this.img = this.card.img;
+
+      console.log(this.img);
+    });
   }
   
   // Title Card
   public get title(): string {
-    return this.cards[this.interaction].title;
-  }
-  public set title(value: string) {
-    this.cards[this.interaction].title = value;
+    return this.titleCard;
   }
   
-  // Text1 Card
-  public get text1(): string {
-    return this.cards[this.interaction].text1;
-  }
-  public set text1(value: string) {
-    this.cards[this.interaction].text1 = value;
+  // Texts Body Card
+  public get texts(): Array<any> {
+    return this.textBody;
   }
 
-  // Text2 Card
+  // Text End Card
   public get text2(): string {
-    return this.cards[this.interaction].text2;
-  }
-  public set text2(value: string) {
-    this.cards[this.interaction].text2 = value;
+    return this.textEnd;
   }
   
-  // ImgURL Card
-  public get imgUrl(): string {
-    return this.cards[this.interaction].imgUrl;
-  }
-  public set imgUrl(value: string) {
-    this.cards[this.interaction].imgUrl = value;
+  // Image Card
+  public get imgs(): Array<any> {
+    return this.img;
   }
   
-  // ImgURL Card
-  public get imgName(): string {
-    return this.cards[this.interaction].imgName;
-  }
-  public set imgName(value: string) {
-    this.cards[this.interaction].imgName = value;
-  }
 }

@@ -90,7 +90,7 @@ export class DataService {
   // ------------------------------- Sections --------------------------------
   public readSections(){
     let sec1Ref = collection(this.firestore, 'sections');
-    return collectionData(sec1Ref) as Observable<Section1[]>;
+    return collectionData(sec1Ref) as Observable<any>;
   }
   
   // ------------------------------- Section 1 -------------------------------
