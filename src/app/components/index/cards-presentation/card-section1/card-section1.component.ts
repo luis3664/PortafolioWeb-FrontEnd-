@@ -20,6 +20,7 @@ export class CardSection1Component implements OnInit {
   private textBody!: Array<any>;
   private textEnd!: string;
   private img!: Array<Img>;
+  private slideButton!: Boolean;
 
   // Inject
   private _dataService = inject(DataService);
@@ -37,6 +38,7 @@ export class CardSection1Component implements OnInit {
       this.textBody = this.card.textBody;
       this.textEnd = this.card.textEnd;
       this.img = this.card.img;
+      this.slideButton = this.card.img.length > 1;
     });
   }
   
@@ -58,6 +60,11 @@ export class CardSection1Component implements OnInit {
   // Image Card
   public get imgs(): Array<any> {
     return this.img;
+  }
+
+  // Slide Buttons
+  public get buttons(): Boolean {
+    return this.slideButton;
   }
   
 }
