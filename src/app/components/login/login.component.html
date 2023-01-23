@@ -9,22 +9,14 @@
             <!-- Username -->
             <label class="form-labelfs-5 text-center">Welcome Developer.</label>
             <div class="mb-3 form-floating">
-                <input type="username" class="form-control" id="inputUsername" placeholder=" " 
-                    formControlName="username" [class.is-valid]="singPorfolio.get('username')?.valid"
+                <input type="email" class="form-control" id="email" placeholder=" " 
+                    formControlName="email" [class.is-valid]="singPorfolio.get('email')?.valid"
                 >
-                <label for="inputUsername" class="form-label fs-5">Username</label>
+                <label for="email" class="form-label fs-5">Email</label>
             </div>
-            <!-- Alert Username minlength -->
-            <div class="alert alert-danger" *ngIf="singPorfolio.get('username')?.errors?.['minlength'] && singPorfolio.get('username')?.touched">
-                The Username must be at least {{singPorfolio.get('username')?.errors?.['minlength']?.requiredLength}} characters.
-            </div>
-            <!-- Alert Username maxlength -->
-            <div class="alert alert-danger" *ngIf="singPorfolio.get('username')?.errors?.['maxlength'] && singPorfolio.get('username')?.touched">
-                The Username has a maximum of {{singPorfolio.get('username')?.errors?.['maxlength']?.requiredLength}} characters.
-            </div>
-            <!-- Alert Username touched -->
-            <div class="alert alert-danger d-flex" *ngIf="singPorfolio.get('username')?.touched && !singPorfolio.get('username')?.valid">
-                It is necessary to enter a username.
+            <!-- Alert Username email -->
+            <div class="alert alert-danger" *ngIf="singPorfolio.get('email')?.errors && singPorfolio.get('email')?.touched">
+                It is necessary to enter a email.
             </div>
 
             <!-- Password -->

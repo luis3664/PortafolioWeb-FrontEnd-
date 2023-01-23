@@ -25,10 +25,11 @@ import { Page404Component } from './components/page404/page404.component';
 import { ProjectComponent } from './components/index/projects/project/project.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { DataService } from './services/data.service';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AuthService } from './services/auth.service';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     provideDatabase(() => getDatabase()),
   ],
   providers: [
-    DataService
+    DataService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

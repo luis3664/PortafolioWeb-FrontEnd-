@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, updateDoc} from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, updateDoc} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Footer } from '../interfaces/Footer.interface';
 
 // Interfaces
 import { Header } from '../interfaces/Header.interface';
+import { Footer } from '../interfaces/Footer.interface';
 import { ImgLogo } from '../interfaces/ImgLogo.interface';
 
 @Injectable({
