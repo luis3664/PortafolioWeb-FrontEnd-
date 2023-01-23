@@ -2,7 +2,6 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { CardSec3 } from 'src/app/interfaces/CardSec3.interface';
 import { Section3 } from 'src/app/interfaces/Section3.interface';
 import { DataService } from 'src/app/services/data.service';
-import { IndexService } from 'src/app/services/index.service';
 
 @Component({
   selector: 'app-course-card',

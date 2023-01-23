@@ -1,5 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { idToken } from '@angular/fire/auth';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Footer } from 'src/app/interfaces/Footer.interface';
 import { Header } from 'src/app/interfaces/Header.interface';
 import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
 import { Logo } from 'src/app/interfaces/Logo.interface';
@@ -19,6 +21,8 @@ export class HeaderComponent implements OnInit{
   private imgLogo!: ImgLogo;
   private logoCurrent!: any;
   private selectEdit!: number;
+  private footer!: Footer;
+  private indexFooter!: number;
   
   // Initializers
   private textHeader!: string;
@@ -56,6 +60,12 @@ export class HeaderComponent implements OnInit{
 
       // Initializers
       this.logo = this.logoCurrent.url;
+    })
+
+    // Footer Logo
+    this._dataService.readFooter().subscribe(res =>{
+      this.footer = res[0];
+      this.indexFooter = res[0].currentIndexLogo;
     })
 
     // Text Header
@@ -157,13 +167,21 @@ export class HeaderComponent implements OnInit{
     if(index == 0){
       alert("To maintain the aesthetics of the page, this is the only logo that cannot be deleted or edit.")
     }else {
-      this.imgLogo.logos.splice(index, 1);
-      if(index < this.imgLogo.currentId){
-        this.imgLogo.currentId -= 1;
-      }
       if(this.imgLogo.currentId == index){
         this.imgLogo.currentId = 0;
       }
+      if(this.indexFooter == index){
+        this.indexFooter = 0;
+      }
+      if(index < this.imgLogo.currentId){
+        this.imgLogo.currentId -= 1;
+      }
+      if(index < this.indexFooter){
+        this.indexFooter -= 1;
+      }
+      this.footer.currentIndexLogo = this.indexFooter;
+      this.imgLogo.logos.splice(index, 1);
+      this._dataService.updateFooter(this.footer);
       this._dataService.updateLogoImg(this.imgLogo);
     }
   }
@@ -173,10 +191,7 @@ export class HeaderComponent implements OnInit{
     return this.textHeader;
   }
   public updateLogoTitle(){
-    this._dataService.updateHeader({
-      id: this.header.id,
-      ...this.formModule.getRawValue(),
-    } as Header);
+    this._dataService.updateHeader((this.formModule.getRawValue()) as Header);
   }
 
   // Titles Menu

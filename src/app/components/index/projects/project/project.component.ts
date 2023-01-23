@@ -2,7 +2,6 @@ import { Component, Input, inject, OnInit } from '@angular/core';
 import { Section2 } from 'src/app/interfaces/Section2.interface';
 import { Slide } from 'src/app/interfaces/Slide.interface';
 import { DataService } from 'src/app/services/data.service';
-import { IndexService } from 'src/app/services/index.service';
 
 @Component({
   selector: 'app-project',

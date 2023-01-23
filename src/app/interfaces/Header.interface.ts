@@ -1,4 +1,3 @@
 export interface Header {
-    id: string;
-    text: string;
+    text: string,
 }

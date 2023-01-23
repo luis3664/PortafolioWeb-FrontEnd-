@@ -4,7 +4,6 @@ import { Bar } from 'src/app/interfaces/Bar.interface';
 import { Section4 } from 'src/app/interfaces/Section4.interface';
 import { TopicSec4 } from 'src/app/interfaces/TopicSec4.interface';
 import { DataService } from 'src/app/services/data.service';
-import { IndexService } from 'src/app/services/index.service';
 
 @Component({
   selector: 'app-topics',

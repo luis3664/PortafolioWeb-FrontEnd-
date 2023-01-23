@@ -1,37 +1,192 @@
 <br>
-<div class="container-fluid bg-dark mb-0">			
+<div class="container-fluid bg-dark mb-0">
   <div class="row text-white">
     <!-- Logo -->
     <div class="col-xs-12 col-md-8 col-lg-3 mt-2">
-      <p class="h5"><img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">Full Stack Developer Jr.</p>
+      <p class="h5"><img [src]="logoImg" [alt]="logoName" width="36" height="29"
+          class="d-inline-block align-text-top">{{title}}</p>
       <p>{{text}}</p>
       <!-- Button Editor Footer -->
-      <button *ngIf="authService.logIn" type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editFooter">
+      <button *ngIf="true" type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editFooter">
         <i class="bi bi-gear-wide-connected"></i>
       </button>
     </div>
 
     <!-- Icons -->
     <div class="text-center col-xs-12 col-md-6 col-lg-3 p-4" *ngFor="let item of icons">
-      <i class="{{item.icon}} btn contact" [attr.aria-label]="item.iconTitle" (click)="openUrl"></i>
+      <!-- Template Icon -->
+      <ng-template #iconTemplate>
+        <i class="btn contact" [ngClass]="item.icon" [attr.aria-label]="item.iconTitle"><a [href]="item.url"></a></i>
+      </ng-template>
+
+      <!-- Template SVG -->
+      <ng-template #svgTemplate>
+        <img class="ms-1 mb-1" [src]="item.svgUrl" [alt]="item.name">
+      </ng-template>
+
+      <!-- Icon or SVG Container -->
+      <ng-container *ngIf="item.svg; else iconTemplate">
+        <ng-container *ngTemplateOutlet="svgTemplate"></ng-container>
+      </ng-container>
+      
     </div>
-  </div>			
+  </div>
 </div>
 
 <!-- Modal Editor Footer -->
 <div class="modal fade" id="editFooter" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-white">
+      <!-- Modal Header -->
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Footer Editor</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <!-- Modal Body -->
       <div class="modal-body">
-        ...
+        <form [formGroup]="formLogo">
+          <div class="col-auto">
+            <label for="titleLogo" class="form_label">Title Logo</label>
+            <input id="titleLogo" type="text" class="form-control" formControlName="title">
+          </div>
+          <div class="col-auto">
+            <label for="textLogo" class="form_label">Text Logo</label>
+            <input id="textLogo" type="text" class="form-control" formControlName="text">
+          </div>
+          <div class="col-auto">
+            <label for="currentIndexLogo" class="form_label">Select Icon</label>
+            <select id="currentIndexLogo" class="form-select" formControlName="currentIndexLogo" name="currentIndexLogo">
+              <option [value]="i" *ngFor="let item of logosSelect; let i = index">
+                {{item.name}}
+              </option>
+            </select>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addLogoFooter">Add Logo</button>
+              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLogo()">Delete Selection</button>
+              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editLogoFooter" (click)="setEditLogo()">Edit Selection</button>
+            </div>
+            <div id="addLogoFooter" class="collapse">
+              <form formGroupName="addLogo">
+                <div class="col-auto">
+                  <label for="name">Name New Logo</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" />
+                </div>
+                <div class="col-auto">
+                  <label for="url">URL New logo</label>
+                  <input type="text" class="form-control" id="url" formControlName="url" />
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addLogoFooter" (click)="addLogo()">Save New Logo</button>
+              </form>
+            </div>
+            <div id="editLogoFooter" class="collapse">
+              <form id="editLogo" formGroupName="editLogo">
+                <div class="col-auto">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" />
+                </div>
+                <div class="col-auto">
+                  <label for="url">URL</label>
+                  <input type="text" class="form-control" id="url" formControlName="url" />
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editLogoFooter" (click)="editLogo()">Save Logo</button>
+              </form>
+            </div>
+          </div>
+        </form>
       </div>
+      <!-- Modal Footer -->
       <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editIconsFooter" data-bs-dismiss="modal">Edit Icons</button>
+        <button type="button" class="btn btn-dark" (click)="saveFooter()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Editor Icons Footer -->
+<div class="modal fade" id="editIconsFooter" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Footer Icons Editor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form [formGroup]="formIcons">
+          <div class="col-auto">
+            <label for="select" class="form_label">Select Icon</label>
+            <select id="select" class="form-select" formControlName="select" name="select">
+              <option [value]="i" *ngFor="let item of icons; let i = index">
+                {{item.name}}
+              </option>
+            </select>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addIconFooter">Add Icon</button>
+              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteIcon()">Delete Selection</button>
+              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editIconFooter" (click)="setEditIcon()">Edit Selection</button>
+            </div>
+            <div id="addIconFooter" class="collapse">
+              <form formGroupName="addIcon">
+                <div class="col-auto">
+                  <label for="name" class="form_label">Name New Icon</label>
+                  <input id="name" type="text" class="form-control" formControlName="name">
+                </div>
+                <div class="col-auto mt-2">
+                  <label for="svg" class="form_label">Is SVG Image?</label>
+                  <div class="form-check">
+                    <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectAddFooter">
+                  </div>
+                </div>
+                <div class="col-auto" *ngIf="!svgSelectAddFooter">
+                  <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                  <input id="icon" type="text" class="form-control" formControlName="icon">
+                </div>
+                <div class="col-auto" *ngIf="svgSelectAddFooter">
+                  <label for="svgUrl" class="form_label">URL of SVG Image</label>
+                  <input id="svgUrl" type="text" class="form-control" formControlName="svgUrl">
+                </div>
+                <div class="col-auto">
+                  <label for="url" class="form_label">URL Link</label>
+                  <input id="url" type="text" class="form-control" formControlName="url">
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addIconFooter" (click)="addIcon()">Save New Icon</button>
+              </form>
+            </div>
+            <div id="editIconFooter" class="collapse">
+              <form id="editIcon" formGroupName="editIcon">
+                <div class="col-auto">
+                  <label for="name" class="form_label">Name Icon</label>
+                  <input id="name" type="text" class="form-control" formControlName="name">
+                </div>
+                <div class="col-auto mt-2">
+                  <label for="svg" class="form_label">Is SVG Image?</label>
+                  <div class="form-check">
+                    <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectAddFooter">
+                  </div>
+                </div>
+                <div class="col-auto" *ngIf="!svgSelectAddFooter">
+                  <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                  <input id="icon" type="text" class="form-control" formControlName="icon">
+                </div>
+                <div class="col-auto" *ngIf="svgSelectAddFooter">
+                  <label for="svgUrl" class="form_label">URL of SVG Image</label>
+                  <input id="svgUrl" type="text" class="form-control" formControlName="svgUrl">
+                </div>
+                <div class="col-auto">
+                  <label for="url" class="form_label">URL Link</label>
+                  <input id="url" type="text" class="form-control" formControlName="url">
+                </div>
+                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editIconFooter" (click)="editIcon()">Save Icon</button>
+              </form>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editFooter" data-bs-dismiss="modal">Edit Logo Footer</button>
         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-dark">Save</button>
       </div>
     </div>
   </div>

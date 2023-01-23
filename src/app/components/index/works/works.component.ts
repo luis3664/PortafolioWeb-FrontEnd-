@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
-import { IndexService } from 'src/app/services/index.service';
 import { Section2 } from 'src/app/interfaces/Section2.interface';
 import { Slide } from 'src/app/interfaces/Slide.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';

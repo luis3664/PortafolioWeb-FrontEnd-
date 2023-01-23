@@ -22,7 +22,6 @@ import { ProjectsComponent } from './components/index/projects/projects.componen
 import { Page404Component } from './components/page404/page404.component';
 
 // Services
-import { IndexService } from './services/index.service';
 import { ProjectComponent } from './components/index/projects/project/project.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -63,7 +62,6 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     provideDatabase(() => getDatabase()),
   ],
   providers: [
-    IndexService,
     DataService
   ],
   bootstrap: [AppComponent]
