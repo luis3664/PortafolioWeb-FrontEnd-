@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject, OnInit } from '@angular/core';
+import { Section2 } from 'src/app/interfaces/Section2.interface';
+import { Slide } from 'src/app/interfaces/Slide.interface';
+import { DataService } from 'src/app/services/data.service';
 import { IndexService } from 'src/app/services/index.service';
 
 @Component({
@@ -6,50 +9,58 @@ import { IndexService } from 'src/app/services/index.service';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit {
 
   @Input('iProjects') interactor: any;
 
-  private projects: any;
+  // Items
+  private section5!: Section2;
+  private slideSec5!: Slide;
 
-  constructor (
-    private _indexService: IndexService,
-  ){
-    this._indexService.getData().subscribe(data => {
-      this.projects = data.section5.projects;
+  // Initializers
+  private titleSlide!: string;
+  private textSlide!: string;
+  private imgNameSlide!: string;
+  private imgUrlSlide!: string;
+
+  // Inject
+  private _dataService = inject(DataService);
+
+  constructor (){
+  }
+  
+  ngOnInit(): void {
+    this._dataService.readSections().subscribe(res =>{
+      // Items
+      this.section5 = res[4];
+      this.slideSec5 = this.section5.slide[this.interactor];
+      
+      // Initializers
+      this.titleSlide = this.slideSec5.title;
+      this.textSlide = this.slideSec5.text;
+      this.imgNameSlide = this.slideSec5.imgName;
+      this.imgUrlSlide = this.slideSec5.imgUrl;
     })
   }
 
   // Title Project
   public get title(): string {
-    return this.projects[this.interactor].title;
+    return this.titleSlide;
   }
-  public set title(value: string) {
-    this.projects[this.interactor].title = value;
-  }
-  
+ 
   // Text Project
   public get text(): string {
-    return this.projects[this.interactor].text;
-  }
-  public set text(value: string) {
-    this.projects[this.interactor].text = value;
+    return this.textSlide;
   }
   
   // imgUrl Project
   public get imgUrl(): string {
-    return this.projects[this.interactor].imgUrl;
-  }
-  public set imgUrl(value: string) {
-    this.projects[this.interactor].imgUrl = value;
+    return this.imgUrlSlide;
   }
   
   // imgName Project
   public get imgName(): string {
-    return this.projects[this.interactor].imgName;
-  }
-  public set imgName(value: string) {
-    this.projects[this.interactor].imgName = value;
+    return this.imgNameSlide;
   }
 
 }

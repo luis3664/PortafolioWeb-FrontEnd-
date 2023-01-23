@@ -5,29 +5,10 @@
     <h2 class="text-center mt-4 mt-md-0">
         {{title}}
         <!-- Button Editor Section 5 -->
-        <button *ngIf="authService.logIn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec5">
+        <button *ngIf="true" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editSec5">
             <i class="bi bi-gear-wide-connected"></i>
         </button>
     </h2>
-        
-    <!-- Modal Editor Section 5 -->
-    <div class="modal fade" id="editSec5" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Section 5 Editor</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-dark">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
         
     <!-- Projects -->
     <div id="carouselProjects" class="carousel carousel-dark slide m-3" data-bs-ride="carousel">
@@ -56,6 +37,111 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
+    </div>
+
+    <!-- Modal Editor Section 5 -->
+    <div class="modal fade" id="editSec5" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <!-- Modal Title -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Section 5 Editor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form [formGroup]="formTitle">
+                        <div class="col-auto">
+                            <label for="titleSection" class="form_label">Title Section</label>
+                            <input id="titleSection" type="text" class="form-control" formControlName="title">
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSlideSec5" data-bs-dismiss="modal">Edit Slides</button>
+                    <button [disabled]="formTitle.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editor Slide Section 5 -->
+    <div class="modal fade" id="editSlideSec5" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <!-- Modal Title -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Section 5 Slides Editor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form [formGroup]="formSlide">
+                        <div class="col-auto">
+                            <label for="selectSlide" class="form_label">Select Slide</label>
+                            <select id="selectSlide" class="form-select" formControlName="select" name="select">
+                                <option [value]="i" *ngFor="let slide of items; let i = index">
+                                {{slide.title}}
+                                </option>
+                            </select>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addFormSec5">Add Card</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteSlide()">Delete Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editFormSec5" (click)="setEditSlide()">Edit Selection</button>
+                            </div>
+                        </div>
+                        <div id="addFormSec5" class="collapse">
+                            <form formGroupName="addSlide">
+                                <div class="col-auto">
+                                    <label for="title">Title New Slide</label>
+                                    <input type="text" class="form-control" id="title" formControlName="title"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="text">Text New Slide</label>
+                                    <input type="text" class="form-control" id="text" formControlName="text"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgName">Image Name New Slide</label>
+                                    <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgUrl">Image URL New Slide</label>
+                                    <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addFormSec5" (click)="addSlide()">Save New Slide</button>
+                        </div>
+                        <div id="editFormSec5" class="collapse">
+                            <form formGroupName="editSlide">
+                                <div class="col-auto">
+                                    <label for="title">Title Slide</label>
+                                    <input type="text" class="form-control" id="title" formControlName="title"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="text">Text Slide</label>
+                                    <input type="text" class="form-control" id="text" formControlName="text"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgName">Image Name Slide</label>
+                                    <input type="text" class="form-control" id="imgName" formControlName="imgName"/>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="imgUrl">Image URL Slide</label>
+                                    <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl"/>
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editFormSec5" (click)="editSlide()">Save Slide</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSec5" data-bs-dismiss="modal">Edit Title Section</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
 </article>
