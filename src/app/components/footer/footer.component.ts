@@ -67,7 +67,15 @@ export class FooterComponent implements OnInit {
       this.textFooter = this.footerSec.text;
       this.nameImgLogo = this.logoCurrent.name as string;
       this.urlImgLogo = this.logoCurrent.url as string;
-    })
+    });
+
+    // Forms
+    this.formIcons.controls.addIcon.get('svg')?.valueChanges.subscribe(res =>{
+      this.svgSelectAddFooter = res as boolean;
+    });
+    this.formIcons.controls.editIcon.get('svg')?.valueChanges.subscribe(res =>{
+      this.svgSelectEditFooter = res as boolean;
+    });
   }
 
   formLogo = new FormGroup({

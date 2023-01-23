@@ -114,12 +114,12 @@
           <div id="addForm" class="collapse">
             <form formGroupName="addLogo">
               <div class="col-auto">
-                <label for="name">Name New Logo</label>
-                <input type="text" class="form-control" id="name" formControlName="name" />
+                <label for="nameNewLogoHeader">Name New Logo</label>
+                <input type="text" class="form-control" id="nameNewLogoHeader" formControlName="name" />
               </div>
               <div class="col-auto">
-                <label for="url">URL New logo</label>
-                <input type="text" class="form-control" id="url" formControlName="url" />
+                <label for="urlNewLogoHeader">URL New logo</label>
+                <input type="text" class="form-control" id="urlNewLogoHeader" formControlName="url" />
               </div>
               <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm" (click)="addLogo()">Save New Logo</button>
             </form>
@@ -127,12 +127,12 @@
           <div id="editForm" class="collapse">
             <form id="editLogo" formGroupName="editLogo">
               <div class="col-auto">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" formControlName="name" />
+                <label for="nameEditHeader">Name</label>
+                <input type="text" class="form-control" id="nameEditHeader" formControlName="name" />
               </div>
               <div class="col-auto">
-                <label for="url">URL</label>
-                <input type="text" class="form-control" id="url" formControlName="url" />
+                <label for="urlNewHeader">URL</label>
+                <input type="text" class="form-control" id="urlNewHeader" formControlName="url" />
               </div>
               <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="editLogo()">Save Logo</button>
             </form>

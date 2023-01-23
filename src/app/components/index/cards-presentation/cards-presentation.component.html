@@ -87,12 +87,12 @@
                 <div formArrayName="img" *ngFor="let img of newImg; let i= index">
                   <form [formGroupName]="i">
                     <div class="col-auto">
-                      <label for="name">New Image Name Card {{i+1}}</label>
-                      <input type="text" class="form-control" id="name" formControlName="name"/>
+                      <label for="nameCard">New Image Name Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="nameCard" formControlName="name"/>
                     </div>
                     <div class="col-auto">
-                      <label for="url">New URL Image Card {{i+1}}</label>
-                      <input type="text" class="form-control" id="url" formControlName="url"/>
+                      <label for="urlNewImgCard">New URL Image Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="urlNewImgCard" formControlName="url"/>
                     </div>
                   </form>
                 </div>
@@ -124,12 +124,12 @@
                 <div formArrayName="img" *ngFor="let img of editImg; let i= index">
                   <form [formGroupName]="i">
                     <div class="col-auto">
-                      <label for="name">New Image Name Card {{i+1}}</label>
-                      <input type="text" class="form-control" id="name" formControlName="name"/>
+                      <label for="nameNewCard">New Image Name Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="nameNewCard" formControlName="name"/>
                     </div>
                     <div class="col-auto">
-                      <label for="url">New URL Image Card {{i+1}}</label>
-                      <input type="text" class="form-control" id="url" formControlName="url"/>
+                      <label for="urlNewCard">New URL Image Card {{i+1}}</label>
+                      <input type="text" class="form-control" id="urlNewCard" formControlName="url"/>
                     </div>
                   </form>
                 </div>

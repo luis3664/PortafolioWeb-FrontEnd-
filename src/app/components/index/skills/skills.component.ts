@@ -48,6 +48,14 @@ export class SkillsComponent implements OnInit {
       this.titleSection = this.section4.title;
       this.topicsSec4 = this.section4.topics;
     })
+
+    // Forms
+    this.formBars.controls.addBar.get('svg')?.valueChanges.subscribe(res =>{
+      this.svgSelectAdd = res as boolean;
+    })
+    this.formBars.controls.editBar.get('svg')?.valueChanges.subscribe(res =>{
+      this.svgSelectEdit = res as boolean;
+    })
   }
 
   formTitle = new FormGroup({

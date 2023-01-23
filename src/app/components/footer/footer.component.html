@@ -15,20 +15,19 @@
     <!-- Icons -->
     <div class="text-center col-xs-12 col-md-6 col-lg-3 p-4" *ngFor="let item of icons">
       <!-- Template Icon -->
-      <ng-template #iconTemplate>
+      <ng-template #iconTemplateFooter>
         <i class="btn contact" [ngClass]="item.icon" [attr.aria-label]="item.iconTitle"><a [href]="item.url"></a></i>
       </ng-template>
 
       <!-- Template SVG -->
-      <ng-template #svgTemplate>
+      <ng-template #svgTemplateFooter>
         <img class="ms-1 mb-1" [src]="item.svgUrl" [alt]="item.name">
       </ng-template>
 
       <!-- Icon or SVG Container -->
-      <ng-container *ngIf="item.svg; else iconTemplate">
-        <ng-container *ngTemplateOutlet="svgTemplate"></ng-container>
+      <ng-container *ngIf="item.svg; else iconTemplateFooter">
+        <ng-container *ngTemplateOutlet="svgTemplateFooter"></ng-container>
       </ng-container>
-      
     </div>
   </div>
 </div>
@@ -68,25 +67,25 @@
             <div id="addLogoFooter" class="collapse">
               <form formGroupName="addLogo">
                 <div class="col-auto">
-                  <label for="name">Name New Logo</label>
-                  <input type="text" class="form-control" id="name" formControlName="name" />
+                  <label for="nameNew">Name New Logo</label>
+                  <input type="text" class="form-control" id="nameNew" formControlName="name" />
                 </div>
                 <div class="col-auto">
-                  <label for="url">URL New logo</label>
-                  <input type="text" class="form-control" id="url" formControlName="url" />
+                  <label for="urlAddLogo">URL New logo</label>
+                  <input type="text" class="form-control" id="urlAddLogo" formControlName="url" />
                 </div>
                 <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addLogoFooter" (click)="addLogo()">Save New Logo</button>
               </form>
             </div>
             <div id="editLogoFooter" class="collapse">
-              <form id="editLogo" formGroupName="editLogo">
+              <form formGroupName="editLogo">
                 <div class="col-auto">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" formControlName="name" />
+                  <label for="nameEdit">Name</label>
+                  <input type="text" class="form-control" id="nameEdit" formControlName="name" />
                 </div>
                 <div class="col-auto">
-                  <label for="url">URL</label>
-                  <input type="text" class="form-control" id="url" formControlName="url" />
+                  <label for="urlEditLogo">URL</label>
+                  <input type="text" class="form-control" id="urlEditLogo" formControlName="url" />
                 </div>
                 <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editLogoFooter" (click)="editLogo()">Save Logo</button>
               </form>
@@ -129,26 +128,26 @@
             <div id="addIconFooter" class="collapse">
               <form formGroupName="addIcon">
                 <div class="col-auto">
-                  <label for="name" class="form_label">Name New Icon</label>
-                  <input id="name" type="text" class="form-control" formControlName="name">
+                  <label for="nameAddIcon" class="form_label">Name New Icon</label>
+                  <input id="nameAddIcon" type="text" class="form-control" formControlName="name">
                 </div>
                 <div class="col-auto mt-2">
-                  <label for="svg" class="form_label">Is SVG Image?</label>
+                  <label for="svgNew" class="form_label">Is SVG Image?</label>
                   <div class="form-check">
-                    <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectAddFooter">
+                    <input class="form-check-input form-control" name="svg" id="svgNew" type="checkbox" value="checkedValue" formControlName="svg">
                   </div>
                 </div>
                 <div class="col-auto" *ngIf="!svgSelectAddFooter">
-                  <label for="icon" class="form_label">Class Icon of Bootstrap</label>
-                  <input id="icon" type="text" class="form-control" formControlName="icon">
+                  <label for="iconNew" class="form_label">Class Icon of Bootstrap</label>
+                  <input id="iconNew" type="text" class="form-control" formControlName="icon">
                 </div>
                 <div class="col-auto" *ngIf="svgSelectAddFooter">
                   <label for="svgUrl" class="form_label">URL of SVG Image</label>
                   <input id="svgUrl" type="text" class="form-control" formControlName="svgUrl">
                 </div>
                 <div class="col-auto">
-                  <label for="url" class="form_label">URL Link</label>
-                  <input id="url" type="text" class="form-control" formControlName="url">
+                  <label for="urlAddIcon" class="form_label">URL Link</label>
+                  <input id="urlAddIcon" type="text" class="form-control" formControlName="url">
                 </div>
                 <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addIconFooter" (click)="addIcon()">Save New Icon</button>
               </form>
@@ -156,13 +155,13 @@
             <div id="editIconFooter" class="collapse">
               <form id="editIcon" formGroupName="editIcon">
                 <div class="col-auto">
-                  <label for="name" class="form_label">Name Icon</label>
-                  <input id="name" type="text" class="form-control" formControlName="name">
+                  <label for="nameIcon" class="form_label">Name Icon</label>
+                  <input id="nameIcon" type="text" class="form-control" formControlName="name">
                 </div>
                 <div class="col-auto mt-2">
                   <label for="svg" class="form_label">Is SVG Image?</label>
                   <div class="form-check">
-                    <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg" [(ngModel)]="svgSelectAddFooter">
+                    <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg">
                   </div>
                 </div>
                 <div class="col-auto" *ngIf="!svgSelectAddFooter">
@@ -174,8 +173,8 @@
                   <input id="svgUrl" type="text" class="form-control" formControlName="svgUrl">
                 </div>
                 <div class="col-auto">
-                  <label for="url" class="form_label">URL Link</label>
-                  <input id="url" type="text" class="form-control" formControlName="url">
+                  <label for="urlEditIcon" class="form_label">URL Link</label>
+                  <input id="urlEditIcon" type="text" class="form-control" formControlName="url">
                 </div>
                 <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editIconFooter" (click)="editIcon()">Save Icon</button>
               </form>
