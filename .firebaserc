@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "porfolio-argentina-programa": {
-      "hosting": {
-        "frontend": [
-          "porfolio-argentina-programa"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "porfolio-argentina-programa"
   }
