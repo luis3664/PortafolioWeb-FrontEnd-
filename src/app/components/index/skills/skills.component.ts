@@ -31,7 +31,7 @@ export class SkillsComponent implements OnInit {
   private _authService = inject(AuthService);
 
   // Login
-  private authentication: any = this._authService;
+  private authentication: boolean = false;
 
   constructor (){
     this.barClear ={name: "", svg: false, icon: "", url: "", valueBar: 0};
@@ -47,6 +47,7 @@ export class SkillsComponent implements OnInit {
       // Initializers
       this.titleSection = this.section4.title;
       this.topicsSec4 = this.section4.topics;
+      this.authentication = this._authService.logState;
     })
 
     // Forms

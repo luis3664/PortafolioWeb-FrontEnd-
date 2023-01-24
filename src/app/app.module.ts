@@ -26,10 +26,11 @@ import { ProjectComponent } from './components/index/projects/project/project.co
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { DataService } from './services/data.service';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AuthService } from './services/auth.service';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 
 @NgModule({
@@ -57,14 +58,15 @@ import { AuthService } from './services/auth.service';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
+    AngularFireAuthModule
   ],
   providers: [
     DataService,
-    AuthService
+    AuthService,
+    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
   ],
   bootstrap: [AppComponent]
 })

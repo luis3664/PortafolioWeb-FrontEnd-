@@ -22,15 +22,12 @@ export class ProjectsComponent implements OnInit {
 
   // Inject
   private _dataService = inject(DataService);
+  private _authService = inject(AuthService);
 
   // Login
-  private authentication: any;
+  private authentication: boolean = false;
 
-  constructor (
-    private _authService: AuthService,
-  ){
-    this.authentication = this._authService;
-
+  constructor (){
     this.slideClear = {title: "", text: "", imgName: "", imgUrl: ""}
   }
 
@@ -43,6 +40,7 @@ export class ProjectsComponent implements OnInit {
       // Initializers
       this.titleSection = this.section5.title;
       this.slidesSec5 = this.section5.slide;
+      this.authentication = this._authService.logState;
     })
   }
 

@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { idToken } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Footer } from 'src/app/interfaces/Footer.interface';
 import { Header } from 'src/app/interfaces/Header.interface';
@@ -35,19 +34,16 @@ export class HeaderComponent implements OnInit{
   private titleSec5: any;
 
   // Login
-  private authentication: any;
+  private authentication: boolean = false;
 
   // Injection
   private _dataService = inject(DataService);
   private _authService = inject(AuthService);
   
 
-  displayLink: boolean = true;
+  public displayLink: boolean = true;
   
   constructor () {
-
-    this.authentication = this._authService;
-
   }
   
   ngOnInit(): void {
@@ -86,12 +82,15 @@ export class HeaderComponent implements OnInit{
       this.titleSec3 = titles[2].title;
       this.titleSec4 = titles[3].title;
       this.titleSec5 = titles[4].title;
+      // Login
+      this.authentication = this._authService.logState;
     })
 
     // Identificator pathname
     if(window.location.pathname == '/login'){
       this.displayLink = false;
     }
+
   }
 
   // Form of Modal Editor
@@ -120,9 +119,12 @@ export class HeaderComponent implements OnInit{
   }
 
   // Login
-  public get authService() {
+  public get authenticator() {
     return this.authentication;
-  } 
+  }
+  public logOut(){
+    this._authService.logout();
+  }
 
   // Logo Img
   public get logoImg(){

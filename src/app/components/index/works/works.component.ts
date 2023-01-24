@@ -20,14 +20,12 @@ export class WorksComponent implements OnInit {
   private slidesWork!: Slide[];
 
   // Login
-  private authentication: any;
+  private authentication: boolean = false;
 
   private _dataService = inject(DataService);
+  private _authService = inject(AuthService);
 
-  constructor (
-    private _authService: AuthService,
-  ){
-    this.authentication = this._authService;
+  constructor (){
   }
 
   ngOnInit(): void {
@@ -39,6 +37,7 @@ export class WorksComponent implements OnInit {
       // Initializers
       this.titleSlide = this.section2.title;
       this.slidesWork = this.section2.slide;
+      this.authentication = this._authService.logState;
     })
   }
   

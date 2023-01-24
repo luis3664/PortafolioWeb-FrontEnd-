@@ -21,13 +21,11 @@ export class CoursesComponent implements OnInit{
 
   // Inject
   private _dataService = inject(DataService);
+  private _authService = inject(AuthService);
 
-  private authentication: any;
+  private authentication: boolean = false;
 
-  constructor (
-    private _authService: AuthService,
-  ){
-    this.authentication = this._authService;
+  constructor (){
   }
 
   ngOnInit(): void {
@@ -39,6 +37,7 @@ export class CoursesComponent implements OnInit{
       // Initializers
       this.titleSection = this.section3.title;
       this.cardsSec3 = this.section3.cards;
+      this.authentication = this._authService.logState;
     })
   }
 

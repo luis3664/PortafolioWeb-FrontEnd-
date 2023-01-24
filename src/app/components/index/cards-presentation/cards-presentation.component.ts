@@ -22,14 +22,12 @@ export class CardsPresentationComponent implements OnInit {
   private cardsArray!: Array<CardSec1>;
 
   // Login
-  private authentication: any;
+  private authentication: boolean = false;
 
   private _dataService = inject(DataService);
+  private _authService = inject(AuthService);
 
-  constructor (
-    private _authService: AuthService, 
-    ) {
-      this.authentication = this._authService;
+  constructor (){
   }
   
   ngOnInit() {
@@ -41,6 +39,7 @@ export class CardsPresentationComponent implements OnInit {
       // Initializers
       this.title = this.section1.title;
       this.cardsArray = this.section1.cards;
+      this.authentication = this._authService.logState;
     });
 
   }

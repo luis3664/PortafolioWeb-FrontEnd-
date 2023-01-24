@@ -37,11 +37,9 @@ export class FooterComponent implements OnInit {
   private _authService = inject(AuthService);
 
   // Login
-  private authentication: any;
+  private authentication: boolean = false;
 
   constructor (){
-    this.authentication = this._authService;
-
     this.logoClear= {name: "", url: ""};
     this.iconClear = {name: "", svg: false, icon: "", svgUrl: "", url:""}
   }
@@ -67,6 +65,7 @@ export class FooterComponent implements OnInit {
       this.textFooter = this.footerSec.text;
       this.nameImgLogo = this.logoCurrent.name as string;
       this.urlImgLogo = this.logoCurrent.url as string;
+      this.authentication = this._authService.logState;
     });
 
     // Forms

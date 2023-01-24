@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Injectable({
@@ -8,28 +8,43 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private uri = 'http://localhost:4200/';
-  private token: any;
+  private token: string = '';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) { }
+  private _firebase = inject(AngularFireAuth);
+  private router = inject(Router);
 
-  login(username:string, password: string) {
-    this.http.post(this.uri + '/authenticate', {username: username, password: password}).subscribe((resp: any) => {
-      this.router.navigate(['index']);
+  constructor() {
+  }
 
-      localStorage.setItem('auth_token', resp.token);
+  public login(email:string, password: string) {
+
+    this._firebase.signInWithEmailAndPassword(email, password).then(result =>{
+      result.user?.getIdToken().then(token =>{
+        this.token = token;
+        this.router.navigate(['/']);
+      })
     })
+
+    // this.http.post(this.uri + '/authenticate', {username: username, password: password}).subscribe((resp: any) => {
+    //   this.router.navigate(['index']);
+
+    //   localStorage.setItem('auth_token', resp.token);
+    // })
   }
 
-  logout() {
-    localStorage.removeItem('token');
+  public getIdToken(): string{
+    return this.token;
   }
 
-  public get logIn(): boolean {
-    return (localStorage.getItem('token') !== null);
+  public logout() {
+    this._firebase.signOut().then(() =>{
+      this.token='';
+      this.router.navigate(['/']);
+    });
+  }
+
+  public get logState(): boolean {
+    return (this.token != '');
   }
 
 }
