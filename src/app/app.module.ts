@@ -31,6 +31,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AuthService } from './services/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { LoginGuard } from './components/login/login-guard.guard';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
   providers: [
     DataService,
     AuthService,
-    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
+    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class AuthService {
 
-  private token: string = '';
 
   private _firebase = inject(AngularFireAuth);
   private router = inject(Router);
@@ -20,31 +19,28 @@ export class AuthService {
 
     this._firebase.signInWithEmailAndPassword(email, password).then(result =>{
       result.user?.getIdToken().then(token =>{
-        this.token = token;
+        localStorage.setItem("auth_token", token);
         this.router.navigate(['/']);
       })
     })
 
-    // this.http.post(this.uri + '/authenticate', {username: username, password: password}).subscribe((resp: any) => {
-    //   this.router.navigate(['index']);
-
-    //   localStorage.setItem('auth_token', resp.token);
-    // })
   }
 
   public getIdToken(): string{
-    return this.token;
+    return localStorage.getItem("auth_token") as string;
   }
 
   public logout() {
     this._firebase.signOut().then(() =>{
-      this.token='';
-      this.router.navigate(['/']);
+      localStorage.removeItem("auth_token");
+      this.router.navigate(['/index']);
+      window.location.reload();
     });
   }
 
   public get logState(): boolean {
-    return (this.token != '');
+    let token: string = localStorage.getItem("auth_token") as string;
+    return (token != undefined);
   }
 
 }
