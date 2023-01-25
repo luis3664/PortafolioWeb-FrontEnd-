@@ -1,5 +1,5 @@
 <br>
-<div class="container-fluid bg-dark mb-0">
+<div class="container-fluid bg-dark mb-0 ">
   <div class="row text-white">
     <!-- Logo -->
     <div class="col-xs-12 col-md-8 col-lg-3 mt-2">
@@ -16,7 +16,7 @@
     <div class="text-center col-xs-12 col-md-6 col-lg-3 p-4" *ngFor="let item of icons">
       <!-- Template Icon -->
       <ng-template #iconTemplateFooter>
-        <i class="btn contact" [ngClass]="item.icon" [attr.aria-label]="item.iconTitle"><a [href]="item.url"></a></i>
+        <a [href]="item.url"><i class="btn contact" [ngClass]="item.icon" [attr.aria-label]="item.iconTitle"></i></a>
       </ng-template>
 
       <!-- Template SVG -->

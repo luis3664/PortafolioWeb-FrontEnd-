@@ -1,7 +1,8 @@
 <!-- Title Topic -->
-<div class="row ms-5 my-3">
-    <h3 class="pointer" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+ids">{{title}}</h3>
-</div>
+<button class="pointer title ms-5 my-3 p-1" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+ids">
+    {{title}}
+</button>
+<div class="row"></div>
 
 <!-- Bar Topic -->
 <div class="collapse" id="{{ids}}">

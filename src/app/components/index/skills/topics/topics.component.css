@@ -1,17 +1,21 @@
-h3 {
-    color: #000000;
-    font-weight: 700;   
-}
-
-h3:hover {
-    color: #1e1d1d;
-}
-
-h3:active {
+.title {
     color: #ffffff;
+    background-color: #1e1d1d;
+    font-weight: 700;
+    font-size: 30px;
+    border-radius: 12px;
+    box-shadow: 0 9px #999;
+    border: none;
 }
 
-h3.pointer {
+.title:active {
+    color: #ffffff;
+    background-color: #252525;
+    transform: translateY(4px);
+    box-shadow: 0 5px #666;
+}
+
+.title.pointer {
     cursor: pointer;
 }
 

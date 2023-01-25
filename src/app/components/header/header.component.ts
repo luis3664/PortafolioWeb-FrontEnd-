@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Footer } from 'src/app/interfaces/Footer.interface';
 import { Header } from 'src/app/interfaces/Header.interface';
 import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit{
   // Injection
   private _dataService = inject(DataService);
   private _authService = inject(AuthService);
+  private router = inject(Router);
   
 
   public displayLink: boolean = true;
@@ -108,6 +110,11 @@ export class HeaderComponent implements OnInit{
       url: new FormControl(''),
     }),
   })
+
+  // Menu Links
+  // public navi(ruta:string){
+  //   let rout = "/index" + ruta;
+  // }
 
   // Get Header
   public get headerTitle(){

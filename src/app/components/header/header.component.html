@@ -1,16 +1,18 @@
 <!-- Navegator -->
-<nav class="navbar navbar-dark bg-dark fixed-top">
-  <div class="container-fluid d-flex">
-    <div class="navbar-brand aling-self-start">
+<nav class="navbar navbar-dark bg-dark fixed-top m-0 p-0">
+  <div class="container-fluid">
+    <div class="">
       <!-- Logo -->
-      <a  class="navbar-brand" routerLink="/index" 
+      <a routerLink="/index"
         routerLinkActive="active" (isActiveChange)="displayLink=true">
-        <img [src]="logoImg" alt="Logo" width="36" height="29" class="d-inline-block align-text-top">
-        {{logoTitle}}
+        <h4 class="mt-3">
+          <img [src]="logoImg" alt="Logo" width="36" height="29">
+          {{logoTitle}}
+        </h4>
       </a>
       <!-- Button Editor Navbar -->
       <button *ngIf="authenticator" type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editHeader">
-        <i class="bi bi-gear-wide-connected"></i>
+        <i class="bi bi-gear-wide-connected m-0"></i>
       </button>
     </div>
     
@@ -35,32 +37,47 @@
       <!-- Menu List -->
       <div class="offcanvas-body">
         <!-- List -->
-        <ul class="navbar-nav flex-grow-1 pe-3">
-          <li class="nav-item mx-auto" *ngIf="!displayLink">
-            <a class="nav-link" routerLink="/index">Home</a>
-          </li>
-          <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#cards-presentation">{{titlePresentation}}</a>
-          </li>
-          <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#works">{{titleWork}}</a>
-          </li>
-          <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#courses">{{titleCourses}}</a>
-          </li>
-          <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#skills">{{titleSkills}}</a>
-          </li>
-          <li class="nav-item mx-auto" *ngIf="displayLink">
-            <a class="nav-link" href="index#projects">{{titleProjects}}</a>
-          </li>
-          <li *ngIf="!authenticator" class="nav-item mx-auto" (click)="displayLink=false">
-            <a class="nav-link" routerLink="/login">Login</a>
-          </li>
-          <li *ngIf="authenticator && displayLink" class="nav-item mx-auto" (click)="displayLink=false">
-            <a class="nav-link" routerLink="/login" (click)="logOut()">Logout</a>
-          </li>
-        </ul>
+        <div class="btn-group btn-group-vertical">
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="!displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index';">
+            Home
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index#cards-presentation';">
+            {{titlePresentation}}
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index#works';">
+            {{titleWork}}
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index#courses';">
+            {{titleCourses}}
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index#skills';">
+            {{titleSkills}}
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="displayLink"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='index#projects';">
+            {{titleProjects}}
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="!authenticator" (click)="displayLink=false"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='login';">
+            Login
+          </button>
+
+          <button type="button" class="nav-link menu-button mt-2" *ngIf="authenticator" (click)="logOut()"
+            data-bs-dismiss="offcanvas" onclick="window.location.href='login';">
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   </div>

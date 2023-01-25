@@ -1,0 +1,46 @@
+.offcanvas {
+    width: 250px;
+}
+
+.offcanvas .offcanvas-body ul li a:hover {
+    padding-left: 10px;
+    transition: 0.5s;
+}
+
+.offcanvas .offcanvas-body ul li a {
+    font-size: 22px;
+}
+
+.menu-button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: rgb(158, 162, 162);
+    font-size: 23px;
+}
+
+.menu-button:hover {
+    padding-left: 10px;
+    transition: 0.5s;
+    color: azure;
+}
+
+h4 {
+    font-size: 25px;
+    text-decoration: none;;
+    display: inline-block;
+    color: azure;
+    overflow: hidden;
+    border-right: .15em solid rgb(158, 162, 162);
+    white-space: nowrap;
+    animation: typing 4s steps(35, end) forwards, blinking .75s infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blinking {
+    from { border-color: transparent; }
+    to { border-color: rgb(158, 162, 162); }
+}
