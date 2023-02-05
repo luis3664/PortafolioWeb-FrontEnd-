@@ -1,6 +1,6 @@
-import { CardSec1 } from "./CardSec1.interface";
+import { Item } from "./Item";
 
 export interface Section1 {
     title: string;
-    cards: CardSec1[];
+    cards: Item[];
 }

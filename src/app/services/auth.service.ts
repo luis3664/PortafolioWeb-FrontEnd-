@@ -20,7 +20,7 @@ export class AuthService {
   public login(email:string, password: string) {
 
     let timer: Date = new Date();
-    timer.setMinutes( timer.getMinutes() + 15);
+    timer.setMinutes( timer.getMinutes() + 60);
     
     this._firebase.signInWithEmailAndPassword(email, password).then(result =>{
       alert("Valid Entry");

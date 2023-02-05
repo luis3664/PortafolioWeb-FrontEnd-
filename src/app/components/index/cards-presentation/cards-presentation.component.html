@@ -70,16 +70,10 @@
                   <label for="title">Title New Card</label>
                   <input type="text" class="form-control" id="title" formControlName="title"/>
                 </div>
-                <div formArrayName="textBody" *ngFor="let item of newTexts; let i = index">
-                  <form [formGroupName]="i">
-                    <div class="col-auto">
-                      <label for="text">Text Body Line {{i+1}}</label>
-                      <input type="text" class="form-control" id="text" formControlName="text"/>
-                    </div>
-                  </form>
+                <div class="col-auto">
+                  <label for="textBody">Text Body</label>
+                  <input type="text" class="form-control" id="textBody" formControlName="textBody"/>
                 </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addLineText()">Add Line</button>
-                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLineText()">Delete Line</button>
                 <div class="col-auto">
                   <label for="textEnd">Text End Card</label>
                   <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>
@@ -107,16 +101,10 @@
                   <label for="title">Title Card</label>
                   <input type="text" class="form-control" id="title" formControlName="title"/>
                 </div>
-                <div formArrayName="textBody" *ngFor="let item of editTexts; let i = index">
-                  <form [formGroupName]="i">
-                    <div class="col-auto">
-                      <label for="text">Text Body Line {{i+1}}</label>
-                      <input type="text" class="form-control" id="text" formControlName="text"/>
-                    </div>
-                  </form>
+                <div class="col-auto">
+                  <label for="textBody">Text Body</label>
+                  <input type="text" class="form-control" id="textBody" formControlName="textBody"/>
                 </div>
-                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="addLineEdit()">Add Line</button>
-                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLineEdit()">Delete Line</button>
                 <div class="col-auto">
                   <label for="text">Text End Card</label>
                   <input type="text" class="form-control" id="textEnd" formControlName="textEnd"/>

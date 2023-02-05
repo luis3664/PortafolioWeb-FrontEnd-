@@ -16,10 +16,8 @@ export class FooterComponent implements OnInit {
 
   // Items
   private footerSec!: Footer;
-  private logoCurrent!: Logo;
   private imgLogo!: ImgLogo;
   private indexCurrent!: number;
-  private logoClear: any;
   public svgSelectAddFooter: boolean = false;
   public svgSelectEditFooter: boolean = false;
   private iconClear!: Icon;
@@ -29,8 +27,6 @@ export class FooterComponent implements OnInit {
   private titleFooter!: string;
   private textFooter!: string;
   private logos!: Logo[];
-  private nameImgLogo!: string;
-  private urlImgLogo!: string;
 
   // Inject
   private _dataService = inject(DataService);
@@ -40,7 +36,6 @@ export class FooterComponent implements OnInit {
   private authentication: boolean = false;
 
   constructor (){
-    this.logoClear= {name: "", url: ""};
     this.iconClear = {name: "", svg: false, icon: "", svgUrl: "", url:""}
   }
 
@@ -56,15 +51,12 @@ export class FooterComponent implements OnInit {
       // Items
       this.footerSec = res[0];
       this.indexCurrent = res[0].currentIndexLogo;
-      this.logoCurrent = this.logos[this.indexCurrent];
       this.setLogoEdit(this.footerSec);
 
       // Initializers
       this.iconsFooter = this.footerSec.icons;
       this.titleFooter = this.footerSec.title;
       this.textFooter = this.footerSec.text;
-      this.nameImgLogo = this.logoCurrent.name as string;
-      this.urlImgLogo = this.logoCurrent.url as string;
       this.authentication = this._authService.logState;
     });
 
@@ -80,15 +72,6 @@ export class FooterComponent implements OnInit {
   formLogo = new FormGroup({
     title: new FormControl(''),
     text: new FormControl(''),
-    currentIndexLogo: new FormControl(),
-    addLogo: new FormGroup({
-      name: new FormControl(''),
-      url: new FormControl(''),
-    }),
-    editLogo: new FormGroup({
-      name: new FormControl(''),
-      url: new FormControl(''),
-    }),
   })
   formIcons = new FormGroup({
     select: new FormControl(0),
@@ -129,68 +112,7 @@ export class FooterComponent implements OnInit {
     let footer = this.formLogo.getRawValue();
     this.footerSec.title = footer.title as string;
     this.footerSec.text = footer.text as string;
-    this.footerSec.currentIndexLogo = footer.currentIndexLogo as number;
     this._dataService.updateFooter(this.footerSec);
-  }
-
-  // Logos Set
-  public get logosSelect(): any{
-    return this.logos;
-  }
-
-  // Logo Img name
-  public get logoName(): string{
-    return this.nameImgLogo;
-  }
-
-  // Logo Img URL
-  public get logoImg(): string{
-    return this.urlImgLogo;
-  }
-  public addLogo(){
-    let logo: Logo = this.formLogo.getRawValue().addLogo;
-    this.imgLogo.logos.push(logo);
-    this._dataService.updateLogoImg(this.imgLogo);
-    this.formLogo.controls.addLogo.patchValue(this.logoClear);
-  }
-  public editLogo(){
-    let ref = this.formLogo.controls.editLogo.getRawValue();
-    let select = this.formLogo.controls.currentIndexLogo.getRawValue();
-    this.imgLogo.logos[select].name = ref.name;
-    this.imgLogo.logos[select].url = ref.url;
-    this._dataService.updateLogoImg(this.imgLogo);
-  }
-  public setEditLogo(){
-    let ref = this.formLogo.getRawValue().currentIndexLogo as number;
-    if(ref == 0){
-      alert("To maintain the aesthetics of the page, this is the only logo that cannot be deleted or edit.")
-      this.formLogo.controls.editLogo.patchValue({name: "None", url: "None"})
-    }else{
-      this.formLogo.controls.editLogo.patchValue(this.imgLogo.logos[ref])
-    }
-  }
-  public deleteLogo(){
-    let index = this.formLogo.getRawValue().currentIndexLogo as number;
-    if(index == 0){
-      alert("To maintain the aesthetics of the page, this is the only logo that cannot be deleted or edit.")
-    }else {
-      if(this.indexCurrent == index){
-        this.indexCurrent = 0;
-      };
-      if(index == this.imgLogo.currentId){
-        this.imgLogo.currentId = 0;
-      };
-      if(index < this.indexCurrent){
-        this.indexCurrent -= 1;
-      };
-      if(index < this.imgLogo.currentId){
-        this.imgLogo.currentId -= 1;
-      };
-      this.footerSec.currentIndexLogo = this.indexCurrent;
-      this.imgLogo.logos.splice(index, 1);
-      this._dataService.updateFooter(this.footerSec);
-      this._dataService.updateLogoImg(this.imgLogo);
-    }
   }
   
   // Icons

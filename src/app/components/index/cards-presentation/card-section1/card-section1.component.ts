@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { CardSec1 } from 'src/app/interfaces/CardSec1.interface';
 import { Img } from 'src/app/interfaces/Img.interface';
+import { Item } from 'src/app/interfaces/Item';
 
 @Component({
   selector: 'app-card-section1',
@@ -13,11 +13,11 @@ export class CardSection1Component implements OnInit {
   @Input() interaction: any;
 
   // Items
-  private card!: CardSec1;
+  private card!: Item;
 
   // Initializers
   private titleCard!: string;
-  private textBody!: Array<any>;
+  private textBody!: string;
   private textEnd!: string;
   private img!: Array<Img>;
   private slideButton!: Boolean;
@@ -29,17 +29,17 @@ export class CardSection1Component implements OnInit {
   }
 
   ngOnInit(){
-    this._dataService.readSections().subscribe(res =>{
+    this._dataService.readSec1().subscribe(res =>{
       // Items
-      this.card = res[0].cards[this.interaction];
+      this.card = res.listItem[this.interaction];
 
       // Initializers
       this.titleCard = this.card.title;
-      this.textBody = this.card.textBody;
-      this.textEnd = this.card.textEnd;
-      this.img = this.card.img;
-      this.slideButton = this.card.img.length > 1;
-    });
+      this.textBody = this.card.text;
+      this.textEnd = this.card.textCard.text;
+      this.img = this.card.imgAssigned;
+      this.slideButton = this.card.imgAssigned.length > 1;
+    })
   }
   
   // Title Card
@@ -48,7 +48,7 @@ export class CardSection1Component implements OnInit {
   }
   
   // Texts Body Card
-  public get texts(): Array<any> {
+  public get texts(): string {
     return this.textBody;
   }
 

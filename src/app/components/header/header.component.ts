@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Footer } from 'src/app/interfaces/Footer.interface';
 import { Header } from 'src/app/interfaces/Header.interface';
 import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
 import { Logo } from 'src/app/interfaces/Logo.interface';
+import { Section } from 'src/app/interfaces/Section.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -17,7 +17,7 @@ import { DataService } from 'src/app/services/data.service';
 export class HeaderComponent implements OnInit{
 
   // Items
-  private header!: Header;
+  private header!: Section;
   private imgLogo!: ImgLogo;
   private logoCurrent!: any;
   private selectEdit!: number;
@@ -40,7 +40,6 @@ export class HeaderComponent implements OnInit{
   // Injection
   private _dataService = inject(DataService);
   private _authService = inject(AuthService);
-  private router = inject(Router);
   
 
   public displayLink: boolean = true;
@@ -49,41 +48,24 @@ export class HeaderComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    // Logos
-    this._dataService.readLogoImg().subscribe(res => {
-      // Items
-      this.imgLogo = res[0];
-      this.logos = this.imgLogo.logos;
-      this.logoCurrent = this.logos[this.imgLogo.currentId];
-
-      // Initializers
-      this.logo = this.logoCurrent.url;
-    })
-
-    // Footer Logo
-    this._dataService.readFooter().subscribe(res =>{
-      this.footer = res[0];
-      this.indexFooter = res[0].currentIndexLogo;
-    })
-
     // Text Header
-    this._dataService.readHeader().subscribe(header => {
+    this._dataService.readHeader().subscribe(res => {
       // Items
-      this.header = header[0];
-      this.setCurrentHeader(header[0]);
+      this.header = res;
+      this.setCurrentHeader(res.title);
 
       // Initializers
-      this.textHeader = this.header.text
+      this.textHeader = res.title
     })
 
     // Menu
-    this._dataService.readSections().subscribe(titles => {
+    this._dataService.readAllSec().subscribe(secs => {
       // Initializers
-      this.titleSec1 = titles[0].title;
-      this.titleSec2 = titles[1].title;
-      this.titleSec3 = titles[2].title;
-      this.titleSec4 = titles[3].title;
-      this.titleSec5 = titles[4].title;
+      this.titleSec1 = secs[0].title;
+      this.titleSec2 = secs[1].title;
+      this.titleSec3 = secs[2].title;
+      this.titleSec4 = secs[3].title;
+      this.titleSec5 = secs[4].title;
       // Login
       this.authentication = this._authService.logState;
     })
@@ -99,30 +81,10 @@ export class HeaderComponent implements OnInit{
   formModule = new FormGroup({
     text: new FormControl('', Validators.required)
   })
-  formLogo = new FormGroup({
-    currentId: new FormControl(0, Validators.required),
-    addLogo: new FormGroup({
-      name: new FormControl(''),
-      url: new FormControl(''),
-    }),
-    editLogo: new FormGroup({
-      name: new FormControl(''),
-      url: new FormControl(''),
-    }),
-  })
 
-  // Menu Links
-  // public navi(ruta:string){
-  //   let rout = "/index" + ruta;
-  // }
-
-  // Get Header
-  public get headerTitle(){
-    return this._dataService.readHeader();
-  }
   // Set Current Header
   private setCurrentHeader(header: any){
-    this.formModule.patchValue(header);
+    this.formModule.controls.text.patchValue(header);
   }
 
   // Login
@@ -132,75 +94,17 @@ export class HeaderComponent implements OnInit{
   public logOut(){
     this._authService.logout();
   }
-
-  // Logo Img
-  public get logoImg(){
-    return this.logo;
-  }
-  public get logosArray(){
-    return this.logos;
-  }
-
-  public addLogo(){
-    let logo: Logo = this.formLogo.getRawValue().addLogo;
-    this.imgLogo.logos.push(logo);
-    this._dataService.updateLogoImg(this.imgLogo);
-  }
-
-  public updateLogo(){
-    let ref = this.formLogo.getRawValue().currentId as number;
-    this.imgLogo.currentId = ref;
-    this._dataService.updateLogoImg(this.imgLogo);
-  }
-
-  public editLogo(){
-    let ref = this.formLogo.controls.editLogo.getRawValue();
-    this.imgLogo.logos[this.selectEdit].name = ref.name;
-    this.imgLogo.logos[this.selectEdit].url = ref.url;
-    this._dataService.updateLogoImg(this.imgLogo);
-  }
-
-  public setEditLogo(){
-    let ref = this.formLogo.getRawValue().currentId as number;
-    if(ref == 0){
-      alert("To maintain the aesthetics of the page, this is the only logo that cannot be deleted or edit.")
-      this.formLogo.controls.editLogo.patchValue({name: "None", url: "None"})
-    }else{
-      this.selectEdit = ref;
-      this.formLogo.controls.editLogo.patchValue(this.imgLogo.logos[ref])
-    }
-  }
-  
-  public deleteLogo(){
-    let index = this.formLogo.getRawValue().currentId as number;
-    if(index == 0){
-      alert("To maintain the aesthetics of the page, this is the only logo that cannot be deleted or edit.")
-    }else {
-      if(this.imgLogo.currentId == index){
-        this.imgLogo.currentId = 0;
-      }
-      if(this.indexFooter == index){
-        this.indexFooter = 0;
-      }
-      if(index < this.imgLogo.currentId){
-        this.imgLogo.currentId -= 1;
-      }
-      if(index < this.indexFooter){
-        this.indexFooter -= 1;
-      }
-      this.footer.currentIndexLogo = this.indexFooter;
-      this.imgLogo.logos.splice(index, 1);
-      this._dataService.updateFooter(this.footer);
-      this._dataService.updateLogoImg(this.imgLogo);
-    }
-  }
   
   // Logo Title
   public get logoTitle(){
     return this.textHeader;
   }
   public updateLogoTitle(){
-    this._dataService.updateHeader((this.formModule.getRawValue()) as Header);
+    let item: Section =  this.header;
+    item.title = this.formModule.controls.text.getRawValue() as string;
+    this._dataService.updateHeaderTitle(item).subscribe(res =>{
+      this.textHeader = item.title;
+    });
   }
 
   // Titles Menu

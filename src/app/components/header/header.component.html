@@ -6,7 +6,7 @@
       <a routerLink="/index"
         routerLinkActive="active" (isActiveChange)="displayLink=true">
         <h4 class="mt-3">
-          <img [src]="logoImg" alt="Logo" width="36" height="29">
+          <img src="../../../assets/logo.png" alt="Logo" width="36" height="29">
           {{logoTitle}}
         </h4>
       </a>
@@ -100,67 +100,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editLogo" data-bs-dismiss="modal">Change Logo</button>
-        <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" (click)="updateLogoTitle()">Save</button>
+        <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="updateLogoTitle()">Save & Close</button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Modal Change logo -->
-<div class="modal fade" id="editLogo" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header">
-        <h5 class="modal-title">Change Header logo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body align-self-auto">
-        <form [formGroup]="formLogo" class="form-group">
-          <div class="col-auto">
-            <label for="currentId" class="form-label">Select Logo</label>
-            <select id="currentId" class="form-select" formControlName="currentId" name="currentId">
-              <option [value]="i" *ngFor="let logo of logosArray; let i = index">
-                {{logo.name}}
-              </option>
-            </select>
-            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm">Add Logo</button>
-            <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteLogo()">Delete Selection</button>
-            <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="setEditLogo()">Edit Selection</button>
-          </div>
-          <div id="addForm" class="collapse">
-            <form formGroupName="addLogo">
-              <div class="col-auto">
-                <label for="nameNewLogoHeader">Name New Logo</label>
-                <input type="text" class="form-control" id="nameNewLogoHeader" formControlName="name" />
-              </div>
-              <div class="col-auto">
-                <label for="urlNewLogoHeader">URL New logo</label>
-                <input type="text" class="form-control" id="urlNewLogoHeader" formControlName="url" />
-              </div>
-              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addForm" (click)="addLogo()">Save New Logo</button>
-            </form>
-          </div>
-          <div id="editForm" class="collapse">
-            <form id="editLogo" formGroupName="editLogo">
-              <div class="col-auto">
-                <label for="nameEditHeader">Name</label>
-                <input type="text" class="form-control" id="nameEditHeader" formControlName="name" />
-              </div>
-              <div class="col-auto">
-                <label for="urlNewHeader">URL</label>
-                <input type="text" class="form-control" id="urlNewHeader" formControlName="url" />
-              </div>
-              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editForm" (click)="editLogo()">Save Logo</button>
-            </form>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editHeader" data-bs-dismiss="modal">Edit Text</button>
-        <button [disabled]="formLogo.invalid" type="button" class="btn btn-dark" (click)="updateLogo()">Save Selection</button>
-      </div>
-    </div>
-  </div>
-</div>
-
