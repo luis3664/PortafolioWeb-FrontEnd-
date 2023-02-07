@@ -1,7 +1,7 @@
 export interface Icon{
+    id: number,
     name: string,
     svg: boolean,
-    icon: string,
-    svgUrl: string,
+    identity: string,
     url: string
 }

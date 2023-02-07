@@ -6,6 +6,7 @@ import { Logo } from 'src/app/interfaces/Logo.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
+import { Section } from 'src/app/interfaces/Section.interface';
 
 @Component({
   selector: 'app-footer',
@@ -15,12 +16,12 @@ import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
 export class FooterComponent implements OnInit {
 
   // Items
-  private footerSec!: Footer;
+  private footerSec!: Section;
   private imgLogo!: ImgLogo;
   private indexCurrent!: number;
   public svgSelectAddFooter: boolean = false;
   public svgSelectEditFooter: boolean = false;
-  private iconClear!: Icon;
+  private iconClear!: any;
   
   // Initializers
   private iconsFooter!: Icon[];
@@ -36,29 +37,24 @@ export class FooterComponent implements OnInit {
   private authentication: boolean = false;
 
   constructor (){
-    this.iconClear = {name: "", svg: false, icon: "", svgUrl: "", url:""}
+    this.iconClear = {name: "", svg: false, identity: "", url:""}
   }
 
   ngOnInit(): void {
-    // Logo Image
-    this._dataService.readLogoImg().subscribe(res =>{
-      this.imgLogo = res[0];
-      this.logos = this.imgLogo.logos;
-    });
+    // Authentication
+    this.authentication = this._authService.logState;
 
     // Footer
-    this._dataService.readFooter().subscribe(res =>{
+    this._dataService.readFooter().subscribe(res => {
       // Items
-      this.footerSec = res[0];
-      this.indexCurrent = res[0].currentIndexLogo;
-      this.setLogoEdit(this.footerSec);
+      this.footerSec = res;
+      this.setLogoEdit(res);
 
       // Initializers
-      this.iconsFooter = this.footerSec.icons;
-      this.titleFooter = this.footerSec.title;
-      this.textFooter = this.footerSec.text;
-      this.authentication = this._authService.logState;
-    });
+      this.titleFooter = res.title;
+      this.textFooter = res.listItem[0].text;
+      this.iconsFooter = res.listItem[0].iconAssigned;
+    })
 
     // Forms
     this.formIcons.controls.addIcon.get('svg')?.valueChanges.subscribe(res =>{
@@ -78,15 +74,13 @@ export class FooterComponent implements OnInit {
     addIcon: new FormGroup({
       name: new FormControl(),
       svg: new FormControl(false),
-      icon: new FormControl(),
-      svgUrl: new FormControl(),
+      identity: new FormControl(),
       url: new FormControl()
     }),
     editIcon: new FormGroup({
       name: new FormControl(),
       svg: new FormControl(false),
-      icon: new FormControl(),
-      svgUrl: new FormControl(),
+      identity: new FormControl(),
       url: new FormControl()
     })
   })
@@ -105,14 +99,40 @@ export class FooterComponent implements OnInit {
   public get text(): string{
     return this.textFooter;
   }
-  public setLogoEdit(footer: Footer){
-    this.formLogo.patchValue(footer);
+  public setLogoEdit(footer: Section){
+    this.formLogo.controls.title.patchValue(footer.title);
+    this.formLogo.controls.text.patchValue(footer.listItem[0].text);
   }
   public saveFooter(){
     let footer = this.formLogo.getRawValue();
-    this.footerSec.title = footer.title as string;
-    this.footerSec.text = footer.text as string;
-    this._dataService.updateFooter(this.footerSec);
+
+    if(this.footerSec.title != footer.title && this.footerSec.listItem[0].text != footer.text){
+      this.footerSec.title = footer.title as string;
+      this.footerSec.listItem[0].text = footer.text as string;
+      
+      this._dataService.updateFooter(this.footerSec).subscribe(() =>{
+        this.titleFooter = footer.title as string;
+      });
+
+      this._dataService.updateItem(this.footerSec.listItem[0]).subscribe(() =>{
+        this.textFooter = footer.text as string;
+      })
+    }else{
+      if(this.footerSec.title != footer.title){
+        this.footerSec.title = footer.title as string;
+        this._dataService.updateFooter(this.footerSec).subscribe(() =>{
+          this.titleFooter = footer.title as string;
+        });
+      }
+      
+      if(this.footerSec.listItem[0].text != footer.text){
+        this.footerSec.listItem[0].text = footer.text as string;
+        this._dataService.updateItem(this.footerSec.listItem[0]).subscribe(() =>{
+          this.textFooter = footer.text as string;
+        })
+      }
+    };
+
   }
   
   // Icons
@@ -121,28 +141,46 @@ export class FooterComponent implements OnInit {
   }
   public addIcon(){
     let iconNew = this.formIcons.controls.addIcon.getRawValue();
-    this.footerSec.icons.push(iconNew as Icon);
-    this._dataService.updateFooter(this.footerSec);
+    let id: number;
+    
+    this._dataService.addIcon(iconNew).subscribe(res =>{
+      id = res as number;
+      this._dataService.setItemIcon(this.footerSec.listItem[0].id, id).subscribe(() =>{});
+      this.iconsFooter.push(iconNew as Icon);
+    })
+
     this.formIcons.controls.addIcon.patchValue(this.iconClear);
+  }
+  public identityAdd(){
+    this.formIcons.controls.addIcon.controls.identity.patchValue("");
   }
   public setEditIcon(){
     let ref = this.formIcons.controls.select.getRawValue() as number;
-    let select = this.footerSec.icons[ref];
+    let select = this.icons[ref];
     this.formIcons.controls.editIcon.patchValue(select);
   }
   public editIcon(){
     let ref = this.formIcons.controls.select.getRawValue() as number;
-    this.footerSec.icons[ref] = this.formIcons.controls.editIcon.getRawValue() as Icon;
-    this._dataService.updateFooter(this.footerSec);
+    let iconNew: Icon = this.iconsFooter[ref];
+
+    iconNew.identity = this.formIcons.controls.editIcon.controls.identity.getRawValue();
+    iconNew.name = this.formIcons.controls.editIcon.controls.name.getRawValue();
+    iconNew.svg = this.formIcons.controls.editIcon.controls.svg.getRawValue() as boolean;
+    iconNew.url = this.formIcons.controls.editIcon.controls.url.getRawValue();
+
+    this._dataService.updateIcon(iconNew).subscribe(() =>{});
   }
   public deleteIcon(){
     let ref = this.formIcons.controls.select.getRawValue() as number;
     if(ref == 0){
       alert("To maintain the aesthetics of the page, this Icon in Footer cannot be deleted.")
     }else{
+      let iconDel: number = this.iconsFooter[ref].id;
       this.formIcons.controls.select.patchValue(0);
-      this.footerSec.icons.splice(ref, 1);
-      this._dataService.updateFooter(this.footerSec);
+      this._dataService.delItemIcon(this.footerSec.listItem[0].id, iconDel).subscribe(() =>{});
+      this._dataService.delIcon(iconDel).subscribe(() =>{
+        this.iconsFooter.slice(ref, 1);
+      });
     }
   }
 

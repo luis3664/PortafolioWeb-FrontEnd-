@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Img } from 'src/app/interfaces/Img.interface';
-import { Item } from 'src/app/interfaces/Item';
+import { Item } from 'src/app/interfaces/Item.interface';
 
 @Component({
   selector: 'app-card-section1',

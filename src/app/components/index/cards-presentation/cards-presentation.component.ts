@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Section1 } from 'src/app/interfaces/Section1.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
-import { Item } from 'src/app/interfaces/Item';
+import { Item } from 'src/app/interfaces/Item.interface';
 
 @Component({
   selector: 'app-cards-presentation',
