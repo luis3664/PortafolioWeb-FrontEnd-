@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit{
 
       // Initializers
       this.textHeader = res.title
+      this.authentication = this._authService.logState;
     })
 
     // Menu
@@ -66,8 +67,6 @@ export class HeaderComponent implements OnInit{
       this.titleSec3 = secs[2].title;
       this.titleSec4 = secs[3].title;
       this.titleSec5 = secs[4].title;
-      // Login
-      this.authentication = this._authService.logState;
     })
 
     // Identificator pathname
@@ -102,8 +101,10 @@ export class HeaderComponent implements OnInit{
   public updateLogoTitle(){
     let item: Section =  this.header;
     item.title = this.formModule.controls.text.getRawValue() as string;
+    console.log(this.textHeader)
     this._dataService.updateHeaderTitle(item).subscribe(res =>{
       this.textHeader = item.title;
+      console.log(this.textHeader)
     });
   }
 

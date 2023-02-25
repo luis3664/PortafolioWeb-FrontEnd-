@@ -42,15 +42,15 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     // Authentication
-    this.authentication = this._authService.logState;
-
+    
     // Footer
     this._dataService.readFooter().subscribe(res => {
       // Items
       this.footerSec = res;
       this.setLogoEdit(res);
-
+      
       // Initializers
+      this.authentication = this._authService.logState;
       this.titleFooter = res.title;
       this.textFooter = res.listItem[0].text;
       this.iconsFooter = res.listItem[0].iconAssigned;

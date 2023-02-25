@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, collectionData, doc, Firestore, updateDoc} from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 // Interfaces
@@ -10,6 +10,8 @@ import { ImgLogo } from '../interfaces/ImgLogo.interface';
 import { Section } from '../interfaces/Section.interface';
 import { Item } from '../interfaces/Item.interface';
 import { Icon } from '../interfaces/Icon.interface';
+import { Img } from '../interfaces/Img.interface';
+import { Text } from '../interfaces/Text.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +34,7 @@ export class DataService {
   }
 
   public updateHeaderTitle(sec: Section): Observable<Object>{
-    return this.http.put(`${this.urlApiSec}6/update`, sec);
+    return this.http.put(`${this.urlApiSec}update`, sec);
   }
 
   // ------------------------------- Footer -------------------------------
@@ -41,18 +43,12 @@ export class DataService {
   }
   
   public updateFooter(sec: Section){
-    return this.http.put(`${this.urlApiSec}7/update`, sec);
+    return this.http.put(`${this.urlApiSec}update`, sec);
   }
   
-  // ------------------------------- Logo Img ----------------------------
-  public readLogoImg(): Observable<ImgLogo[]>{
-    let logoRef = collection(this.firestore, 'imgLogo');
-    return collectionData(logoRef) as Observable<ImgLogo[]>;
-  }
-  
-  public updateLogoImg(imgLogo: any){
-    let logoDocRef = doc(this.firestore, 'imgLogo/TazKzQxYWxnRoXqzxwlJ');
-    return updateDoc(logoDocRef, imgLogo);
+  // ------------------------------- Card Presentation ----------------------------
+  public cardsP(){
+    return this.http.get(`${this.urlApi}cardP/readAll`)
   }
 
   // ------------------------------- Sections --------------------------------
@@ -70,9 +66,12 @@ export class DataService {
     return this.http.get<Section>(`${this.urlApiSec}1`);
   }
 
-  public updateSec1(sec1: any){
-    let sec1DocRef = doc(this.firestore, 'sections/1');
-    return updateDoc(sec1DocRef, sec1);
+  public updateSec1(sec1: Section){
+    return this.http.put(`${this.urlApiSec}update`, sec1);
+  }
+
+  public setSec1Item(idItem: number){
+    return this.http.put(`${this.urlApiSec}1/addItem?idItem=${idItem}`, {})
   }
 
   // ------------------------------- Section 2 -------------------------------
@@ -83,7 +82,6 @@ export class DataService {
   public updateSec2(sec2: any){
     let sec2DocRef = doc(this.firestore, 'sections/2');
     return updateDoc(sec2DocRef, sec2);
-  
   }
 
   // ------------------------------- Section 3 -------------------------------
@@ -117,6 +115,12 @@ export class DataService {
   }
 
   // ------------------------------- Items -----------------------------------
+  public addItem(item: Item){
+    item.imgAssigned = [];
+    item.textCard = {id: 0, text: ""};
+    return this.http.post<Item>(`${this.urlApi}item/add`, item).pipe(take(1));
+  }
+
   public readItem(id: number): Observable<Item>{
     return this.http.get<Item>(`${this.urlApi}item/${id}`);
   }
@@ -125,8 +129,21 @@ export class DataService {
     return this.http.put(`${this.urlApi}item/update`, item);
   }
 
+  public deleteItem(id: number){
+    return this.http.delete(`${this.urlApi}item/delete?id=${id}`, {});
+  }
+
   public setItemIcon(idItem: number, idIcon: number){
     return this.http.post(`${this.urlApi}item/addIcon?idItem=${idItem}&idIcon=${idIcon}`, {})
+  }
+
+  public setItemImg(idItem: number, idImg: number){
+    return this.http.put(`${this.urlApi}item/addImg?idItem=${idItem}&idImg=${idImg}`, {})
+  }
+
+  public setItemText(idItem: number, idText: number){
+    console.log(`${this.urlApi}item/addText?idItem=${idItem}&idText=${idText}`);
+    return this.http.put(`${this.urlApi}item/addText?idItem=${idItem}&idText=${idText}`, {})
   }
   
   public delItemIcon(idItem: number, idIcon: number){
@@ -137,17 +154,34 @@ export class DataService {
   public addIcon(icon: any){
     return this.http.post(`${this.urlApi}icon/add`, icon);
   }
-
+  
   public readIcon(id: number): Observable<Icon>{
     return this.http.get<Icon>(`${this.urlApi}icon/${id}`);
   }
-
+  
   public updateIcon(icon: Icon){
     return this.http.put(`${this.urlApi}icon/update`, icon);
   }
-
+  
   public delIcon(id: number){
-    return this.http.delete(`${this.urlApi}icon/delete?id=${id}`)
+    return this.http.delete(`${this.urlApi}icon/delete?id=${id}`);
+  }
+  
+  // ------------------------------- Imagens -----------------------------------
+  public addImg(img: Img){
+    return this.http.post(`${this.urlApi}img/add`, img);
   }
 
+  public addMultiImg(imgList: Array<Img>){
+    return this.http.post(`${this.urlApi}img/addMulti`, imgList);
+  }
+
+  // ------------------------------- Text Card -----------------------------------
+  public addTextC(textC: any) {
+    return this.http.post(`${this.urlApi}text/add`, textC)
+  }
+
+  public deleteTextC(id: number) {
+    return this.http.delete(`${this.urlApi}text/delete?id=${id}`)
+  }
 }

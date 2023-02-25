@@ -1,10 +1,10 @@
 <!-- Card -->
 <div class="row g-0">
-    <div id="carousel{{interaction}}" class="carousel carousel-dark slide col-md-4 my-auto mx-auto" data-bs-ride="carousel">
+    <div id="carousel{{interaction}}" class="carousel carousel-dark slide col-md-4 my-auto mx-auto p-1" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item" [ngClass]="{'active': i == 0}" data-bs-interval="3000" *ngFor="let img of imgs; let i = index">
+            <figure class="carousel-item" [ngClass]="{'active': i == 0}" data-bs-interval="3000" *ngFor="let img of imgs; let i = index">
                 <img [src]="img.url" class="img-fluid rounded d-block my-auto mx-auto" [alt]="img.name">
-            </div>
+            </figure>
         </div>
         <!-- Side Button -->
         <button class="carousel-control-prev" type="button" attr.data-bs-target="#carousel{{interaction}}" data-bs-slide="prev" *ngIf="buttons">
@@ -22,7 +22,7 @@
             <h5 class="card-title">{{title}}</h5>
             <p class="card-text">{{texts}}</p>
             <p class="card-text"><small class="text-muted">{{text2}}</small></p>
-       </div>
+        </div>
     </div>
 </div>
 

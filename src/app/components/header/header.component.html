@@ -1,19 +1,21 @@
 <!-- Navegator -->
-<nav class="navbar navbar-dark bg-dark fixed-top m-0 p-0">
-  <div class="container-fluid">
-    <div class="">
-      <!-- Logo -->
-      <a routerLink="/index"
-        routerLinkActive="active" (isActiveChange)="displayLink=true">
-        <h4 class="mt-3">
-          <img src="../../../assets/logo.png" alt="Logo" width="36" height="29">
-          {{logoTitle}}
-        </h4>
-      </a>
-      <!-- Button Editor Navbar -->
-      <button *ngIf="authenticator" type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#editHeader">
-        <i class="bi bi-gear-wide-connected m-0"></i>
-      </button>
+<nav class="navbar navbar-dark bg-dark m-0 p-0">
+  <div class="container-fluid row">
+    <div class="col-12 col-md-10">
+      <div class="row">
+        <!-- Logo -->
+        <a class="col-10 col-md-4 w-auto" routerLink="/index"
+          routerLinkActive="active" (isActiveChange)="displayLink=true">
+          <h4 class="mt-3">
+            <img src="../../../assets/logo.png" alt="Logo" width="36" height="29">
+            {{logoTitle}}
+          </h4>
+        </a>
+        <!-- Button Editor Navbar -->
+        <button *ngIf="authenticator" type="button" class="btn text-white col-1" data-bs-toggle="modal" data-bs-target="#editHeader">
+          <i class="bi bi-gear-wide-connected m-0"></i>
+        </button>
+      </div>
     </div>
     
       
@@ -84,7 +86,7 @@
 </nav>
 
 <!-- Modal Editor Header -->
-<div class="modal fade" id="editHeader" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editHeader" tabindex="-1" aria-hidden="true" data-bs-backdrop="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">

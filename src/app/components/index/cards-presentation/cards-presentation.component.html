@@ -1,8 +1,4 @@
-<article>
-  <!--Space Header-->
-  <br>
-  <br>
-  <br>
+<article class="pt-3">
   <!--Title Section-->
   <h2 class="text-center mt-4 mt-md-0">{{titleSection}}
     <!-- Button Editor Section 1 -->
@@ -32,7 +28,7 @@
         <!-- Modal Footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editCardSec1" data-bs-dismiss="modal">Edit Cards</button>
-          <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+          <button [disabled]="formModule.invalid" type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="saveTitle()">Save & Close</button>
         </div>
       </div>
     </div>
