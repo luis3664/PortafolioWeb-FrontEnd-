@@ -136,8 +136,8 @@
   <!--Cards Section-->
   <div class="d-flex justify-content-evenly row">
     <app-card-section1 
-      *ngFor="let card of cards; let i = index" [interaction]="i"
-      class="card text-white bg-dark m-2 col-ms-12 border border-dark border-3"
-    ></app-card-section1>
+      *ngFor="let card of cards; let i = index" [interaction]="i" [cardi] ="card"
+      class="card text-white bg-dark m-2 col-ms-12 border border-dark border-3 d-flex align-items-center justify-content-center">
+    </app-card-section1>
   </div>
 </article>

@@ -115,8 +115,11 @@ export class CardsPresentationComponent implements OnInit {
       itemNew = res;
       this._dataService.setSec1Item(itemNew.id).subscribe(res => {
         this._dataService.setItemText(itemNew.id, text.id).subscribe(res => {
+          itemNew.textCard = res as Text;
           for (let i = 0; i < images.length; i++){
-            this._dataService.setItemImg(itemNew.id, images[i].id).subscribe(res => {});
+            this._dataService.setItemImg(itemNew.id, images[i].id).subscribe(res => {
+              itemNew = res as Item;
+            });
           };
         });
       });
@@ -198,7 +201,6 @@ export class CardsPresentationComponent implements OnInit {
         });
       }
       this.cardsArray[ref] = cardEdit;
-      window.location.reload();
     })
   }
 

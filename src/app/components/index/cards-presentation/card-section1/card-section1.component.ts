@@ -11,9 +11,7 @@ import { Item } from 'src/app/interfaces/Item.interface';
 export class CardSection1Component implements OnInit {
 
   @Input() interaction: any;
-
-  // Items
-  private card!: Item;
+  @Input() cardi: any;
 
   // Initializers
   private titleCard!: string;
@@ -29,17 +27,12 @@ export class CardSection1Component implements OnInit {
   }
 
   ngOnInit(){
-    this._dataService.readSec1().subscribe(res =>{
-      // Items
-      this.card = res.listItem[this.interaction];
-
-      // Initializers
-      this.titleCard = this.card.title;
-      this.textBody = this.card.text;
-      this.textEnd = this.card.textCard.text;
-      this.img = this.card.imgAssigned;
-      this.slideButton = this.card.imgAssigned.length > 1;
-    })
+    // Initializers
+    this.titleCard = this.cardi.title;
+    this.textBody = this.cardi.text;
+    this.textEnd = this.cardi.textCard.text;
+    this.img = this.cardi.imgAssigned;
+    this.slideButton = this.cardi.imgAssigned.length > 1;
   }
   
   // Title Card

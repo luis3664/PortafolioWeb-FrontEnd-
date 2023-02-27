@@ -27,6 +27,7 @@ export class AuthService {
       result.user?.getIdToken().then(token =>{
         // localStorage.setItem("auth_token", token);
         this.cookies.set("auth_token", token, timer);
+        window.location.reload();
         this.router.navigate(['/']);
       })
     }).catch(err =>{
