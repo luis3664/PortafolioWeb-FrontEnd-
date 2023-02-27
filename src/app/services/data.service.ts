@@ -12,6 +12,7 @@ import { Item } from '../interfaces/Item.interface';
 import { Icon } from '../interfaces/Icon.interface';
 import { Img } from '../interfaces/Img.interface';
 import { Text } from '../interfaces/Text.interface';
+import { Certificate } from '../interfaces/Certificate.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +45,6 @@ export class DataService {
   
   public updateFooter(sec: Section){
     return this.http.put(`${this.urlApiSec}update`, sec);
-  }
-  
-  // ------------------------------- Card Presentation ----------------------------
-  public cardsP(){
-    return this.http.get(`${this.urlApi}cardP/readAll`)
   }
 
   // ------------------------------- Sections --------------------------------
@@ -93,8 +89,19 @@ export class DataService {
   }
 
   public updateSec3(sec3: any){
-    let sec3DocRef = doc(this.firestore, 'sections/3');
-    return updateDoc(sec3DocRef, sec3);
+    return this.http.put(`${this.urlApiSec}update`, sec3);
+  }
+
+  public setSec3Item(idItem: number){
+    return this.http.put(`${this.urlApiSec}3/addItem?idItem=${idItem}`, {});
+  }
+
+  public addCertiCard(certi: Certificate){
+    return this.http.post(`${this.urlApi}certificate/add`, certi);
+  }
+  
+  public updateCertiCard(certi: Certificate){
+    return this.http.put(`${this.urlApi}certificate/${certi.id}/update`, certi);
   }
 
   // ------------------------------- Section 4 -------------------------------
@@ -125,6 +132,16 @@ export class DataService {
     item.imgAssigned = [];
     item.textCard = {id: 0, text: ""};
     return this.http.post<Item>(`${this.urlApi}item/add`, item).pipe(take(1));
+  }
+
+  public addItemC(item: any, idImg: Number, idCertificate: Number){
+    item.imgAssigned = [];
+    return this.http.post<Item>(`${this.urlApi}item/addC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
+  
+  }
+  public updateItemC(item: any, idImg: Number, idCertificate: Number){
+    item.imgAssigned = [];
+    return this.http.put<Item>(`${this.urlApi}item/updateC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
   }
 
   public readItem(id: number): Observable<Item>{

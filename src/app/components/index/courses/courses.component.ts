@@ -1,6 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CardSec3 } from 'src/app/interfaces/CardSec3.interface';
+import { Certificate } from 'src/app/interfaces/Certificate.interface';
+import { Img } from 'src/app/interfaces/Img.interface';
+import { Item } from 'src/app/interfaces/Item.interface';
+import { Section } from 'src/app/interfaces/Section.interface';
 import { Section3 } from 'src/app/interfaces/Section3.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -13,11 +17,11 @@ import { DataService } from 'src/app/services/data.service';
 export class CoursesComponent implements OnInit{
 
   // Items
-  private section3!: Section3;
+  private section3!: Section;
   
   // Initializers
   private titleSection!: string;
-  private cardsSec3!: CardSec3[];
+  private cardsSec3!: Item[];
 
   // Inject
   private _dataService = inject(DataService);
@@ -29,16 +33,16 @@ export class CoursesComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this._dataService.readSections().subscribe(res => {
+    this._dataService.readSec3().subscribe(res => {
       // Items
-      this.section3 = res[2];
-      this.setCurrentTitle(this.section3);
+      this.section3 = res;
+      this.setCurrentTitle(this.section3.title);
       
       // Initializers
       this.titleSection = this.section3.title;
-      this.cardsSec3 = this.section3.cards;
+      this.cardsSec3 = this.section3.listItem;
       this.authentication = this._authService.logState;
-    })
+    });
   }
 
   formTitle = new FormGroup({
@@ -52,7 +56,6 @@ export class CoursesComponent implements OnInit{
       date: new FormControl(''),
       imgName: new FormControl(''),
       imgUrl: new FormControl(''),
-      certificateTitle: new FormControl(''),
       certificateUrl: new FormControl('')
     }),
     editCard: new FormGroup({
@@ -61,7 +64,6 @@ export class CoursesComponent implements OnInit{
       date: new FormControl(''),
       imgName: new FormControl(''),
       imgUrl: new FormControl(''),
-      certificateTitle: new FormControl(''),
       certificateUrl: new FormControl('')
     })
   })
@@ -75,40 +77,98 @@ export class CoursesComponent implements OnInit{
   public get title(): string {
     return this.titleSection;
   }
-  private setCurrentTitle(sec3: Section3){
-    this.formTitle.controls.title.patchValue(sec3.title);
+  private setCurrentTitle(title: string){
+    this.formTitle.controls.title.patchValue(title);
   }
   public saveTitle(){
-    this._dataService.updateSec3(this.formTitle.getRawValue());
+    let sec3 = this.section3;
+    sec3.title = this.formTitle.controls.title.getRawValue() as string;
+    this._dataService.updateSec3(sec3).subscribe(() =>{
+      this.titleSection = sec3.title;
+    });
   }
   
   // Cards
-  public get cards(): CardSec3[] {
+  public get cards(): Item[] {
     return this.cardsSec3;
   }
   public addCard(){
     let card = this.formCards.getRawValue().addCard;
-    this.section3.cards.push(card as CardSec3);
-    this._dataService.updateSec3(this.section3);
+    let img: Img;
+    let certificate: Certificate;
+    let imgs = {
+      name: card.imgName,
+      url: card.imgUrl
+    };
+    let certi = {
+      urlCertificate: card.certificateUrl,
+      date: card.date
+    }
+    let item = {
+      title: card.title,
+      text: card.text,
+      imgAssigned: [],
+      certificate: {},
+      iconAssigned: null,
+      textCard: null
+    }
+
+    this._dataService.addImg(imgs as Img).subscribe(res => {
+      img = res as Img;
+      this._dataService.addCertiCard(certi as Certificate).subscribe(res => {
+        certificate = res as Certificate;
+        this._dataService.addItemC(item, img.id, certificate.id).subscribe(res => {
+          console.log(res);
+          this.section3.listItem.push(res);
+        })
+      });
+    });
   }
   public setEditCard(){
     let ref = this.formCards.getRawValue().select as number;
-    let select = this.section3.cards[ref];
-    this.formCards.controls.editCard.patchValue(select);
+    let select = this.section3.listItem[ref];
+    this.formCards.controls.editCard.controls.title.patchValue(select.title);
+    this.formCards.controls.editCard.controls.text.patchValue(select.text);
+    this.formCards.controls.editCard.controls.date.patchValue(select.certificate.date);
+    this.formCards.controls.editCard.controls.imgName.patchValue(select.imgAssigned[0].name);
+    this.formCards.controls.editCard.controls.imgUrl.patchValue(select.imgAssigned[0].url);
+    this.formCards.controls.editCard.controls.certificateUrl.patchValue(select.certificate.urlCertificate);
   }
   public editCard(){
     let ref = this.formCards.controls.select.getRawValue() as number;
-    this.section3.cards[ref] = this.formCards.controls.editCard.getRawValue();
-    this._dataService.updateSec3(this.section3);
+    let item: Item = this.section3.listItem[ref];
+    let card = this.formCards.controls.editCard.getRawValue();
+    let img: Img = item.imgAssigned[0];
+    let certificate: Certificate = item.certificate;
+
+    item.title = card.title as string;
+    item.text = card.text as string;
+
+    img.name = card.imgName as string;
+    img.url = card.imgUrl as string;
+
+    certificate.date = card.date as string;
+    certificate.urlCertificate = card.certificateUrl as string;
+
+    this._dataService.addImg(img).subscribe(res => {
+      img = res as Img;
+      this._dataService.updateCertiCard(certificate).subscribe(res => {
+        certificate = res as Certificate;
+        this._dataService.updateItemC(item, img.id, certificate.id).subscribe(res => {
+          this.section3.listItem[ref] = res;
+        })
+      });
+    });
   }
   public deleteCard() {
     let index = this.formCards.controls.select.getRawValue() as number;
     if(index == 0){
-      alert("To maintain the aesthetics of the page, this card cannot be deleted.")
+      alert("To maintain the aesthetics of the page, this card cannot be deleted.");
     }else{
-      this.section3.cards.splice(index, 1);
-      this._dataService.updateSec3(this.section3);
-      this.formCards.controls.select.patchValue(0);
+      this._dataService.deleteItem(this.section3.listItem[index].id).subscribe(res => {
+        this.section3.listItem.splice(index, 1);
+        this.formCards.controls.select.patchValue(0);
+      });
     }
   }
   

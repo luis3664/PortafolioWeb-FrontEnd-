@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { CardSec3 } from 'src/app/interfaces/CardSec3.interface';
+import { Item } from 'src/app/interfaces/Item.interface';
 import { Section3 } from 'src/app/interfaces/Section3.interface';
 import { DataService } from 'src/app/services/data.service';
 
@@ -11,12 +12,9 @@ import { DataService } from 'src/app/services/data.service';
 export class CourseCardComponent implements OnInit {
   
   @Input() interaction: any;
-
-  // // Items
-  private section3!: Section3;
-  private cardsSec3!: CardSec3[];
+  @Input() cardC!: Item;
   
-  // // Initializers
+  // Initializers
   private id: any;
   private titleCard!: string;
   private textCard!: string;
@@ -26,28 +24,19 @@ export class CourseCardComponent implements OnInit {
   private certificateTitleCard!: string;
   private certificateUrlCard!: string;
 
-  // // Inject
-  private _dataService = inject(DataService);
-
   constructor (){
   }
 
   ngOnInit(): void {
-    this._dataService.readSections().subscribe(res =>{
-      // Items
-      this.section3 = res[2];
-      this.cardsSec3 = this.section3.cards;
-
-      // Initializers
-      this.id = "certificate" + this.interaction;
-      this.titleCard = this.cardsSec3[this.interaction].title as string;
-      this.textCard = this.cardsSec3[this.interaction].text as string;
-      this.dateCard = this.cardsSec3[this.interaction].date as string;
-      this.imgNameCard = this.cardsSec3[this.interaction].imgName as string;
-      this.imgUrlCard = this.cardsSec3[this.interaction].imgUrl as string;
-      this.certificateTitleCard = this.cardsSec3[this.interaction].certificateTitle as string;
-      this.certificateUrlCard = this.cardsSec3[this.interaction].certificateUrl as string;
-    })
+    // Initializers
+    this.id = "certificate" + this.interaction;
+    this.titleCard = this.cardC.title;
+    this.textCard = this.cardC.text;
+    this.dateCard = this.cardC.certificate.date;
+    this.imgNameCard = this.cardC.imgAssigned[0].name;
+    this.imgUrlCard = this.cardC.imgAssigned[0].url;
+    this.certificateTitleCard = this.cardC.title;
+    this.certificateUrlCard = this.cardC.certificate.urlCertificate;
   }
 
   // Ids Modal

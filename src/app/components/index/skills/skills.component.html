@@ -1,7 +1,4 @@
-<article>
-    <br>
-    <br>
-    <br>
+<article class="mt-5">
     <!-- Title Section -->
     <h2 class="text-center mt-4 mt-md-0">
         {{title}}
@@ -53,14 +50,14 @@
                         <div class="col-auto">
                             <label for="selectTopicSec4" class="form_label">Select Card</label>
                             <select id="selectTopicSec4" class="form-select" formControlName="select" name="select">
-                              <option [value]="i" *ngFor="let topic of topics; let i = index">
-                                {{topic.title}}
-                              </option>
+                                <option [value]="i" *ngFor="let topic of topics; let i = index">
+                                    {{topic.title}}
+                                </option>
                             </select>
                             <div class="btn-group" role="group">
-                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addTopicSec4">Add Topic</button>
-                              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteTopic()">Delete Selection</button>
-                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editTopicSec4" (click)="setEditTopic()">Edit Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addTopicSec4">Add Topic</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteTopic()">Delete Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editTopicSec4" (click)="setEditTopic()">Edit Selection</button>
                             </div>
                         </div>
                         <div id="addTopicSec4" class="collapse">
