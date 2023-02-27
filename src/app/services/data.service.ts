@@ -113,8 +113,11 @@ export class DataService {
   }
 
   public updateSec5(sec5: any){
-    let sec5DocRef = doc(this.firestore, 'sections/5');
-    return updateDoc(sec5DocRef, sec5);
+    return this.http.put(`${this.urlApiSec}update`, sec5);
+  }
+
+  public setSec5Item(idItem: number){
+    return this.http.put(`${this.urlApiSec}5/addItem?idItem=${idItem}`, {})
   }
 
   // ------------------------------- Items -----------------------------------

@@ -24,7 +24,7 @@
             <!-- Project -->
             <app-project
                 class="carousel-item" [ngClass]="{'active': i == 0}" data-bs-interval="4000" 
-                *ngFor="let item of items, let i = index" [iProjects]="i">
+                *ngFor="let item of items, let i = index" [iProjects]="i" [slideP]="item" >
             </app-project>
         </div>
 
@@ -60,7 +60,7 @@
                 <!-- Modal Footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editSlideSec5" data-bs-dismiss="modal">Edit Slides</button>
-                    <button [disabled]="formTitle.invalid" type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+                    <button [disabled]="formTitle.invalid" type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="saveTitle()">Save & Close</button>
                 </div>
             </div>
         </div>
