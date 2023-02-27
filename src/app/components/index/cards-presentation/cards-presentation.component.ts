@@ -20,7 +20,6 @@ export class CardsPresentationComponent implements OnInit {
   // Items
   private section1!: Section;
   private item!: Item;
-  public prueba$: any;
 
   // Initializers
   private title!: string;
@@ -47,7 +46,6 @@ export class CardsPresentationComponent implements OnInit {
       this.cardsArray = res.listItem;
       this.authentication = this._authService.logState;
     })
-    this.prueba$ = this._dataService.readSec1()
   }
   
   // Forms
@@ -118,18 +116,14 @@ export class CardsPresentationComponent implements OnInit {
       this._dataService.setSec1Item(itemNew.id).subscribe(res => {
         this._dataService.setItemText(itemNew.id, text.id).subscribe(res => {
           for (let i = 0; i < images.length; i++){
-            this._dataService.setItemImg(itemNew.id, images[i].id).subscribe(res => {
-            });
+            this._dataService.setItemImg(itemNew.id, images[i].id).subscribe(res => {});
           };
         });
       });
       this.cardsArray.push(itemNew);
     });
     this.formCards.controls.addCard.reset();
-
-    this._dataService.readSec1().subscribe(res => {
-      this.cardsArray = res.listItem;
-    })
+    window.location.reload();
   }
 
   public addImgAdd() {
@@ -204,6 +198,7 @@ export class CardsPresentationComponent implements OnInit {
         });
       }
       this.cardsArray[ref] = cardEdit;
+      window.location.reload();
     })
   }
 
@@ -241,7 +236,7 @@ export class CardsPresentationComponent implements OnInit {
       alert("To maintain the aesthetics of the page, this card cannot be deleted.")
     }else{
       this._dataService.deleteItem(this.cardsArray[index].id).subscribe(res => {})
-      this.cardsArray.slice(index,1);
+      this.cardsArray.splice(index, 1);
       this.formCards.controls.select.patchValue(0);
     }
   }

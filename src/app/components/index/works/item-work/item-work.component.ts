@@ -1,4 +1,5 @@
 import { Component, Input, inject, OnInit } from '@angular/core';
+import { Item } from 'src/app/interfaces/Item.interface';
 import { Slide } from 'src/app/interfaces/Slide.interface';
 import { DataService } from 'src/app/services/data.service';
 
@@ -12,7 +13,7 @@ export class ItemWorkComponent implements OnInit {
   @Input() interaction: any;
 
   // Items
-  private slideWork!: Slide;
+  private slideWork!: Item;
 
   // Initializers
   private titleSlide!: string;
@@ -27,16 +28,16 @@ export class ItemWorkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._dataService.readSections().subscribe(res =>{
+    this._dataService.readSec2().subscribe(res => {
       // Items
-      this.slideWork = res[1].slide[this.interaction];
+      this.slideWork = res.listItem[this.interaction];
       
       // Initializers
       this.titleSlide = this.slideWork.title;
       this.textSlide = this.slideWork.text;
-      this.imgNameSlide = this.slideWork.imgName;
-      this.imgUrlSlide = this.slideWork.imgUrl;
-    })
+      this.imgNameSlide = this.slideWork.imgAssigned[0].name;
+      this.imgUrlSlide = this.slideWork.imgAssigned[0].url;
+    });
   }
 
 

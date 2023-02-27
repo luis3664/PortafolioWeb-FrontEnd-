@@ -69,7 +69,7 @@ export class DataService {
   public updateSec1(sec1: Section){
     return this.http.put(`${this.urlApiSec}update`, sec1);
   }
-
+  
   public setSec1Item(idItem: number){
     return this.http.put(`${this.urlApiSec}1/addItem?idItem=${idItem}`, {})
   }
@@ -78,10 +78,13 @@ export class DataService {
   public readSec2(): Observable<Section>{
     return this.http.get<Section>(`${this.urlApiSec}2`);
   }
-
+  
   public updateSec2(sec2: any){
-    let sec2DocRef = doc(this.firestore, 'sections/2');
-    return updateDoc(sec2DocRef, sec2);
+    return this.http.put(`${this.urlApiSec}update`, sec2);
+  }
+
+  public setSec2Item(idItem: number){
+    return this.http.put(`${this.urlApiSec}2/addItem?idItem=${idItem}`, {})
   }
 
   // ------------------------------- Section 3 -------------------------------
