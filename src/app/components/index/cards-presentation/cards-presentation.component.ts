@@ -97,19 +97,39 @@ export class CardsPresentationComponent implements OnInit {
 
     let itemNew: Item;
 
-    let images: Array<Img> = [];
+    let images: Array<Img> = [
+      {
+        id: 0,
+        name: "",
+        url: ""
+      },{
+        id: 0,
+        name: "",
+        url: ""
+      },{
+        id: 0,
+        name: "",
+        url: ""
+      }
+    ];
 
-    let text: Text;
+    let text: Text = item.textCard as Text;
 
-    this._dataService.addTextC(item.textCard).subscribe(res => {
-      text = res as Text;
-    })
+    // this._dataService.addTextC(item.textCard).subscribe(res => {
+    //   text = res as Text;
+    //   console.log(item.imgAssigned)
+    //   this._dataService.addMultiImg(item.imgAssigned as Array<Img>).subscribe(res => {
+    //     for (let i = 0; i < res.length; i++) {
+    //       images[i] = res[i] as Img;
+    //     };
+    //     this._dataService.addItemP(item, text.id, res.length, images[0].id, images[1].id, images[2].id).subscribe(res => {
+    //       console.log(res);
+    //       itemNew = res as Item;
+    //     });
+    //   })
+    // })
 
-    for(let i=0; i < item.imgAssigned.length; i++){
-      this._dataService.addImg(item.imgAssigned[i] as Img).subscribe(res =>{
-        images.push(res as Img);
-      })
-    };
+
 
     this._dataService.addItem(item as Item).subscribe(res => {
       itemNew = res;
@@ -126,7 +146,6 @@ export class CardsPresentationComponent implements OnInit {
       this.cardsArray.push(itemNew);
     });
     this.formCards.controls.addCard.reset();
-    window.location.reload();
   }
 
   public addImgAdd() {

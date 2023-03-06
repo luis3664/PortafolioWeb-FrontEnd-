@@ -29,7 +29,7 @@
                 <!-- Modal Footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editTopicsSec4" data-bs-dismiss="modal">Edit Topics</button>
-                    <button type="button" class="btn btn-dark" (click)="saveTitle()">Save</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="saveTitle()">Save & Close</button>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                         <div id="editTopicSec4" class="collapse">
                             <form formGroupName="editTopic">
                                 <div class="col-auto">
-                                    <label for="title" class="form_label">Title New Topic</label>
+                                    <label for="title" class="form_label">Title Topic</label>
                                     <input id="title" type="text" class="form-control" formControlName="title">
                                     <button type="button" class="btn btn-dark mt-2 ms-2" (click)="editTopic()">Save Topic</button>
                                 </div>
@@ -104,14 +104,14 @@
                         <div class="col-auto">
                             <label for="selectBarSec4" class="form_label">Select Bar</label>
                             <select id="selectBarSec4" class="form-select" formControlName="select" name="select">
-                              <option [value]="i" *ngFor="let bar of bars; let i = index">
-                                {{bar.name}}
-                              </option>
+                                <option [value]="i" *ngFor="let bar of bars; let i = index">
+                                    {{bar.icon.name}}
+                                </option>
                             </select>
                             <div class="btn-group" role="group">
-                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addBarSec4">Add Bar</button>
-                              <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteBar()">Delete Selection</button>
-                              <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editBarSec4" (click)="setEditBar()">Edit Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#addBarSec4">Add Bar</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" (click)="deleteBar()">Delete Selection</button>
+                                <button type="button" class="btn btn-dark mt-2 ms-2" data-bs-toggle="collapse" data-bs-target="#editBarSec4" (click)="setEditBar()">Edit Selection</button>
                             </div>
                         </div>
                         <div id="addBarSec4" class="collapse">
@@ -126,13 +126,10 @@
                                         <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg">
                                     </div>
                                 </div>
-                                <div class="col-auto" *ngIf="!svgSelectAdd">
-                                    <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                                <div class="col-auto">
+                                    <label for="icon" class="form_label" *ngIf="!svgSelectAdd">Class Icon of Bootstrap</label>
+                                    <label for="url" class="form_label" *ngIf="svgSelectAdd">URL of SVG Image</label>
                                     <input id="icon" type="text" class="form-control" formControlName="icon">
-                                </div>
-                                <div class="col-auto" *ngIf="svgSelectAdd">
-                                    <label for="url" class="form_label">URL of SVG Image</label>
-                                    <input id="url" type="text" class="form-control" formControlName="url">
                                 </div>
                                 <div class="col-auto">
                                     <label for="valueBar" class="form_label">Skill Value 0-100</label>
@@ -153,13 +150,10 @@
                                         <input class="form-check-input form-control" name="svg" id="svg" type="checkbox" value="checkedValue" formControlName="svg">
                                     </div>
                                 </div>
-                                <div class="col-auto" *ngIf="!svgSelectEdit">
-                                    <label for="icon" class="form_label">Class Icon of Bootstrap</label>
+                                <div class="col-auto">
+                                    <label for="icon" class="form_label" *ngIf="!svgSelectEdit">Class Icon of Bootstrap</label>
+                                    <label for="url" class="form_label" *ngIf="svgSelectEdit">URL of SVG Image</label>
                                     <input id="icon" type="text" class="form-control" formControlName="icon">
-                                </div>
-                                <div class="col-auto" *ngIf="svgSelectEdit">
-                                    <label for="url" class="form_label">URL of SVG Image</label>
-                                    <input id="url" type="text" class="form-control" formControlName="url">
                                 </div>
                                 <div class="col-auto">
                                     <label for="valueBar" class="form_label">Skill Value 0-100</label>
@@ -181,7 +175,7 @@
         
     <!-- Topics -->
     <div class="container-fluid">
-        <app-topics *ngFor="let topic of topics; let i = index" [iSkills]="i"></app-topics>
+        <app-topics *ngFor="let topic of topics; let i = index" [iSkills]="i" [topicList] ="topic"></app-topics>
     </div>
     
 </article>

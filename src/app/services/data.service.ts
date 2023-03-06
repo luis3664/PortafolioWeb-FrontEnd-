@@ -13,6 +13,8 @@ import { Icon } from '../interfaces/Icon.interface';
 import { Img } from '../interfaces/Img.interface';
 import { Text } from '../interfaces/Text.interface';
 import { Certificate } from '../interfaces/Certificate.interface';
+import { Topic } from '../interfaces/Topic.interface';
+import { Bar } from '../interfaces/Bar.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -110,8 +112,35 @@ export class DataService {
   }
 
   public updateSec4(sec4: any){
-    let sec4DocRef = doc(this.firestore, 'sections/4');
-    return updateDoc(sec4DocRef, sec4);
+    return this.http.put(`${this.urlApiSec}update`, sec4);
+  }
+
+  public addTopic(topic: any){
+    return this.http.post(`${this.urlApi}topic/add`, topic);
+  }
+
+  public delTopic(id: number){
+    return this.http.delete(`${this.urlApi}topic/delete?id=${id}`);
+  }
+
+  public updateTopic(topic: Topic){
+    return this.http.put(`${this.urlApi}topic/${topic.id}/update`, topic);
+  }
+
+  public addBar(idIcon: number, bar: Bar) {
+    return this.http.post(`${this.urlApi}bar/add?idIcon=${idIcon}`, bar);
+  }
+
+  public addBarTopic(idTopic: number, idBar: number){
+    return this.http.put(`${this.urlApi}topic/addBar?idTopic=${idTopic}&idBar=${idBar}`, {})
+  }
+
+  public delBar(idBar: number){
+    return this.http.delete(`${this.urlApi}bar/delete?idBar=${idBar}`, {});
+  }
+
+  public updateBar(idBar: number, idIcon: number, bar: Bar){
+    return this.http.put(`${this.urlApi}bar/${idBar}/update?idIcon=${idIcon}`, bar);
   }
 
   // ------------------------------- Section 5 -------------------------------
@@ -139,6 +168,13 @@ export class DataService {
     return this.http.post<Item>(`${this.urlApi}item/addC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
   
   }
+
+  public addItemP(item: any, idText: Number, length: number, idImg1: Number, idImg2: Number, idImg3: Number){
+    item.imgAssigned = [];
+    console.log(`${this.urlApi}item/addP?idText=${idText}&length=${length}&idImg1=${idImg1}&idImg2=${idImg2}&idImg3=${idImg3}`);
+    return this.http.post(`${this.urlApi}item/addP?idText=${idText}&length=${length}&idImg1=${idImg1}&idImg2=${idImg2}&idImg3=${idImg3}`, JSON.stringify(item));
+  }
+
   public updateItemC(item: any, idImg: Number, idCertificate: Number){
     item.imgAssigned = [];
     return this.http.put<Item>(`${this.urlApi}item/updateC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
@@ -196,7 +232,9 @@ export class DataService {
   }
 
   public addMultiImg(imgList: Array<Img>){
-    return this.http.post(`${this.urlApi}img/addMulti`, imgList);
+    let obj = {imgList}
+    console.log(obj)
+    return this.http.post<Array<Img>>(`${this.urlApi}img/addAll`, obj);
   }
 
   // ------------------------------- Text Card -----------------------------------

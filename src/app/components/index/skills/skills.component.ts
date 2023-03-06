@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Bar } from 'src/app/interfaces/Bar.interface';
-import { Section4 } from 'src/app/interfaces/Section4.interface';
-import { TopicSec4 } from 'src/app/interfaces/TopicSec4.interface';
+import { Icon } from 'src/app/interfaces/Icon.interface';
+import { Section } from 'src/app/interfaces/Section.interface';
+import { Topic } from 'src/app/interfaces/Topic.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -14,17 +15,17 @@ import { DataService } from 'src/app/services/data.service';
 
 export class SkillsComponent implements OnInit {
   // Items
-  private section4!: Section4;
+  private section4!: Section;
   private barsOfTopic!: Bar[];
   private titleTopicSelect!: string;
   public svgSelectEdit: Boolean = false;
   public svgSelectAdd: Boolean = false;
-  private barClear!: Bar;
+  private barClear!: any;
   private topicClear!: string;
 
   // Initializers
   private titleSection!: string;
-  private topicsSec4!: TopicSec4[];
+  private topicsSec4!: Topic[];
 
   // Inject
   private _dataService = inject(DataService);
@@ -39,24 +40,24 @@ export class SkillsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._dataService.readSections().subscribe(res =>{
+    this._dataService.readSec4().subscribe(res => {
       // Items
-      this.section4 = res[3];
-      this.setCurrentTitle(this.section4);
+      this.section4 = res;
+      this.setCurrentTitle(this.section4.title);
 
       // Initializers
       this.titleSection = this.section4.title;
-      this.topicsSec4 = this.section4.topics;
+      this.topicsSec4 = this.section4.listTopic;
       this.authentication = this._authService.logState;
-    })
+    });
 
     // Forms
     this.formBars.controls.addBar.get('svg')?.valueChanges.subscribe(res =>{
       this.svgSelectAdd = res as boolean;
-    })
+    });
     this.formBars.controls.editBar.get('svg')?.valueChanges.subscribe(res =>{
       this.svgSelectEdit = res as boolean;
-    })
+    });
   }
 
   formTitle = new FormGroup({
@@ -77,14 +78,12 @@ export class SkillsComponent implements OnInit {
       name: new FormControl(),
       svg: new FormControl(false),
       icon: new FormControl(),
-      url: new FormControl(),
       valueBar: new FormControl(0)
     }),
     editBar: new FormGroup({
       name: new FormControl(),
       svg: new FormControl(false),
       icon: new FormControl(),
-      url: new FormControl(),
       valueBar: new FormControl(0)
     })
   })
@@ -98,11 +97,17 @@ export class SkillsComponent implements OnInit {
   public get title(): string {
     return this.titleSection;
   }
-  private setCurrentTitle(sec4: Section4){
-    this.formTitle.controls.title.patchValue(sec4.title);
+  private setCurrentTitle(title: string){
+    this.formTitle.controls.title.patchValue(title);
   }
   public saveTitle(){
-    this._dataService.updateSec4(this.formTitle.getRawValue());
+    let title: string = this.formTitle.controls.title.getRawValue() as string;
+
+    this.section4.title = title;
+
+    this._dataService.updateSec4(this.section4).subscribe(res => {
+      this.titleSection = title;
+    })
   }
 
   // Topics
@@ -111,8 +116,10 @@ export class SkillsComponent implements OnInit {
   }
   public addTopic(){
     let topic = this.formTopics.getRawValue().addTopic;
-    this.section4.topics.push(topic as TopicSec4);
-    this._dataService.updateSec4(this.section4);
+    
+    this._dataService.addTopic(topic).subscribe(res => {
+      this.section4.listTopic.push(res as Topic);
+    });
     this.formTopics.controls.addTopic.controls.title.patchValue(this.topicClear);
   }
   public deleteTopic(): void{
@@ -120,20 +127,28 @@ export class SkillsComponent implements OnInit {
     if(index <= 1){
       alert("To maintain the aesthetics of the page, this topic cannot be deleted.")
     }else{
-      this.section4.topics.splice(index, 1);
-      this._dataService.updateSec4(this.section4);
-      this.formTopics.controls.select.patchValue(0);
+      this._dataService.delTopic(this.section4.listTopic[index].id).subscribe(res => {
+        this.section4.listTopic.splice(index, 1);
+        this.formTopics.controls.select.patchValue(0);
+      })
     }
   }
   public setEditTopic(){
     let ref = this.formTopics.getRawValue().select as number;
-    let select = this.section4.topics[ref];
-    this.formTopics.controls.editTopic.patchValue(select);
+    let select = this.section4.listTopic[ref];
+
+    this.formTopics.controls.editTopic.controls.title.patchValue(select.title);
   }
   public editTopic(){
     let ref = this.formTopics.controls.select.getRawValue() as number;
-    this.section4.topics[ref].title = this.formTopics.controls.editTopic.getRawValue().title;
-    this._dataService.updateSec4(this.section4);
+
+    let topic = this.section4.listTopic[ref];
+
+    topic.title = this.formTopics.controls.editTopic.getRawValue().title;
+
+    this._dataService.updateTopic(topic).subscribe(res => {
+      this.section4.listTopic[ref] = res as Topic;
+    });
   }
 
   // Bars
@@ -145,14 +160,35 @@ export class SkillsComponent implements OnInit {
   }
   public setBarsOfTopic(){
     let ref = this.formTopics.getRawValue().select as number;
-    this.barsOfTopic = this.section4.topics[ref].bars;
-    this.titleTopicSelect = this.section4.topics[ref].title as string;
+    this.barsOfTopic = this.section4.listTopic[ref].listBar;
+    this.titleTopicSelect = this.section4.listTopic[ref].title as string;
   }
   public addBar(){
     let barNew = this.formBars.controls.addBar.getRawValue();
-    let refTopic = this.formTopics.getRawValue().select as number;
-    this.section4.topics[refTopic].bars.push(barNew as Bar);
-    this._dataService.updateSec4(this.section4);
+    let ref = this.formTopics.getRawValue().select as number;
+    let topicId = this.section4.listTopic[ref].id;
+    let bar: Bar = {
+      id: null,
+      title: barNew.name as string,
+      value: barNew.valueBar as number,
+      icon: {
+        id: null,
+        name: barNew.name,
+        identity: barNew.icon,
+        url: "",
+        svg: barNew.svg as boolean
+      }
+    };
+
+    this._dataService.addIcon(bar.icon).subscribe(res => {
+      this._dataService.addBar(res as number, bar).subscribe(res => {
+        this._dataService.addBarTopic(topicId, res as number).subscribe(res => {
+          bar = res as Bar;
+          this.section4.listTopic[ref].listBar.push(bar);
+        });
+      });
+    });
+
     this.formBars.controls.addBar.patchValue(this.barClear);
     this.setBarsOfTopic();
   }
@@ -162,24 +198,41 @@ export class SkillsComponent implements OnInit {
     if(refTopic <= 1 && refBar == 0){
       alert("To maintain the aesthetics of the page, this Bar in this Topic cannot be deleted.")
     }else{
-      this.section4.topics[refTopic].bars.splice(refBar, 1);
-      this._dataService.updateSec4(this.section4);
-      this.setBarsOfTopic();
-      this.formBars.controls.select.patchValue(0);
+      let id = this.section4.listTopic[refTopic].listBar[refBar].id as number;
+      this._dataService.delBar(id).subscribe(res => {
+        this.formBars.controls.select.patchValue(0);
+        this.section4.listTopic[refTopic].listBar.splice(refBar, 1);
+        this.setBarsOfTopic();
+      });
     }
   }
   public setEditBar(){
     let ref = this.formBars.getRawValue().select as number;
     let bar = this.barsOfTopic[ref];
-    this.formBars.controls.editBar.patchValue(bar);
+    this.formBars.controls.editBar.controls.name.patchValue(bar.icon.name);
+    this.formBars.controls.editBar.controls.svg.patchValue(bar.icon.svg);
+    this.formBars.controls.editBar.controls.icon.patchValue(bar.icon.identity);
+    this.formBars.controls.editBar.controls.valueBar.patchValue(bar.value);
   }
   public editBar(){
     let barNew = this.formBars.controls.editBar.getRawValue();
     let refBar = this.formBars.getRawValue().select as number;
     let refTopic = this.formTopics.getRawValue().select as number;
-    this.section4.topics[refTopic].bars[refBar] = barNew as Bar;
-    this._dataService.updateSec4(this.section4);
-    this.setBarsOfTopic();
+    let topicId = this.section4.listTopic[refTopic].id;
+    let bar = this.section4.listTopic[refTopic].listBar[refBar];
+
+    bar.icon.name = barNew.name;
+    bar.icon.identity = barNew.icon;
+    bar.icon.svg = barNew.svg as boolean;
+    bar.value = barNew.valueBar as number;
+    bar.title = barNew.name;
+    
+    this._dataService.updateIcon(bar.icon as Icon).subscribe(res => {
+      this._dataService.updateBar(bar.id as number, bar.icon.id as number, bar).subscribe(res => {
+        this.section4.listTopic[refTopic].listBar[refBar] = res as Bar;
+        this.setBarsOfTopic();
+      });
+    });
   }
 
 }

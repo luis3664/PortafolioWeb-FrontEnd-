@@ -1,9 +1,5 @@
-import { HtmlParser } from '@angular/compiler';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Bar } from 'src/app/interfaces/Bar.interface';
-import { Section4 } from 'src/app/interfaces/Section4.interface';
-import { TopicSec4 } from 'src/app/interfaces/TopicSec4.interface';
-import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-topics',
@@ -13,32 +9,22 @@ import { DataService } from 'src/app/services/data.service';
 export class TopicsComponent implements OnInit {
   
   @Input('iSkills') interactor: any;
-
-  // Items
-  private section4!: Section4;
+  @Input('topicList') topics: any;
   
   // Initializers
   private titleTopic!: string;
   private barsSec4!: Bar[];
   private id: any;
 
-  // Inject
-  private _dataService = inject(DataService);
-
 
   constructor (){
   }
 
   ngOnInit(): void {
-    this._dataService.readSections().subscribe(res =>{
-      // Items
-      this.section4 = res[3];
-      
-      // Initializers
-      this.titleTopic = this.section4.topics[this.interactor].title as string;
-      this.barsSec4 = this.section4.topics[this.interactor].bars;
-      this.id = "id" + this.interactor;
-    })
+    // Initializers
+    this.titleTopic = this.topics.title as string;
+    this.barsSec4 = this.topics.listBar;
+    this.id = "id" + this.interactor;
   }
 
   // Title the Topics

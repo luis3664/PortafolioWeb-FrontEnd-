@@ -6,20 +6,20 @@
 
 <!-- Bar Topic -->
 <div class="collapse" id="{{ids}}">
-    <div class="row d-flex justify-content-center" *ngFor="let bar of bars">
+    <div class="row d-flex justify-content-center aling" *ngFor="let bar of bars">
         <!-- Template Icon -->
         <ng-template #iconTemplate>
-            <i [ngClass]="bar.icon"></i>
+            <i [ngClass]="bar.icon.identity"></i>
         </ng-template>
         
         <!-- Template SVG -->
         <ng-template #svgTemplate>
-            <img class="ms-1 mb-1" [src]="bar.url" [alt]="bar.name">
+            <img class="ms-1 mb-1" [src]="bar.icon.identity" [alt]="bar.title">
         </ng-template>
     
         <!-- Icon or SVG Container -->
         <div class="col-12 col-md-1 d-flex justify-content-center me-3">
-            <ng-container *ngIf="bar.svg; else iconTemplate">
+            <ng-container *ngIf="bar.icon.svg; else iconTemplate">
                 <ng-container *ngTemplateOutlet = "svgTemplate"></ng-container>
             </ng-container>
         </div>
@@ -28,8 +28,8 @@
         <div class="col-12 col-md-9 my-auto">
             <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" 
-                    [attr.aria-label]="bar.name" aria-valuemin="0" aria-valuemax="100" 
-                    [attr.aria-valuenow]="bar.valueBar" [style.width]="bar.valueBar+'%'">
+                    [attr.aria-label]="bar.title" aria-valuemin="0" aria-valuemax="100" 
+                    [attr.aria-valuenow]="bar.value" [style.width]="bar.value+'%'">
                 </div>
             </div>
         </div>

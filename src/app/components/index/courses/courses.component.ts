@@ -1,11 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CardSec3 } from 'src/app/interfaces/CardSec3.interface';
 import { Certificate } from 'src/app/interfaces/Certificate.interface';
 import { Img } from 'src/app/interfaces/Img.interface';
 import { Item } from 'src/app/interfaces/Item.interface';
 import { Section } from 'src/app/interfaces/Section.interface';
-import { Section3 } from 'src/app/interfaces/Section3.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 

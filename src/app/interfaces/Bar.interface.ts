@@ -1,7 +1,14 @@
 export interface Bar{
+    id: number | null,
+    title: string,
+    value: number,
+    icon: Icon
+};
+
+interface Icon {
+    id: number | null,
     name: string,
-    svg: boolean,
-    icon: string,
+    identity: string,
     url: string,
-    valueBar: number
-}
+    svg: boolean
+};
