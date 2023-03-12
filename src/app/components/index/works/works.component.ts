@@ -108,8 +108,8 @@ export class WorksComponent implements OnInit {
         img = res as Img;
         this._dataService.addItem(item as Item).subscribe(res => {
           itemNew = res as Item
-          this._dataService.setSec2Item(itemNew.id).subscribe(res => {
-            this._dataService.setItemImg(itemNew.id, img.id).subscribe(res => {
+          this._dataService.setSec2Item(itemNew.id as number).subscribe(res => {
+            this._dataService.setItemImg(itemNew.id as number, img.id).subscribe(res => {
               this.slidesWork.push(res as Item);
             })
           })
@@ -146,7 +146,7 @@ export class WorksComponent implements OnInit {
       img = res as Img;
       this._dataService.updateItem(item as Item).subscribe(res => {
         itemNew = res as Item
-        this._dataService.setItemImg(itemNew.id, img.id).subscribe(res => {
+        this._dataService.setItemImg(itemNew.id as number, img.id).subscribe(res => {
           this.slidesWork[ref] = res as Item;
         })
       })
@@ -158,7 +158,7 @@ export class WorksComponent implements OnInit {
     if(index <= 1){
       alert("To maintain the aesthetics of the page, this slide cannot be deleted.")
     }else{
-      this._dataService.deleteItem(this.slidesWork[index].id).subscribe(res => {
+      this._dataService.deleteItem(this.slidesWork[index].id as number).subscribe(res => {
         this.slidesWork.splice(index, 1);
         this.formSlide.controls.select.patchValue(0);
       });

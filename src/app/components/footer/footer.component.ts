@@ -145,7 +145,7 @@ export class FooterComponent implements OnInit {
     
     this._dataService.addIcon(iconNew).subscribe(res =>{
       id = res as number;
-      this._dataService.setItemIcon(this.footerSec.listItem[0].id, id).subscribe(() =>{});
+      this._dataService.setItemIcon(this.footerSec.listItem[0].id as number, id).subscribe(() =>{});
       this.iconsFooter.push(iconNew as Icon);
     })
 
@@ -177,7 +177,7 @@ export class FooterComponent implements OnInit {
     }else{
       let iconDel: number = this.iconsFooter[ref].id;
       this.formIcons.controls.select.patchValue(0);
-      this._dataService.delItemIcon(this.footerSec.listItem[0].id, iconDel).subscribe(() =>{});
+      this._dataService.delItemIcon(this.footerSec.listItem[0].id as number, iconDel).subscribe(() =>{});
       this._dataService.delIcon(iconDel).subscribe(() =>{
         this.iconsFooter.slice(ref, 1);
       });

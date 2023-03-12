@@ -53,11 +53,6 @@ export class DataService {
   public readAllSec(): Observable<Section[]>{
     return this.http.get<Section[]>(`${this.urlApiSec}readAll`);
   }
-
-  public readSections(){
-    let sec1Ref = collection(this.firestore, 'sections');
-    return collectionData(sec1Ref) as Observable<any>;
-  }
   
   // ------------------------------- Section 1 -------------------------------
   public readSec1(): Observable<Section>{
@@ -166,18 +161,19 @@ export class DataService {
   public addItemC(item: any, idImg: Number, idCertificate: Number){
     item.imgAssigned = [];
     return this.http.post<Item>(`${this.urlApi}item/addC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
-  
   }
 
-  public addItemP(item: any, idText: Number, length: number, idImg1: Number, idImg2: Number, idImg3: Number){
-    item.imgAssigned = [];
-    console.log(`${this.urlApi}item/addP?idText=${idText}&length=${length}&idImg1=${idImg1}&idImg2=${idImg2}&idImg3=${idImg3}`);
-    return this.http.post(`${this.urlApi}item/addP?idText=${idText}&length=${length}&idImg1=${idImg1}&idImg2=${idImg2}&idImg3=${idImg3}`, JSON.stringify(item));
+  public addItemP(item: Item){
+    return this.http.post(`${this.urlApi}item/addP`, item);
   }
 
   public updateItemC(item: any, idImg: Number, idCertificate: Number){
     item.imgAssigned = [];
     return this.http.put<Item>(`${this.urlApi}item/updateC?idCertificate=${idCertificate}&idImg=${idImg}`, item);
+  
+  }
+  public updateItemP(item: Item){
+    return this.http.put<Item>(`${this.urlApi}item/updateP`, item);
   }
 
   public readItem(id: number): Observable<Item>{
@@ -234,7 +230,7 @@ export class DataService {
   public addMultiImg(imgList: Array<Img>){
     let obj = {imgList}
     console.log(obj)
-    return this.http.post<Array<Img>>(`${this.urlApi}img/addAll`, obj);
+    return this.http.post<Array<Img>>(`${this.urlApi}img/addAll`, JSON.stringify(obj));
   }
 
   // ------------------------------- Text Card -----------------------------------

@@ -3,7 +3,7 @@ import { Img } from "./Img.interface";
 import { Text } from "./Text.interface";
 
 export interface Item {
-    id: number,
+    id: number | null,
     title: string,
     text: string,
     certificate: Certificate,

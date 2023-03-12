@@ -163,7 +163,7 @@ export class CoursesComponent implements OnInit{
     if(index == 0){
       alert("To maintain the aesthetics of the page, this card cannot be deleted.");
     }else{
-      this._dataService.deleteItem(this.section3.listItem[index].id).subscribe(res => {
+      this._dataService.deleteItem(this.section3.listItem[index].id as number).subscribe(res => {
         this.section3.listItem.splice(index, 1);
         this.formCards.controls.select.patchValue(0);
       });

@@ -88,62 +88,22 @@ export class CardsPresentationComponent implements OnInit {
   // Cards Section 1 New
   public addCard(){
     let card = this.formCards.controls.addCard.getRawValue();
-    let item = {
-      title: card.title, 
-      text: card.textBody, 
-      textCard: {text: card.textEnd},
-      imgAssigned: card.img
+    let item: Item = {
+      id: null,
+      title: card.title as string, 
+      text: card.textBody as string, 
+      textCard: {text: card.textEnd} as Text,
+      certificate: {
+        id: 0,
+        urlCertificate: "",
+        date: ""
+      },
+      imgAssigned: card.img as Array<Img>,
+      iconAssigned: []
     };
 
-    let itemNew: Item;
-
-    let images: Array<Img> = [
-      {
-        id: 0,
-        name: "",
-        url: ""
-      },{
-        id: 0,
-        name: "",
-        url: ""
-      },{
-        id: 0,
-        name: "",
-        url: ""
-      }
-    ];
-
-    let text: Text = item.textCard as Text;
-
-    // this._dataService.addTextC(item.textCard).subscribe(res => {
-    //   text = res as Text;
-    //   console.log(item.imgAssigned)
-    //   this._dataService.addMultiImg(item.imgAssigned as Array<Img>).subscribe(res => {
-    //     for (let i = 0; i < res.length; i++) {
-    //       images[i] = res[i] as Img;
-    //     };
-    //     this._dataService.addItemP(item, text.id, res.length, images[0].id, images[1].id, images[2].id).subscribe(res => {
-    //       console.log(res);
-    //       itemNew = res as Item;
-    //     });
-    //   })
-    // })
-
-
-
-    this._dataService.addItem(item as Item).subscribe(res => {
-      itemNew = res;
-      this._dataService.setSec1Item(itemNew.id).subscribe(res => {
-        this._dataService.setItemText(itemNew.id, text.id).subscribe(res => {
-          itemNew.textCard = res as Text;
-          for (let i = 0; i < images.length; i++){
-            this._dataService.setItemImg(itemNew.id, images[i].id).subscribe(res => {
-              itemNew = res as Item;
-            });
-          };
-        });
-      });
-      this.cardsArray.push(itemNew);
+    this._dataService.addItemP(item).subscribe(res => {
+      this.cardsArray.push(res as Item);
     });
     this.formCards.controls.addCard.reset();
   }
@@ -206,21 +166,11 @@ export class CardsPresentationComponent implements OnInit {
       textCard: {
         id: this.cardsArray[ref].textCard.id,
         text: this.formCards.controls.editCard.getRawValue().textEnd}
-    }
+    };
 
-    for(let i=0; i < cardEdit.imgAssigned.length; i++){
-      this._dataService.addImg(cardEdit.imgAssigned[i]).subscribe(res =>{
-        cardEdit.imgAssigned[i] = res as Img;
-      })
-    }
-    
-    this._dataService.updateItem(cardEdit).subscribe(res => {
-      for(let i=0; i < cardEdit.imgAssigned.length; i++) {
-        this._dataService.setItemImg(cardEdit.id, cardEdit.imgAssigned[i].id).subscribe(res => {
-        });
-      }
-      this.cardsArray[ref] = cardEdit;
-    })
+    this._dataService.updateItemP(cardEdit).subscribe(res => {
+      this.cardsArray[ref] = res;
+    });
   }
 
   public addImgEdit() {
@@ -256,7 +206,7 @@ export class CardsPresentationComponent implements OnInit {
     if(index <= 1){
       alert("To maintain the aesthetics of the page, this card cannot be deleted.")
     }else{
-      this._dataService.deleteItem(this.cardsArray[index].id).subscribe(res => {})
+      this._dataService.deleteItem(this.cardsArray[index].id as number).subscribe(res => {})
       this.cardsArray.splice(index, 1);
       this.formCards.controls.select.patchValue(0);
     }
