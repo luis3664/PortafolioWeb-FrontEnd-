@@ -15,7 +15,7 @@ export class CourseCardComponent implements OnInit {
   private id: any;
   private titleCard!: string;
   private textCard!: string;
-  private dateCard!: string;
+  private dateCard!: Date;
   private imgNameCard!: string;
   private imgUrlCard!: string;
   private certificateTitleCard!: string;
@@ -29,7 +29,7 @@ export class CourseCardComponent implements OnInit {
     this.id = "certificate" + this.interaction;
     this.titleCard = this.cardC.title;
     this.textCard = this.cardC.text;
-    this.dateCard = this.cardC.certificate.date;
+    this.dateCard = this.cardC.certificate.date as Date;
     this.imgNameCard = this.cardC.imgAssigned[0].name;
     this.imgUrlCard = this.cardC.imgAssigned[0].url;
     this.certificateTitleCard = this.cardC.title;
@@ -52,7 +52,7 @@ export class CourseCardComponent implements OnInit {
   }
 
   // Date Card
-  public get date(): string {
+  public get date(): Date {
     return this.dateCard;
   }
   

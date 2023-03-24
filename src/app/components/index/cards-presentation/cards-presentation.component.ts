@@ -96,7 +96,7 @@ export class CardsPresentationComponent implements OnInit {
       certificate: {
         id: 0,
         urlCertificate: "",
-        date: ""
+        date: new Date
       },
       imgAssigned: card.img as Array<Img>,
       iconAssigned: []

@@ -1,11 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Footer } from 'src/app/interfaces/Footer.interface';
 import { Icon } from 'src/app/interfaces/Icon.interface';
-import { Logo } from 'src/app/interfaces/Logo.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
-import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
 import { Section } from 'src/app/interfaces/Section.interface';
 
 @Component({
@@ -17,8 +14,6 @@ export class FooterComponent implements OnInit {
 
   // Items
   private footerSec!: Section;
-  private imgLogo!: ImgLogo;
-  private indexCurrent!: number;
   public svgSelectAddFooter: boolean = false;
   public svgSelectEditFooter: boolean = false;
   private iconClear!: any;
@@ -27,7 +22,6 @@ export class FooterComponent implements OnInit {
   private iconsFooter!: Icon[];
   private titleFooter!: string;
   private textFooter!: string;
-  private logos!: Logo[];
 
   // Inject
   private _dataService = inject(DataService);

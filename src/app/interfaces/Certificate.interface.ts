@@ -1,6 +1,5 @@
-
 export interface Certificate {
     id: number,
     urlCertificate: string,
-    date: string
+    date: Date
 }

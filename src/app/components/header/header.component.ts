@@ -1,9 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Footer } from 'src/app/interfaces/Footer.interface';
-import { Header } from 'src/app/interfaces/Header.interface';
-import { ImgLogo } from 'src/app/interfaces/ImgLogo.interface';
-import { Logo } from 'src/app/interfaces/Logo.interface';
 import { Section } from 'src/app/interfaces/Section.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -18,16 +14,9 @@ export class HeaderComponent implements OnInit{
 
   // Items
   private header!: Section;
-  private imgLogo!: ImgLogo;
-  private logoCurrent!: any;
-  private selectEdit!: number;
-  private footer!: Footer;
-  private indexFooter!: number;
   
   // Initializers
   private textHeader!: string;
-  private logo!: Logo;
-  private logos!: Logo[];
   private titleSec1: any;
   private titleSec2: any;
   private titleSec3: any;

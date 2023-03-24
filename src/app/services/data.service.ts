@@ -1,17 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, updateDoc} from '@angular/fire/firestore';
 import { Observable, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 // Interfaces
-import { Header } from '../interfaces/Header.interface';
-import { Footer } from '../interfaces/Footer.interface';
-import { ImgLogo } from '../interfaces/ImgLogo.interface';
 import { Section } from '../interfaces/Section.interface';
 import { Item } from '../interfaces/Item.interface';
 import { Icon } from '../interfaces/Icon.interface';
 import { Img } from '../interfaces/Img.interface';
-import { Text } from '../interfaces/Text.interface';
 import { Certificate } from '../interfaces/Certificate.interface';
 import { Topic } from '../interfaces/Topic.interface';
 import { Bar } from '../interfaces/Bar.interface';
@@ -23,8 +18,8 @@ export class DataService {
 
   private urlApi = "http://localhost:8080/"
   private urlApiSec = "http://localhost:8080/sec/"
-
-  private firestore= inject(Firestore);
+  // private urlApi = "https://api-porfolio.onrender.com/"
+  // private urlApiSec = "https://api-porfolio.onrender.com/sec/"
 
   private http = inject(HttpClient);
 

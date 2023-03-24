@@ -36,6 +36,7 @@ export class CoursesComponent implements OnInit{
       this.section3 = res;
       this.setCurrentTitle(this.section3.title);
       
+      
       // Initializers
       this.titleSection = this.section3.title;
       this.cardsSec3 = this.section3.listItem;
@@ -51,7 +52,7 @@ export class CoursesComponent implements OnInit{
     addCard: new FormGroup({
       title: new FormControl(''),
       text: new FormControl(''),
-      date: new FormControl(''),
+      date: new FormControl(),
       imgName: new FormControl(''),
       imgUrl: new FormControl(''),
       certificateUrl: new FormControl('')
@@ -59,7 +60,7 @@ export class CoursesComponent implements OnInit{
     editCard: new FormGroup({
       title: new FormControl(''),
       text: new FormControl(''),
-      date: new FormControl(''),
+      date: new FormControl(),
       imgName: new FormControl(''),
       imgUrl: new FormControl(''),
       certificateUrl: new FormControl('')
@@ -145,7 +146,7 @@ export class CoursesComponent implements OnInit{
     img.name = card.imgName as string;
     img.url = card.imgUrl as string;
 
-    certificate.date = card.date as string;
+    certificate.date = card.date as Date;
     certificate.urlCertificate = card.certificateUrl as string;
 
     this._dataService.addImg(img).subscribe(res => {
