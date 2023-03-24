@@ -16,10 +16,10 @@ import { Bar } from '../interfaces/Bar.interface';
 })
 export class DataService {
 
-  private urlApi = "http://localhost:8080/"
-  private urlApiSec = "http://localhost:8080/sec/"
-  // private urlApi = "https://api-porfolio.onrender.com/"
-  // private urlApiSec = "https://api-porfolio.onrender.com/sec/"
+  // private urlApi = "http://localhost:8080/"
+  // private urlApiSec = "http://localhost:8080/sec/"
+  private urlApi = "https://api-porfolio.onrender.com/"
+  private urlApiSec = "https://api-porfolio.onrender.com/sec/"
 
   private http = inject(HttpClient);
 
